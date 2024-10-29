@@ -1,0 +1,178 @@
+*{
+    margin: 0;
+    padding: 0;
+  }
+  
+.invisible{
+  
+    display: none !important;
+   
+}
+
+  body {
+    background: #000000;
+    background: -webkit-linear-gradient(to right, #434343, #000000);
+    background: linear-gradient(to right, #434343, #000000);
+  }
+  
+  .form-container {
+    margin-top: 5%;
+    margin-left: auto;
+    margin-bottom: auto;
+    margin-right: auto;
+    display: flex;
+    border-radius: 19px;
+    background: #e6e916;
+    box-shadow: inset 14px 14px 28px #a3a510,
+                inset -14px -14px 28px #ffff1c;
+    height: 75vh;
+    width: 65%;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+  }
+  
+  /* Media query para pantallas más grandes */
+  @media (min-width: 768px) {
+    .form-container {
+      width: 50%;
+    }
+  }
+  
+.iconb{
+
+  color: black;
+}
+  
+ /* From Uiverse.io by Praashoo7 */ 
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 2em;
+    padding-right: 2em;
+    padding-bottom: 0.4em;
+    background-color:#cfc7c7;
+    border-radius: 25px;
+    transition: .4s ease-in-out;
+  }
+  
+
+  
+  #heading {
+    text-align: center;
+    margin: 2em;
+    color: rgb(0, 0, 0);
+    font-size: 1.2em;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: rgb(0, 0, 0);
+    font-size: 1rem;
+    
+  }
+  
+  .field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    border-radius: 25px;
+    padding: 0.6em;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: #fbf240f8;
+    box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+  }
+  
+  .input-icon {
+    height: 1.3em;
+    width: 1.3em;
+    fill: rgb(0, 0, 0);
+  }
+  
+  .input-field {
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    color: #000000;
+  }
+  
+  .form .btn {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin-top: 2.5em;
+  }
+
+  .label {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin-bottom: 1.5rem;
+    transition: 0.5s;
+  }
+
+  .label:hover{
+scale: 1.05;
+color:rgb(105, 105, 230);
+cursor: pointer;
+font: bolder;
+
+  }
+  .button1 {
+    padding: 0.5em;
+    padding-left: 1.1em;
+    padding-right: 1.1em;
+    border-radius: 5px;
+    margin-right: 0.5em;
+    border: none;
+    outline: none;
+    transition: .4s ease-in-out;
+    background-color: #252525;
+    color: white;
+  }
+  
+  .button1:hover {
+    background-color:#4aff13;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+  }
+  
+  .button2 {
+    padding: 0.5em;
+    padding-left: 2.3em;
+    padding-right: 2.3em;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    transition: .4s ease-in-out;
+    background-color: #252525;
+    color: white;
+  }
+  
+  .button2:hover {
+    background-color: #fff156;
+    color: rgb(0, 0, 0);
+     cursor: pointer;
+  }
+  
+  .button3 {
+    margin-bottom: 3em;
+    padding: 0.5em;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    transition: .4s ease-in-out;
+    background-color:rgb(101, 100, 100);
+    color: white;
+  }
+  
+  .button3:hover {
+    background-color: red;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+  }
