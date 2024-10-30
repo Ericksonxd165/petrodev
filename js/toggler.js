@@ -7,7 +7,10 @@ d.addEventListener("click",e=>{
 if(e.target.matches(buton)){
 
 d.getElementById(element1).classList.toggle('invisible')
-console.log("hola")
+d.getElementById(element2).classList.toggle('invisible')
+
+
+
 }
 
 

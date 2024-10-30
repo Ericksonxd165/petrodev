@@ -1,13 +1,12 @@
 const d =document;
 
-import toggler from "./js/toggler.js";
+import toggler from "./toggler.js";
 
 
-d.addEventListener("DOMContentLoaded",(e)=>{
-
-toggler("#login","#register","#buttonl")
-
+d.addEventListener("DOMContentLoaded",e=>{
+toggler("login","register","#buttonl")
 
 
 
-})
+}
+)

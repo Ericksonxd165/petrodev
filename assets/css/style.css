@@ -6,7 +6,8 @@
 .invisible{
   
     display: none !important;
-   
+    transform: translateY(-20px);
+    pointer-events: none;
 }
 
   body {
@@ -26,10 +27,11 @@
     box-shadow: inset 14px 14px 28px #a3a510,
                 inset -14px -14px 28px #ffff1c;
     height: 75vh;
-    width: 65%;
+    width: 70%;
     align-items: center;
     justify-content: center;
     align-content: center;
+    
   }
   
   /* Media query para pantallas más grandes */
@@ -45,18 +47,24 @@
 }
   
  /* From Uiverse.io by Praashoo7 */ 
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding-left: 2em;
-    padding-right: 2em;
-    padding-bottom: 0.4em;
-    background-color:#cfc7c7;
-    border-radius: 25px;
-    transition: .4s ease-in-out;
-  }
-  
+ .form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 2em 0.4em 2em;
+  background-color: #cfc7c7;
+  border-radius: 25px;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+.form.hidden {
+  opacity: 0;
+  transform: translateY(-20px);
+}
 
   
   #heading {
