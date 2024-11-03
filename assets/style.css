@@ -5,10 +5,7 @@
 
   :root{
 
-   --main-color:#e6e916;;
-
-
-
+   --main-color:#e6e916;
   }
   
   body{
@@ -42,7 +39,7 @@
   border-radius: 10px;
 background: linear-gradient(145deg, #fffff3, #dadacc);
 box-shadow:  5px 5px 27px #cecec1,
-             -5px -5px 10px #ffffff;
+             -5px -5px 5px #ffffff;
              height: 50px;
              width: 50px;
              
