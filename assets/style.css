@@ -1,6 +1,14 @@
 *{
     margin: 0;
-    padding: 0;
+    padding: 0; 
+  }
+
+  :root{
+
+   --main-color:#e6e916;;
+
+
+
   }
   
   body{
@@ -9,6 +17,10 @@
     background: -webkit-linear-gradient(to right, #434343, #000000) !important;
     background: linear-gradient(to right, #434343, #000000)!important;
   }
+  .main {
+    flex: 1; /* Para que ocupe el espacio disponible */
+    margin-bottom: 60px; /* Ajusta según la altura de .menu */
+}
 
 
 

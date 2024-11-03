@@ -1,12 +1,12 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  build: {
-    rollupOptions: {
-      input: {
-        main: 'index.html',
-        dashboard: 'dashboard.html', // Agregar aquí tu dashboard
-      }
+    build: {
+        rollupOptions: {
+            input: {
+                main: './index.html',
+                dashboard: './dashboard.html'
+            }
+        }
     }
-  }
 });
