@@ -9,10 +9,7 @@
 
   :root{
 
-   --main-color:#e6e916;;
-
-
-
+   --main-color:#e6e916;
   }
   
   body{
@@ -46,12 +43,21 @@
   border-radius: 10px;
 background: linear-gradient(145deg, #fffff3, #dadacc);
 box-shadow:  5px 5px 27px #cecec1,
+<<<<<<< HEAD
              -5px -5px 10px #ffffff;
+=======
+             -5px -5px 5px #ffffff;
+>>>>>>> 02d24db685f0ca703ba4adc017f3c2b3c5d24c33
              height: 50px;
              width: 50px;
              
   border: none;
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 02d24db685f0ca703ba4adc017f3c2b3c5d24c33
 
 
 .invisible{
