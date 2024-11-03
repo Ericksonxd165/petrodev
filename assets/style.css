@@ -42,40 +42,13 @@
 .btn-menu{
   border-radius: 10px;
 background: linear-gradient(145deg, #fffff3, #dadacc);
-<<<<<<< HEAD
-box-shadow:  2px 2px 15px #cecec1,
-             -5px -5px 10px #ffffff;
-=======
 box-shadow:  5px 5px 27px #cecec1,
-<<<<<<< HEAD
              -5px -5px 10px #ffffff;
-=======
-             -5px -5px 5px #ffffff;
->>>>>>> 02d24db685f0ca703ba4adc017f3c2b3c5d24c33
->>>>>>> 60017739278ae3c08297a481c8b2690c43f369b3
              height: 50px;
              width: 50px;
              
   border: none;
-  transition: 0.5s;
-  color: black;
 }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 02d24db685f0ca703ba4adc017f3c2b3c5d24c33
-
-.btn-menu:hover{
-
-  border-radius: 10px;
-background: #f2f2e3;
-box-shadow: inset 14px 14px 15px #dcdccf,
-            inset -25px -25px 15px #fffff7;
-            height: 50px;
-            width: 50px;
-}
-  
 
 
 .invisible{
