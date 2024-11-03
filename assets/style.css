@@ -9,10 +9,13 @@
   }
   
   body{
-    
-    background: #000000 !important;  
-    background: -webkit-linear-gradient(to right, #434343, #000000) !important;
-    background: linear-gradient(to right, #434343, #000000)!important;
+    background: #000000;
+    background: linear-gradient(to right, #434343, #000000);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
   }
   .main {
     flex: 1; /* Para que ocupe el espacio disponible */
@@ -35,15 +38,28 @@
 .btn-menu{
   border-radius: 10px;
 background: linear-gradient(145deg, #fffff3, #dadacc);
-box-shadow:  5px 5px 27px #cecec1,
-             -5px -5px 5px #ffffff;
+box-shadow:  2px 2px 15px #cecec1,
+             -5px -5px 10px #ffffff;
              height: 50px;
              width: 50px;
              
   border: none;
+  transition: 0.5s;
+  color: black;
 }
 
 
+
+.btn-menu:hover{
+
+  border-radius: 10px;
+background: #f2f2e3;
+box-shadow: inset 14px 14px 15px #dcdccf,
+            inset -25px -25px 15px #fffff7;
+            height: 50px;
+            width: 50px;
+}
+  
 
 
 .invisible{
