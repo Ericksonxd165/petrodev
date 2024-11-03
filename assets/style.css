@@ -4,20 +4,14 @@
   }
   
   body{
+    
     background: #000000 !important;  
     background: -webkit-linear-gradient(to right, #434343, #000000) !important;
     background: linear-gradient(to right, #434343, #000000)!important;
   }
 
 
-  .menu{
-    
-    position: fixed;
-    bottom: 0px;
-    background-color:#4aff13
 
-    }
-  
 
 
 .invisible{
