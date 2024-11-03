@@ -3,6 +3,23 @@
     padding: 0;
   }
   
+  body{
+    background: #000000 !important;  
+    background: -webkit-linear-gradient(to right, #434343, #000000) !important;
+    background: linear-gradient(to right, #434343, #000000)!important;
+  }
+
+
+  .menu{
+    
+    position: fixed;
+    bottom: 0px;
+    background-color:#4aff13
+
+    }
+  
+
+
 .invisible{
   
     display: none !important;
@@ -10,11 +27,7 @@
     pointer-events: none;
 }
 
-  body {
-    background: #000000;
-    background: -webkit-linear-gradient(to right, #434343, #000000);
-    background: linear-gradient(to right, #434343, #000000);
-  }
+ 
   
   .form-container {
     margin-top: 5%;
@@ -58,6 +71,7 @@
   opacity: 1;
   transform: translateY(0);
 }
+
 
 
 
@@ -184,3 +198,6 @@ font: bolder;
     color: rgb(0, 0, 0);
     cursor: pointer;
   }
+
+
+  
