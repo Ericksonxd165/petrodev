@@ -1,4 +1,5 @@
-import './assets/style.css'
+import './assets/style.css';
+
 import toggler from '/js/toggler.js'
 
 
