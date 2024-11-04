@@ -163,9 +163,7 @@ box-shadow:  5px 5px 27px #353535,
     margin-right: auto;
     display: flex;
     border-radius: 19px;
-    background: #e6e916;
-    box-shadow: inset 14px 14px 28px #a3a510,
-                inset -14px -14px 28px #ffff1c;
+   background: var(--main-color);
     height: 75vh;
     width: 70%;
     align-items: center;
@@ -183,7 +181,7 @@ box-shadow:  5px 5px 27px #353535,
   
 .iconb{
 
-  color: black;
+ color: white
 }
   
  /* From Uiverse.io by Praashoo7 */ 
@@ -232,7 +230,7 @@ box-shadow:  5px 5px 27px #353535,
     border: none;
     outline: none;
     color: white;
-    background-color: #fbf240f8;
+   background-color: var(--main-black-color);
     box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
   }
   
@@ -247,7 +245,7 @@ box-shadow:  5px 5px 27px #353535,
     border: none;
     outline: none;
     width: 100%;
-    color: #000000;
+    color: #ffffff;
   }
   
   .form .btn {
@@ -286,7 +284,7 @@ font: bolder;
   }
   
   .button1:hover {
-    background-color:#4aff13;
+    background-color: var(--main-color);
     color: rgb(0, 0, 0);
     cursor: pointer;
   }
@@ -304,7 +302,7 @@ font: bolder;
   }
   
   .button2:hover {
-    background-color: #fff156;
+   background-color: var(--main-color);
     color: rgb(0, 0, 0);
      cursor: pointer;
   }
@@ -321,10 +319,13 @@ font: bolder;
   }
   
   .button3:hover {
-    background-color: red;
+    background-color: var(--main-color);
     color: rgb(0, 0, 0);
     cursor: pointer;
   }
 
 
-  
+  .logo {
+  height: 200px;
+  width: 95%;
+  }
