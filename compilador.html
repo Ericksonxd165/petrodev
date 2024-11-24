@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Python</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <script defer src="https://cdn.jsdelivr.net/pyodide/v0.21.0/full/pyodide.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #result {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+            height: 150px;
+            overflow-y: auto;
+            white-space: pre;
+        }
+        #loading {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="editor" style="height: 310px; width: 70%; margin: auto;"></div>
+    <button id="run" disabled><i class="fa-solid fa-play"></i></button>
+    <div id="loading">Cargando...</div>
+    <div id="result"></div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var editor = CodeMirror(document.getElementById('editor'), {
+                value: "print('¡Hola, mundo!')",
+                mode: "python",
+                lineNumbers: true
+            });
+
+            async function loadPyodideAndRun() {
+                document.getElementById('loading').style.display = 'block';
+                let pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.21.0/full/" });
+
+                await pyodide.loadPackage('micropip');
+                await pyodide.runPythonAsync(`
+                    import micropip
+                    await micropip.install('discutils')
+                `);
+
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('run').disabled = false;
+
+                document.getElementById('run').addEventListener('click', async () => {
+                    let code = editor.getValue();
+                    let resultDiv = document.getElementById('result');
+                    resultDiv.textContent = ''; // Clear previous result
+                    try {
+                        // Redirigir la salida estándar a resultDiv
+                        pyodide.runPython(`
+                            import sys
+                            class StdoutRedirector:
+                                def __init__(self):
+                                    self.content = ""
+                                def write(self, message):
+                                    self.content += message
+                                def flush(self):
+                                    pass
+                            sys.stdout = StdoutRedirector()
+                        `);
+
+                        await pyodide.runPythonAsync(code);
+
+                        // Obtener el contenido de StdoutRedirector
+                        let output = pyodide.runPython('sys.stdout.content');
+                        resultDiv.textContent = output;
+                    } catch (error) {
+                        resultDiv.textContent = error;
+                    }
+                });
+            }
+
+            loadPyodideAndRun();
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/js/all.min.js"></script>
+</body>
+</html>
