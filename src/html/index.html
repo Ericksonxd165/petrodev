@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Petrodev - Inicia Sesión</title>
+  <link rel="icon" href="./assets/images/logos/foto-logo.ico" type="image/x-icon">  
+  <link rel="stylesheet" href="./assets/css/styles.min.css" />
+
+  <style>
+    /* Posiciona el ícono de modo oscuro en la esquina superior derecha */
+    #darkModeContainer {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      z-index: 9999;
+    }
+    
+    #darkModeToggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #f8f9fa; /* Fondo claro por defecto */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    #darkModeToggle:hover {
+      background-color: #e2e6ea;
+      transform: scale(1.1);
+    }
+
+    #darkModeToggle i {
+      font-size: 24px;
+      color: #333;
+      transition: color 0.3s ease;
+    }
+
+    body.dark-mode #darkModeToggle {
+      background-color: #333;
+    }
+
+    body.dark-mode #darkModeToggle i {
+      color: #fff;
+    }
+      
+    /* Estilo por defecto (Modo Claro) */
+.position-relative.min-vh-100.d-flex.align-items-center.justify-content-center {
+    background-color: #ffffff;  /* Fondo blanco en modo claro */
+    color: #000000; /* Texto oscuro por defecto */
+}
+
+/* Estilo cuando está activado el modo oscuro */
+body.dark-mode .position-relative.min-vh-100.d-flex.align-items-center.justify-content-center {
+    background-color: #000000;  /* Fondo negro en modo oscuro */
+    color: #ffffff; /* Texto blanco en modo oscuro */
+}  
+      
+.card-body {
+  display: flex;
+  justify-content: center;  /* Centra el contenido horizontalmente */
+  align-items: center;      /* Centra el contenido verticalmente */
+  flex-direction: column;   /* Alinea los elementos de arriba hacia abajo */
+  text-align: center;       /* Alinea el texto al centro */
+  padding: 40px 20px;       /* Aumenta el espaciado interno para evitar que los elementos estén muy juntos */
+  border-radius: 10px;      /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  background-color: #fff;   /* Fondo blanco (puedes cambiarlo si prefieres otro color) */
+  width: 100%;              /* Asegura que ocupe el 100% del contenedor padre */
+  max-width: 450px;         /* Limita el ancho máximo */
+  margin: 0 auto;           /* Centra el card en la pantalla */
+}
+
+/* Estilo para la imagen del logo */
+.card-body .logo-img {
+  width: 150px;            /* Aumenta el tamaño del logo */
+  height: auto;            /* Mantiene la proporción */
+  object-fit: contain;     /* Asegura que la imagen no se distorsione */
+  transition: filter 0.3s ease; /* Transición suave para el cambio de color */
+  margin-bottom: 20px;     /* Añade espacio debajo del logo */
+}
+
+/* Estilo para el logo en modo oscuro */
+body.dark-mode .card-body .logo-img img {
+  filter: invert(1) brightness(2); /* Logo blanco en modo oscuro */
+}
+
+/* Estilo para los campos de texto y botones en modo oscuro */
+body.dark-mode .card-body input,
+body.dark-mode .card-body button {
+  background-color: #333;  /* Fondo oscuro para los campos */
+  color: white;             /* Texto blanco */
+  border: 1px solid #444;  /* Borde sutil */
+}
+
+/* Ajusta los elementos debajo del logo para que no estén pegados */
+.card-body .login-text {
+  margin-top: 20px;         /* Añade espacio arriba */
+}
+
+/* Asegúrate de que los elementos de texto (como "Forgot Password") no estén tan juntos */
+.card-body .forgot-password {
+  margin-top: 10px;         /* Añade un margen superior para evitar que se junten */
+}
+
+
+/* Modo oscuro */
+body.dark-mode .card-body {
+  background-color: #212529; /* Gris oscuro */
+  color: #ffffff;  /* Letras blancas en modo oscuro */
+}
+
+/* Estilo para la imagen del logo */
+.card-body .logo-img {
+  display: flex;
+  justify-content: center;  /* Centra el logo horizontalmente */
+  align-items: center;      /* Centra el logo verticalmente */
+  padding: 5px 0;           /* Reduce el espaciado superior e inferior */
+  margin-bottom: 10px;      /* Reduce el espacio debajo del logo */
+}
+
+/* Estilo para la imagen del logo (ajustado para el modo oscuro) */
+.card-body .logo-img img {
+  width: 135px;        /* Aumenta el tamaño del logo */
+  height: auto;        /* Mantiene la proporción */
+  object-fit: contain; /* Asegura que la imagen no se distorsione */
+  transition: filter 0.3s ease; /* Transición suave para el cambio de color */
+}
+
+/* Modo oscuro: Cambia el logo a blanco */
+body.dark-mode .card-body .logo-img img {
+  filter: invert(1) brightness(2); /* Invierte los colores y los hace más brillantes */
+}
+
+/* Ajuste para los textos (username, etc) en modo oscuro */
+body.dark-mode .card-body input,
+body.dark-mode .card-body label,
+body.dark-mode .card-body .text {
+  color: #ffffff;  /* Cambia el color de las letras a blanco en modo oscuro */
+}
+
+/* Ajustes adicionales para los botones en modo oscuro */
+body.dark-mode .card-body .btn {
+  background-color: #444;  /* Color de fondo de los botones en modo oscuro */
+  color: #ffffff;          /* Texto de los botones en blanco */
+}
+
+body.dark-mode .card-body .btn:hover {
+  background-color: #555;  /* Efecto hover para los botones */
+}
+      
+/* Estilo para el texto "PETRODEV" */
+.card-body .text-center {
+  font-size: 32px;        /* Aumenta el tamaño de la letra */
+  font-weight: bold;      /* Hace que el texto sea en negrita */
+  margin-top: -25px;      /* Reduce el espacio arriba para mover el texto más cerca del logo */
+  color: #000;            /* Color negro para el texto (puedes cambiarlo según tu diseño) */
+  text-align: center;     /* Asegura que el texto esté centrado */
+  width: 100%;            /* Asegura que ocupe todo el ancho disponible */
+  display: flex;          /* Utiliza flexbox para centrar el contenido */
+  justify-content: center;/* Centra el texto horizontalmente */
+  align-items: center;    /* Centra el texto verticalmente */
+}
+
+/* En modo oscuro, cambia el color del texto */
+body.dark-mode .card-body .text-center {
+  color: #fff;            /* Cambia el texto a blanco en modo oscuro */
+}      
+      
+/* Estilos para los botones de tipo enlace */
+body:not(.dark-mode) a.btn.btn-primary {
+    background-color: #007bff; /* Azul para modo claro */
+    color: white; /* Texto blanco */
+    border: 1px solid #007bff; /* Borde azul */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+body:not(.dark-mode) a.btn.btn-primary:hover {
+    background-color: transparent; /* Fondo transparente */
+    color: #007bff; /* Texto azul */
+    border: 1px solid #007bff; /* Borde azul */
+}
+
+/* Estilos para los botones de tipo enlace en modo oscuro */
+body.dark-mode a.btn.btn-primary {
+    background-color: #ffffff; /* Fondo blanco para modo oscuro */
+    color: black; /* Texto negro */
+    border: 1px solid #333; /* Borde gris oscuro */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+body.dark-mode a.btn.btn-primary:hover {
+    background-color: transparent; /* Fondo transparente */
+    color: #fff; /* Texto blanco */
+    border: 1px solid #fff; /* Borde blanco */
+}    
+    
+      
+/* Cambiar color de texto de 'Recordarme' en modo oscuro */
+body.dark-mode .form-check .form-check-label {
+  color: white !important; /* Asegura que el texto sea blanco en modo oscuro */
+}
+
+/* Si el modo claro está activado, mantenemos el color negro */
+body:not(.dark-mode) .form-check .form-check-label {
+  color: black;
+}
+      
+/* Cambiar color de enlaces con clase 'text-primary' en modo oscuro */
+body.dark-mode a.text-primary.fw-bold {
+    color: orange !important; /* Cambia 'orange' por el color que prefieras */
+}
+
+/* Si deseas que el color vuelva al original en modo claro, no es necesario hacer nada más */
+body:not(.dark-mode) a.text-primary.fw-bold {
+    color: #007bff; /* Azul original de 'text-primary' */
+}
+      
+/* Ajuste para mover "Recordarme" 1px hacia abajo */
+.form-check .form-check-label {
+    margin-top: 1px; /* Ajusta el valor según lo necesites */
+}      
+      
+      
+  </style>
+</head>
+
+<body onload="redirectToDashboardIfLoggedIn()">
+
+  <script>
+    // Mostrar mensaje de error si está presente en la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const message = urlParams.get('message');
+    if (message) {
+      alert(message);
+    }
+
+    // Manejar el inicio de sesión
+    async function handleLogin(event) {
+      event.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        localStorage.setItem('user', JSON.stringify(result.user));
+        window.location.href = '/dashboard.html';
+      } else {
+        alert(result.message);
+      }
+    }
+  </script>
+  <!-- Contenedor del ícono de modo oscuro -->
+  <div id="darkModeContainer">
+    <div id="darkModeToggle">
+      <i class="ti ti-moon"></i>
+    </div>
+  </div>
+
+ <!-- Body Wrapper -->
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <div class="position-relative min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="d-flex align-items-center justify-content-center w-100">
+        <div class="row justify-content-center w-100">
+          <div class="col-md-8 col-lg-6 col-xxl-3">
+            <div class="card mb-0">
+              <div class="card-body">
+              <a href="javascript:void(0)" class="logo-img text-center d-block py-3 w-100">
+                <img src="./assets/images/logos/foto-logo.svg" alt="" class="logo">
+              </a>
+                </a>
+              
+
+                <p class="text-center">PETRODEV</p>
+                <form onsubmit="handleLogin(event)">
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Correo Electronico</label>
+                      <input type="email" id="email" name="email" required class="form-control">
+                    </div>
+                    <div class="mb-4">
+                      <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                      <input type="password" id="password" name="password" required class="form-control">
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                    </div>
+                    <button href="./index.html" class="btn btn-primary w-100 py-8 fs-4 mb-4">Inicia Sesion</button>
+                    <div class="d-flex align-items-center justify-content-center">
+                      <p class="fs-4 mb-0 fw-bold">Nuevo en Petrodev?</p>
+                      <a class="text-primary fw-bold ms-2" href="./register.html">Inscribete ya</a>
+                      
+                  </div>
+                  <br>
+                  <a class="text-primary fw-bold" href="#">Olvidaste la contraseña?</a>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  
+// Función que activa o desactiva el modo oscuro
+function toggleDarkMode() {
+    const body = document.body;
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    
+    // Alternar la clase 'dark-mode' en el body
+    body.classList.toggle('dark-mode');
+    
+    // Cambiar el icono de sol a luna y guardar el estado en localStorage
+    if (body.classList.contains('dark-mode')) {
+        darkModeToggle.innerHTML = '<i class="ti ti-sun"></i>';  // Icono de sol
+        localStorage.setItem('theme', 'dark');  // Guardar modo oscuro
+    } else {
+        darkModeToggle.innerHTML = '<i class="ti ti-moon"></i>';  // Icono de luna
+        localStorage.setItem('theme', 'light');  // Guardar modo claro
+    }
+}
+
+// Al cargar la página, aplicar el tema guardado y gestionar la precarga
+window.addEventListener('DOMContentLoaded', () => {
+    const currentTheme = localStorage.getItem('theme') || 'light'; // Por defecto: modo claro
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const sidebarNav = document.querySelector('.sidebar-nav');
+    const brandLogo = document.querySelector('.brand-logo');
+
+    // Inicializar opacidad para la precarga
+    document.body.style.opacity = '0';
+    if (sidebarNav) sidebarNav.style.opacity = '0';
+    if (brandLogo) brandLogo.style.opacity = '0';
+
+    // Aplicar el tema desde localStorage
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        darkModeToggle.innerHTML = '<i class="ti ti-sun"></i>';  // Icono de sol
+    } else {
+        document.body.classList.remove('dark-mode');
+        darkModeToggle.innerHTML = '<i class="ti ti-moon"></i>';  // Icono de luna
+    }
+
+    // Usar requestAnimationFrame para una transición fluida
+    requestAnimationFrame(() => {
+        document.body.style.transition = 'opacity 0.3s ease-in-out';
+        document.body.style.opacity = '1';
+
+        if (sidebarNav) {
+            sidebarNav.style.transition = 'opacity 0.3s ease-in-out';
+            sidebarNav.style.opacity = '1';
+        }
+        if (brandLogo) {
+            brandLogo.style.transition = 'opacity 0.3s ease-in-out';
+            brandLogo.style.opacity = '1';
+        }
+    });
+
+    // Añadir el event listener al botón para cambiar el tema
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+    }
+});
+</script>
+<script src="assets/js/sessions.js" ></script>
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+</body>
+
+</html>

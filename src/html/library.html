@@ -1,0 +1,995 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Petrodev - Libreria</title>
+  <link rel="icon" href="./assets/images/logos/foto-logo.ico" type="image/x-icon">  
+  <link rel="stylesheet" href="../../node_modules/simplebar/dist/simplebar.min.css">
+  <link rel="stylesheet" href="./assets/css/styles.min.css" />
+    <style>
+    /* Estilos generales */
+    
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    .example {
+      display: none;
+      opacity: 0;
+      transform: translateX(100%);
+      transition: opacity 0.5s, transform 0.5s;
+    }
+
+    .example.active {
+      display: block;
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .controls button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .controls button:hover {
+      background-color: #0056b3;
+    }
+
+    pre {
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+
+    .example-title {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+        
+    /* Estilos para la etiqueta "Ingeniería en Petróleo" */
+.example {
+  position: relative;
+}
+
+.tag {
+  position: absolute;
+  top: -40px; /* Ajustado más cerca de la parte superior */
+  right: 5px; /* Ajustado más cerca del borde derecho */
+  background-color: #333; /* Gris oscuro para un estilo minimalista */
+  color: white;
+  padding: 3px 8px; /* Más pequeño */
+  font-size: 12px; /* Texto más pequeño */
+  font-weight: normal; /* Menos pesado */
+  border-radius: 4px; /* Bordes ligeramente redondeados */
+  text-transform: uppercase;
+  letter-spacing: 0.5px; /* Espaciado de letras más fino */
+  box-shadow: none; /* Sin sombra para un estilo más limpio */
+}    
+      
+ /* Estilos para la etiqueta "Ingeniería en Petróleo" */
+.example {
+  position: relative;
+}
+
+.tag-python {
+  position: absolute;
+  top: -40px; /* Ajustado más cerca de la parte superior */
+  right: 200px; /* Ajustado más cerca del borde derecho */
+  background-color: #333; /* Gris oscuro para un estilo minimalista */
+  color: white;
+  padding: 3px 8px; /* Más pequeño */
+  font-size: 12px; /* Texto más pequeño */
+  font-weight: normal; /* Menos pesado */
+  border-radius: 4px; /* Bordes ligeramente redondeados */
+  text-transform: uppercase;
+  letter-spacing: 0.5px; /* Espaciado de letras más fino */
+  box-shadow: none; /* Sin sombra para un estilo más limpio */
+}         
+        
+/* Estilos para el modo oscuro */
+body.dark-mode .container,
+body.dark-mode .container.mt-5 {
+    background-color: #444; /* Gris oscuro uniforme #444 */
+    color: #fff; /* Texto blanco */
+}
+
+/* Fondo gris para el .card-body en modo oscuro */
+body.dark-mode .card-body {
+    background-color: #444; /* Mismo gris oscuro #444 que en los contenedores */
+    color: #fff; /* Texto blanco */
+}
+
+/* Estilo para bloques de código preformateado */
+body.dark-mode pre code {
+    background-color: transparent; /* Sin fondo extra, eliminando el cuadro blanco */
+    color: #000; /* Texto negro para el código */
+    padding: 0; /* Elimina el relleno si lo tiene */
+    border: none; /* Elimina cualquier borde */
+}
+
+/* Transición suave para todos los cambios */
+.container, .container.mt-5, .card-body, pre code {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+        
+/* Cambiar color del texto azul a blanco en modo oscuro */
+body.dark-mode .video-gallery h2,
+body.dark-mode .example-title, 
+body.dark-mode h3, 
+body.dark-mode .subtitulo,
+body.dark-mode .card-title, /* Para los títulos en las tarjetas */
+body.dark-mode .container h1, /* Para los títulos h1 dentro de containers */
+body.dark-mode .container h5 { /* Para los h5 dentro de containers */
+    color: #fff !important; /* Texto blanco para los títulos y subtítulos */
+}
+
+/* Estilos para los botones "Anterior" y "Siguiente" */
+.navigation button {
+    background-color: #007BFF; /* Azul por defecto */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    padding: 10px 15px; /* Tamaño de los botones */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor */
+    transition: background-color 0.3s, color 0.3s; /* Transiciones suaves */
+}
+
+/* Efecto hover para botones en modo claro */
+.navigation button:hover {
+    background-color: transparent; /* Fondo transparente */
+    color: #007BFF; /* Texto azul al pasar el ratón */
+    border: 1px solid #007BFF; /* Borde azul para destacar */
+}
+
+/* Botones en modo oscuro */
+body.dark-mode .navigation button {
+    background-color: #fff; /* Fondo blanco */
+    color: #444; /* Texto gris oscuro */
+    border: 1px solid #444; /* Borde gris oscuro */
+}
+
+/* Hover en modo oscuro */
+body.dark-mode .navigation button:hover {
+    background-color: transparent; /* Fondo transparente */
+    color: #fff; /* Texto blanco */
+    border: 1px solid #fff; /* Borde blanco */
+}
+
+        
+ /* Botones dentro de .controls en modo claro */
+.controls button {
+    background-color: #007BFF; /* Fondo azul */
+    color: #fff; /* Texto blanco */
+    border: 1px solid #007BFF; /* Borde azul */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+/* Hover de botones dentro de .controls en modo claro */
+.controls button:hover {
+    background-color: transparent; /* Fondo transparente */
+    color: #007BFF; /* Texto azul */
+    border: 1px solid #007BFF; /* Borde azul */
+}
+
+/* Botones dentro de .controls en modo oscuro */
+body.dark-mode .controls button {
+    background-color: #fff; /* Fondo blanco */
+    color: #444; /* Texto gris oscuro */
+    border: 1px solid #444; /* Borde gris oscuro */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+/* Hover de botones dentro de .controls en modo oscuro */
+body.dark-mode .controls button:hover {
+    background-color: transparent; /* Fondo transparente */
+    color: #fff; /* Texto blanco */
+    border: 1px solid #fff; /* Borde blanco */
+}       
+        
+  </style>
+</head>
+
+<body onload="showUserCedula()">
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./dashboard.html" class="text-nowrap logo-img">
+            <img src="./assets/images/logos/foto-logo.svg" alt="" />
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+       <!-- Sidebar navigation-->
+       <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+        <ul id="sidebarnav">
+          <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
+            <span class="hide-menu">Inicio</span>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./dashboard.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-grip-lines"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
+            <span class="hide-menu">HUB de Programación</span>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link  activated" href="./library.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-book-open"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Entorno de Formación</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./modulos.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-rectangle-list"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Módulos</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./capacitacion.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-user-graduate"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Capacitación</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./proyectos.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-code"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Proyectos</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./editor.html" aria-expoanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-terminal"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Editor de Código</span>
+            </a>
+          </li>
+      
+      </nav>
+               
+              
+         
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+     <!--  Header Start -->
+<header class="app-header">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <ul class="navbar-nav">
+            <li class="nav-item d-block d-xl-none">
+                <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                    <i class="ti ti-menu-2"></i>
+                </a>
+            </li>
+            
+            <!-- Icono de la luna para el modo oscuro -->
+            <li class="nav-item">
+    <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="darkModeToggle">
+        <i class="ti ti-moon"></i> <!-- El icono de la luna que cambia a sol -->
+        <div class="notification bg-primary rounded-circle"></div>
+    </a>
+</li>
+        </ul>
+         <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+    <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">  
+        <!-- Botón "¡Empieza a Codificar!" -->
+        <a href="index.html" class="btn" style="background-color: #333; color: white; padding: 10px 20px; border-radius: 5px; display: flex; align-items: center;">
+
+          <span> <i class="fa-brands fa-python"></i>    ¡Empieza a Codificar!</span>
+        </a>
+        
+        <li class="nav-item dropdown">
+            <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
+              <span id="user-cedula"></span>
+              <i class="fa-solid fa-user"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                <div class="message-body">
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-user fs-6"></i>
+                        <p class="mb-0 fs-3">My Profile</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-mail fs-6"></i>
+                        <p class="mb-0 fs-3">My Account</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-list-check fs-6"></i>
+                        <p class="mb-0 fs-3">My Task</p>
+                    </a>
+                    <Logout href="javascript:void(0)" class="btn btn-outline-primary mx-3 mt-2 d-block"  onclick="logout()">Logout</a>
+                </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!--  Header End -->
+<!-- Nueva sección de videos locales -->
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Galería de Videos</h5>
+      <div class="video-section text-center">
+        <video id="main-video" controls width="100%">
+          <source src="videos/video1.mp4" type="video/mp4">
+          Tu navegador no soporta la reproducción de videos.
+        </video>
+        <div class="navigation mt-3">
+          <button id="prev-video" class="btn btn-secondary">&#8592; Anterior</button>
+          <button id="next-video" class="btn btn-secondary">Siguiente &#8594;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <h1>Ejemplos de Python</h1>
+  <div id="example-container">
+
+    <!-- Ejemplo 1: Básico -->
+    <div class="example active" id="example-1">
+        <div class="tag">Python Básico</div>
+      <h2 class="example-title">Hola Mundo</h2>
+      <p>Este programa imprime "Hola Mundo" en la consola.</p>
+      <pre><code>print("Hola Mundo")</code></pre>
+      <p><strong>Salida:</strong> Hola Mundo</p>
+    </div>
+
+    <!-- Ejemplo 2: Básico -->
+    <div class="example" id="example-2">
+        <div class="tag">Python Básico</div>
+      <h2 class="example-title">Suma de Dos Números</h2>
+      <p>Este programa suma dos números y muestra el resultado.</p>
+      <pre><code>a = 5
+b = 3
+print(a + b)</code></pre>
+      <p><strong>Salida:</strong> 8</p>
+    </div>
+
+    <!-- Ejemplo 3: Básico -->
+    <div class="example" id="example-3">
+        <div class="tag">Python Básico</div>
+      <h2 class="example-title">Operadores Aritméticos</h2>
+      <p>Este programa realiza operaciones aritméticas simples.</p>
+      <pre><code>a = 10
+b = 4
+print(a - b)  # Resta
+print(a * b)  # Multiplicación
+print(a / b)  # División</code></pre>
+      <p><strong>Salida:</strong> 6, 40, 2.5</p>
+    </div>
+
+    <!-- Ejemplo 4: Básico -->
+    <div class="example" id="example-4">
+        <div class="tag">Python Básico</div>
+      <h2 class="example-title">Uso de Condicionales</h2>
+      <p>Este programa utiliza una estructura condicional para verificar si un número es positivo o negativo.</p>
+      <pre><code>num = -5
+if num > 0:
+    print("Positivo")
+else:
+    print("Negativo")</code></pre>
+      <p><strong>Salida:</strong> Negativo</p>
+    </div>
+
+    <!-- Ejemplo 5: Básico -->
+    <div class="example" id="example-5">
+        <div class="tag">Python Básico</div>
+      <h2 class="example-title">Bucle For</h2>
+      <p>Este programa imprime los números del 1 al 5 utilizando un bucle for.</p>
+      <pre><code>for i in range(1, 6):
+    print(i)</code></pre>
+      <p><strong>Salida:</strong> 1 2 3 4 5</p>
+    </div>
+
+   <!-- Ejemplo 6: Petróleo -->
+<div class="example" id="example-6">
+  <!-- Etiqueta en la esquina superior derecha del ejemplo -->
+  <div class="tag">Ingeniería en Petróleo</div>
+      <div class="tag-python">Python Básico</div>
+  
+  <h2 class="example-title">Estimación de Reservas de Petróleo</h2>
+  <p>Este programa calcula la estimación de reservas de petróleo utilizando una fórmula simple.</p>
+  <pre><code>produccion_diaria = 100000
+vida_util = 20
+reservas_estimadas = produccion_diaria * vida_util * 365
+print("Reservas estimadas de petróleo:", reservas_estimadas, "barriles")</code></pre>
+  <p><strong>Salida:</strong> Reservas estimadas de petróleo: 730000000 barriles</p>
+</div>
+
+    <!-- Ejemplo 7: Petróleo -->
+    <div class="example" id="example-7">
+        <!-- Etiqueta en la esquina superior derecha del ejemplo -->
+  <div class="tag">Ingeniería en Petróleo</div>
+          <div class="tag-python">Python Básico</div>
+        
+      <h2 class="example-title">Cálculo de Costos de Extracción</h2>
+      <p>Este programa calcula el costo de extracción de petróleo por barril.</p>
+      <pre><code>costos_fijos = 5000000
+costos_variables = 50
+barriles_extraidos = 10000
+costo_por_barril = (costos_fijos + (costos_variables * barriles_extraidos)) / barriles_extraidos
+print("Costo por barril extraído:", costo_por_barril)</code></pre>
+      <p><strong>Salida:</strong> Costo por barril extraído: 550.0</p>
+    </div>
+
+    <!-- Ejemplo 8: Petróleo -->
+    <div class="example" id="example-8">
+         <!-- Etiqueta en la esquina superior derecha del ejemplo -->
+  <div class="tag">Ingeniería en Petróleo</div>
+          <div class="tag-python">Python Básico</div>
+        
+      <h2 class="example-title">Cálculo de Producción Anual de Petróleo</h2>
+      <p>Este programa calcula la producción anual de petróleo basado en la producción diaria.</p>
+      <pre><code>produccion_diaria = 120000
+produccion_anual = produccion_diaria * 365
+print("Producción anual de petróleo:", produccion_anual, "barriles")</code></pre>
+      <p><strong>Salida:</strong> Producción anual de petróleo: 43800000 barriles</p>
+    </div>
+
+    <!-- Ejemplo 9: Petróleo -->
+    <div class="example" id="example-9">
+         <!-- Etiqueta en la esquina superior derecha del ejemplo -->
+  <div class="tag">Ingeniería en Petróleo</div>
+         <div class="tag-python">Python Básico</div>
+        
+      <h2 class="example-title">Cálculo de Rentabilidad de Campo Petrolero</h2>
+      <p>Este programa calcula la rentabilidad de un campo petrolero comparando los ingresos y los costos.</p>
+      <pre><code>ingresos = 20000000
+costos = 15000000
+rentabilidad = (ingresos - costos) / costos * 100
+print("Rentabilidad del campo petrolero:", rentabilidad, "%")</code></pre>
+      <p><strong>Salida:</strong> Rentabilidad del campo petrolero: 33.33%</p>
+    </div>
+
+    <!-- Ejemplo 10: Petróleo -->
+    <div class="example" id="example-10">
+         <!-- Etiqueta en la esquina superior derecha del ejemplo -->
+  <div class="tag">Ingeniería en Petróleo</div>
+         <div class="tag-python">Python Básico</div>
+        
+      <h2 class="example-title">Proyección de Precios de Petróleo</h2>
+      <p>Este programa proyecta el precio del petróleo en el futuro utilizando una tasa de crecimiento anual.</p>
+      <pre><code>precio_actual = 70
+tasa_crecimiento = 0.05
+años = 5
+precio_futuro = precio_actual * (1 + tasa_crecimiento) ** años
+print("Precio del petróleo en", años, "años será:", precio_futuro)</code></pre>
+      <p><strong>Salida:</strong> Precio del petróleo en 5 años será: 89.824</p>
+    </div>
+
+      <!-- Ejemplo 1: Intermedio -->
+<div class="example" id="example-6">
+    <div class="tag">Python Intermedio</div>
+  <h2 class="example-title">Listas y Bucles</h2>
+  <p>Este programa utiliza una lista y un bucle para imprimir cada elemento de la lista.</p>
+  <pre><code>frutas = ["manzana", "banana", "cereza"]
+for fruta in frutas:
+    print(fruta)</code></pre>
+  <p><strong>Salida:</strong> manzana, banana, cereza</p>
+</div>
+
+<!-- Ejemplo 2: Intermedio -->
+<div class="example" id="example-7">
+    <div class="tag">Python Intermedio</div>
+  <h2 class="example-title">Diccionarios</h2>
+  <p>Este programa usa un diccionario para almacenar pares clave-valor y acceder a los valores mediante las claves.</p>
+  <pre><code>persona = {"nombre": "Juan", "edad": 25}
+print(persona["nombre"])  # Acceso al valor por clave</code></pre>
+  <p><strong>Salida:</strong> Juan</p>
+</div>
+
+<!-- Ejemplo 3: Intermedio -->
+<div class="example" id="example-8">
+    <div class="tag">Python Intermedio</div>
+  <h2 class="example-title">Manejo de Archivos</h2>
+  <p>Este programa abre un archivo, escribe en él y luego lo lee.</p>
+  <pre><code>with open("archivo.txt", "w") as file:
+    file.write("Hola, Mundo!\n")
+
+with open("archivo.txt", "r") as file:
+    print(file.read())</code></pre>
+  <p><strong>Salida:</strong> Hola, Mundo!</p>
+</div>
+
+<!-- Ejemplo 4: Intermedio -->
+<div class="example" id="example-9">
+    <div class="tag">Python Intermedio</div>
+  <h2 class="example-title">Funciones con Argumentos</h2>
+  <p>Este programa define una función que recibe dos argumentos y retorna su suma.</p>
+  <pre><code>def sumar(a, b):
+    return a + b
+
+print(sumar(10, 5))</code></pre>
+  <p><strong>Salida:</strong> 15</p>
+</div>
+
+<!-- Ejemplo 5: Intermedio -->
+<div class="example" id="example-10">
+    <div class="tag">Python Intermedio</div>
+  <h2 class="example-title">Excepciones</h2>
+  <p>Este programa utiliza manejo de excepciones para evitar errores al dividir por cero.</p>
+  <pre><code>try:
+    resultado = 10 / 0
+except ZeroDivisionError:
+    print("Error: División por cero")</code></pre>
+  <p><strong>Salida:</strong> Error: División por cero</p>
+</div>
+      
+<!-- Ejemplo 6: Petróleo -->
+<div class="example" id="example-1">
+  <!-- Etiqueta en la esquina superior derecha del ejemplo -->
+  <div class="tag">Ingeniería en Petróleo</div>
+    <div class="tag-python">Python Intermedio</div>
+  
+  <h2 class="example-title">Análisis de Curva de Producción</h2>
+  <p>Este programa realiza un análisis de la curva de producción de un pozo petrolero utilizando el modelo de declinación exponencial.</p>
+  <pre><code>import math
+
+produccion_inicial = 100000
+declinacion = 0.1
+tiempo = 5
+
+produccion_futura = produccion_inicial * math.exp(-declinacion * tiempo)
+print("Producción esperada en", tiempo, "años:", produccion_futura, "barriles/día")</code></pre>
+  <p><strong>Salida:</strong> Producción esperada en 5 años: 60553.229 barra/día</p>
+</div>     
+      
+<!-- Ejemplo 2: Petróleo -->
+<div class="example" id="example-2">
+  <!-- Etiqueta en la esquina superior derecha del ejemplo -->
+  <div class="tag">Ingeniería en Petróleo</div>
+    <div class="tag-python">Python Intermedio</div>
+  
+  <h2 class="example-title">Cálculo de Factor de Recuperación</h2>
+  <p>Este programa calcula el factor de recuperación de un yacimiento petrolero utilizando el volumen de producción y el volumen de reservas.</p>
+  <pre><code>reservas_iniciales = 5000000
+produccion_total = 1200000
+
+factor_recuperacion = produccion_total / reservas_iniciales
+print("Factor de recuperación:", factor_recuperacion)</code></pre>
+  <p><strong>Salida:</strong> Factor de recuperación: 0.24</p>
+</div>
+      
+<!-- Ejemplo 3: Petróleo -->
+<div class="example" id="example-3">
+  <!-- Etiqueta en la esquina superior derecha del ejemplo -->
+  <div class="tag">Ingeniería en Petróleo</div>
+    <div class="tag-python">Python Intermedio</div>
+  
+  <h2 class="example-title">Cálculo de Producción a partir de la Ley de Darcy</h2>
+  <p>Este programa calcula la producción de petróleo a partir de la Ley de Darcy considerando la permeabilidad del reservorio y la diferencia de presión.</p>
+  <pre><code>permeabilidad = 150
+viscosidad = 1.2
+diferencia_presion = 300
+longitud = 100
+radio_pozo = 0.5
+
+produccion = (permeabilidad * diferencia_presion) / (viscosidad * longitud * radio_pozo)
+print("Producción de petróleo:", produccion, "barriles/día")</code></pre>
+  <p><strong>Salida:</strong> Producción de petróleo: 250 barriles/día</p>
+</div>
+      
+<!-- Ejemplo 4: Petróleo -->
+<div class="example" id="example-4">
+  <!-- Etiqueta en la esquina superior derecha del ejemplo -->
+  <div class="tag">Ingeniería en Petróleo</div>
+    <div class="tag-python">Python Intermedio</div>
+  
+  <h2 class="example-title">Cálculo de Factor de Expansión de Gas</h2>
+  <p>Este programa calcula el factor de expansión de gas utilizando la ecuación de estado de los gases ideales.</p>
+  <pre><code>presion_inicial = 1000
+volumen_inicial = 100
+temperatura_inicial = 300
+temperatura_final = 350
+
+factor_expansion = (presion_inicial * volumen_inicial * temperatura_final) / (temperatura_inicial * 1000)
+print("Factor de expansión de gas:", factor_expansion)</code></pre>
+  <p><strong>Salida:</strong> Factor de expansión de gas: 1.1667</p>
+</div>
+      
+<!-- Ejemplo 5: Petróleo -->
+<div class="example" id="example-5">
+  <!-- Etiqueta en la esquina superior derecha del ejemplo -->
+  <div class="tag">Ingeniería en Petróleo</div>
+    <div class="tag-python">Python Intermedio</div>
+  
+  <h2 class="example-title">Cálculo de Rentabilidad de Inversión en Proyectos Petroleros</h2>
+  <p>Este programa calcula la rentabilidad de un proyecto petrolero basado en el flujo de caja y el costo de inversión.</p>
+  <pre><code>inversion_inicial = 5000000
+flujo_efectivo_anual = 1200000
+años = 10
+
+valor_presente = flujo_efectivo_anual * ((1 - (1 + 0.1) ** -años) / 0.1)
+rentabilidad = (valor_presente - inversion_inicial) / inversion_inicial * 100
+print("Rentabilidad del proyecto:", rentabilidad, "%")</code></pre>
+  <p><strong>Salida:</strong> Rentabilidad del proyecto: 57.74%</p>
+</div>
+      
+<!-- Ejemplo 1: Python Avanzado -->
+<div class="example" id="example-2">
+  <!-- Etiqueta en la esquina superior derecha del ejemplo -->
+  <div class="tag">Python Avanzado</div>
+  
+  <h2 class="example-title">Creación de Gráficas con Matplotlib</h2>
+  <p>Este programa usa Matplotlib para crear una gráfica de barras basada en datos.</p>
+  <pre><code>import matplotlib.pyplot as plt
+
+categorias = ['A', 'B', 'C', 'D']
+valores = [23, 45, 56, 78]
+
+plt.bar(categorias, valores)
+plt.xlabel('Categorías')
+plt.ylabel('Valores')
+plt.title('Gráfica de barras')
+plt.show()</code></pre>
+  <p><strong>Salida:</strong> Gráfica de barras mostrada en una ventana emergente.</p>
+</div> 
+
+<!-- Ejemplo 2: Python Avanzado -->
+<div class="example" id="example-3">
+  <!-- Etiqueta en la esquina superior derecha del ejemplo -->
+  <div class="tag">Python Avanzado</div>
+  
+  <h2 class="example-title">Python Avanzado: Conexión a Base de Datos con SQLite</h2>
+  <p>Este programa conecta a una base de datos SQLite, realiza una consulta y obtiene resultados.</p>
+  <pre><code>import sqlite3
+
+conn = sqlite3.connect('example.db')
+cursor = conn.cursor()
+cursor.execute('SELECT * FROM usuarios')
+resultados = cursor.fetchall()
+for fila in resultados:
+    print(fila)
+conn.close()</code></pre>
+  <p><strong>Salida:</strong> Datos obtenidos desde la base de datos y mostrados en consola.</p>
+</div>      
+
+<!-- Ejemplo 3: Python Avanzado -->
+<div class="example" id="example-4">
+  <!-- Etiqueta en la esquina superior derecha del ejemplo -->
+  <div class="tag">Python Avanzado</div>
+  
+  <h2 class="example-title">Python Avanzado: Creación de un Servidor Web con Flask</h2>
+  <p>Este programa crea un servidor web básico utilizando el framework Flask.</p>
+  <pre><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Hola, mundo!"
+
+if __name__ == '__main__':
+    app.run(debug=True)</code></pre>
+  <p><strong>Salida:</strong> Servidor web en ejecución en el puerto 5000.</p>
+</div>      
+
+<!-- Ejemplo 4: Python Avanzado -->
+<div class="example" id="example-5">
+  <!-- Etiqueta en la esquina superior derecha del ejemplo -->
+  <div class="tag">Python Avanzado</div>
+  
+  <h2 class="example-title">Programación Concurrente con Threads</h2>
+  <p>Este programa ejecuta múltiples tareas de forma concurrente usando threads.</p>
+  <pre><code>import threading
+
+def tarea():
+    print("Tarea ejecutada en un hilo")
+
+hilo1 = threading.Thread(target=tarea)
+hilo2 = threading.Thread(target=tarea)
+
+hilo1.start()
+hilo2.start()
+
+hilo1.join()
+hilo2.join()</code></pre>
+  <p><strong>Salida:</strong> Tarea ejecutada en un hilo (se muestra dos veces).</p>
+</div>
+      
+<!-- Ejemplo 5 : Python Avanzado -->
+<div class="example" id="example-6">
+  <!-- Etiqueta en la esquina superior derecha del ejemplo -->
+  <div class="tag">Python Avanzado</div>
+  
+  <h2 class="example-title">Implementación de un Algoritmo de Aprendizaje Automático con Scikit-Learn</h2>
+  <p>Este programa utiliza el algoritmo de regresión lineal de Scikit-Learn para predecir valores basándose en un conjunto de datos.</p>
+  <pre><code>import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.datasets import make_regression
+
+# Crear datos de ejemplo
+X, y = make_regression(n_samples=100, n_features=1, noise=0.1)
+
+# Dividir los datos en conjunto de entrenamiento y prueba
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Crear el modelo de regresión lineal
+modelo = LinearRegression()
+
+# Entrenar el modelo
+modelo.fit(X_train, y_train)
+
+# Realizar predicciones
+predicciones = modelo.predict(X_test)
+
+# Mostrar resultados
+print("Predicciones:", predicciones[:5])
+print("Valor real:", y_test[:5])</code></pre>
+  <p><strong>Salida:</strong> Predicciones y valores reales mostrados para las primeras 5 muestras.</p>
+</div>
+
+<!-- Ejemplo 1: Ingeniería en Petróleo Avanzado -->
+<div class="example" id="example-11">
+  <!-- Etiquetas en la esquina superior derecha del ejemplo -->
+  <div class="tag">Ingeniería en Petróleo</div>
+  <div class="tag-python">Python Avanzado</div>
+  
+  <h2 class="example-title">Estimación de Costos de Proyectos Petroleros</h2>
+  <p>Este programa estima los costos de un proyecto petrolero utilizando variables como costos de perforación, equipos y mano de obra.</p>
+  <pre><code>costos_perforacion = 10000000
+costos_equipos = 5000000
+costos_mano_obra = 2000000
+costos_totales = costos_perforacion + costos_equipos + costos_mano_obra
+print("Costo total del proyecto:", costos_totales)</code></pre>
+  <p><strong>Salida:</strong> Costo total del proyecto: 17000000</p>
+</div>      
+      
+<!-- Ejemplo 2: Ingeniería en Petróleo Avanzado -->
+<div class="example" id="example-12">
+  <!-- Etiquetas en la esquina superior derecha del ejemplo -->
+  <div class="tag">Ingeniería en Petróleo</div>
+  <div class="tag-python">Python Avanzado</div>
+
+  <h2 class="example-title">Modelado de Reservas de Petróleo</h2>
+  <p>Este programa calcula el modelo de reservas de petróleo a partir de diferentes variables como la tasa de recuperación y la producción inicial.</p>
+  <pre><code>produccion_inicial = 100000
+tasa_recuperacion = 0.25
+reservas_totales = produccion_inicial * tasa_recuperacion * 365 * 20  # Estimación para 20 años
+print("Reservas totales estimadas:", reservas_totales)</code></pre>
+  <p><strong>Salida:</strong> Reservas totales estimadas: 182500000</p>
+</div>
+      
+<!-- Ejemplo 3: Ingeniería en Petróleo Avanzado -->
+<div class="example" id="example-13">
+  <!-- Etiquetas en la esquina superior derecha del ejemplo -->
+  <div class="tag">Ingeniería en Petróleo</div>
+  <div class="tag-python">Python Avanzado</div>
+
+  <h2 class="example-title">Cálculo de Rentabilidad de Proyecto Petrolero</h2>
+  <p>Este programa calcula la rentabilidad de un proyecto petrolero basado en la relación entre ingresos y costos a lo largo del tiempo.</p>
+  <pre><code>ingresos_proyecto = 30000000
+costos_proyecto = 15000000
+rentabilidad = (ingresos_proyecto - costos_proyecto) / costos_proyecto * 100
+print("Rentabilidad del proyecto:", rentabilidad, "%")</code></pre>
+  <p><strong>Salida:</strong> Rentabilidad del proyecto: 100%</p>
+</div>
+      
+<!-- Ejemplo 4: Ingeniería en Petróleo Avanzado -->
+<div class="example" id="example-14">
+  <!-- Etiquetas en la esquina superior derecha del ejemplo -->
+  <div class="tag">Ingeniería en Petróleo</div>
+  <div class="tag-python">Python Avanzado</div>
+
+  <h2 class="example-title">Análisis de Flujo Multifase en Pozos Petroleros</h2>
+  <p>Este programa simula el flujo multifase dentro de un pozo petrolero usando el modelo de flujo de Homogeneous Flow.</p>
+  <pre><code>caudal_gas = 5000
+caudal_liquido = 2000
+caudal_total = caudal_gas + caudal_liquido
+presion = 3000
+temperatura = 80
+velocidad_flujo = caudal_total / (presion * temperatura)
+print("Velocidad de flujo:", velocidad_flujo, "m/s")</code></pre>
+  <p><strong>Salida:</strong> Velocidad de flujo: 0.022 m/s</p>
+</div>
+      
+<!-- Ejemplo 5: Ingeniería en Petróleo Avanzado -->
+<div class="example" id="example-15">
+  <!-- Etiquetas en la esquina superior derecha del ejemplo -->
+  <div class="tag">Ingeniería en Petróleo</div>
+  <div class="tag-python">Python Avanzado</div>
+
+  <h2 class="example-title">Simulación de Comportamiento de Reservas No Convencionales</h2>
+  <p>Este programa simula el comportamiento de reservas no convencionales en un campo petrolero, teniendo en cuenta los cambios en la presión y la saturación de la roca.</p>
+  <pre><code>presion_inicial = 3500
+saturacion_inicial = 0.7
+tiempo = 10  # en años
+presion_final = presion_inicial * (1 - 0.05 * tiempo)
+saturacion_final = saturacion_inicial * (1 - 0.03 * tiempo)
+print("Presión final:", presion_final)
+print("Saturación final:", saturacion_final)</code></pre>
+  <p><strong>Salida:</strong> Presión final: 2000, Saturación final: 0.4</p>
+</div>      
+      
+      
+  </div>
+  <div class="controls">
+    <button id="prev-button">&#8592; Anterior</button>
+    <button id="next-button">Siguiente &#8594;</button>
+  </div>
+</div>
+</div>
+      
+
+<script>
+  const examples = document.querySelectorAll('.example');
+  let currentExample = 0;
+
+  document.getElementById('next-button').addEventListener('click', () => {
+    examples[currentExample].classList.remove('active');
+    currentExample = (currentExample + 1) % examples.length;
+    examples[currentExample].classList.add('active');
+  });
+
+  document.getElementById('prev-button').addEventListener('click', () => {
+    examples[currentExample].classList.remove('active');
+    currentExample = (currentExample - 1 + examples.length) % examples.length;
+    examples[currentExample].classList.add('active');
+  });
+</script>
+
+<script>
+// Lista de videos locales
+const videos = [
+  "videos/video1.mp4",
+  "videos/video2.mp4",
+  "videos/video3.mp4"
+];
+
+let currentVideoIndex = 0;
+const mainVideo = document.getElementById("main-video");
+const prevVideo = document.getElementById("prev-video");
+const nextVideo = document.getElementById("next-video");
+
+// Funciones de navegación
+prevVideo.addEventListener("click", () => {
+  currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
+  mainVideo.src = videos[currentVideoIndex];
+  mainVideo.play();
+});
+
+nextVideo.addEventListener("click", () => {
+  currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+  mainVideo.src = videos[currentVideoIndex];
+  mainVideo.play();
+});
+</script>
+      
+<script>
+// Función que activa o desactiva el modo oscuro
+function toggleDarkMode() {
+    const body = document.body;
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    
+    // Alternar la clase 'dark-mode' en el body
+    body.classList.toggle('dark-mode');
+    
+    // Cambiar el icono de sol a luna y guardar el estado en localStorage
+    if (body.classList.contains('dark-mode')) {
+        darkModeToggle.innerHTML = '<i class="ti ti-sun"></i>';  // Icono de sol
+        localStorage.setItem('theme', 'dark');  // Guardar modo oscuro
+    } else {
+        darkModeToggle.innerHTML = '<i class="ti ti-moon"></i>';  // Icono de luna
+        localStorage.setItem('theme', 'light');  // Guardar modo claro
+    }
+}
+
+// Al cargar la página, aplicar el tema guardado y gestionar la precarga
+window.addEventListener('DOMContentLoaded', () => {
+    const currentTheme = localStorage.getItem('theme') || 'light'; // Por defecto: modo claro
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const sidebarNav = document.querySelector('.sidebar-nav');
+    const brandLogo = document.querySelector('.brand-logo');
+
+    // Inicializar opacidad para la precarga
+    document.body.style.opacity = '0';
+    if (sidebarNav) sidebarNav.style.opacity = '0';
+    if (brandLogo) brandLogo.style.opacity = '0';
+
+    // Aplicar el tema desde localStorage
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        darkModeToggle.innerHTML = '<i class="ti ti-sun"></i>';  // Icono de sol
+    } else {
+        document.body.classList.remove('dark-mode');
+        darkModeToggle.innerHTML = '<i class="ti ti-moon"></i>';  // Icono de luna
+    }
+
+    // Usar requestAnimationFrame para una transición fluida
+    requestAnimationFrame(() => {
+        document.body.style.transition = 'opacity 0.3s ease-in-out';
+        document.body.style.opacity = '1';
+
+        if (sidebarNav) {
+            sidebarNav.style.transition = 'opacity 0.3s ease-in-out';
+            sidebarNav.style.opacity = '1';
+        }
+        if (brandLogo) {
+            brandLogo.style.transition = 'opacity 0.3s ease-in-out';
+            brandLogo.style.opacity = '1';
+        }
+    });
+
+    // Añadir el event listener al botón para cambiar el tema
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+    }
+});
+</script>
+
+        
+      </div>
+    </div>
+  </div>
+  <script src="assets/js/sessions.js" ></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/js/all.min.js"></script>
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+  <script src="../assets/js/sidebarmenu.js"></script>
+  <script src="../assets/js/app.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Petrodev - Editor</title>
+  <link rel="icon" href="./assets/images/logos/foto-logo.ico" type="image/x-icon">  
+  <link rel="stylesheet" href="../../node_modules/simplebar/dist/simplebar.min.css">
+  <link rel="stylesheet" href="./assets/css/styles.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+  <script defer src="https://cdn.jsdelivr.net/pyodide/v0.21.0/full/pyodide.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./assets/css/styleeditor.css">
+  <style>
+      #result {
+          border: 1px solid #000000;
+          padding: 10px;
+          margin-top: 10px;
+          height: 150px;
+          overflow-y: auto;
+          white-space: pre;
+      }
+      #loading {
+          display: none;
+      }
+  </style>
+</head>
+
+<body onload="showUserCedula()">
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./dashboard.html" class="text-nowrap logo-img">
+            <img src="./assets/images/logos/foto-logo.svg" alt="" />
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+       <!-- Sidebar navigation-->
+       <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+        <ul id="sidebarnav">
+          <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
+            <span class="hide-menu">Inicio</span>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./dashboard.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-grip-lines"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
+            <span class="hide-menu">HUB de Programación</span>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./library.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-book-open"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Entorno de Formación</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./modulos.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-rectangle-list"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Módulos</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./capacitacion.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-user-graduate"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Capacitación</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./proyectos.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-code"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Proyectos</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link activated" href="./editor.html" aria-expoanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-terminal"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Editor de Código</span>
+            </a>
+          </li>
+      
+      </nav>
+               
+         
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+     <!--  Header Start -->
+<header class="app-header">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <ul class="navbar-nav">
+            <li class="nav-item d-block d-xl-none">
+                <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                    <i class="ti ti-menu-2"></i>
+                </a>
+            </li>
+            
+            <!-- Icono de la luna para el modo oscuro -->
+            <li class="nav-item">
+    <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="darkModeToggle">
+        <i class="ti ti-moon"></i> <!-- El icono de la luna que cambia a sol -->
+        <div class="notification bg-primary rounded-circle"></div>
+    </a>
+</li>
+        </ul>
+         <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+    <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">  
+        <!-- Botón "¡Empieza a Codificar!" -->
+        <a href="index.html" class="btn" style="background-color: #333; color: white; padding: 10px 20px; border-radius: 5px; display: flex; align-items: center;">
+          <span> <i class="fa-brands fa-python"></i>    ¡Empieza a Codificar!</span>
+        </a>
+        
+        <li class="nav-item dropdown">
+            <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
+              <span id="user-cedula"></span>
+              <i class="fa-solid fa-user"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                <div class="message-body">
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-user fs-6"></i>
+                        <p class="mb-0 fs-3">My Profile</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-mail fs-6"></i>
+                        <p class="mb-0 fs-3">My Account</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-list-check fs-6"></i>
+                        <p class="mb-0 fs-3">My Task</p>
+                    </a>
+                    <Logout href="javascript:void(0)" class="btn btn-outline-primary mx-3 mt-2 d-block"  onclick="logout()">Logout</a>
+                </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!--  Header End -->
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <div id="editor" style="height: 310px; width: 70%; margin: auto;"></div>
+            <button id="run" disabled><i class="fa-solid fa-play"></i></button>
+            <div id="loading">Cargando...</div>
+            <div id="result"></div>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    var editor = CodeMirror(document.getElementById('editor'), {
+                        value: "print('¡Hola, mundo!')",
+                        mode: "python",
+                        lineNumbers: true
+                    });
+        
+                    async function loadPyodideAndRun() {
+                        document.getElementById('loading').style.display = 'block';
+                        let pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.21.0/full/" });
+        
+                        await pyodide.loadPackage('micropip');
+                        await pyodide.runPythonAsync(`
+                            import micropip
+                            await micropip.install('discutils')
+                        `);
+        
+                        document.getElementById('loading').style.display = 'none';
+                        document.getElementById('run').disabled = false;
+        
+                        document.getElementById('run').addEventListener('click', async () => {
+                            let code = editor.getValue();
+                            let resultDiv = document.getElementById('result');
+                            resultDiv.textContent = ''; // Clear previous result
+                            try {
+                                // Redirigir la salida estándar a resultDiv
+                                pyodide.runPython(`
+                                    import sys
+                                    class StdoutRedirector:
+                                        def __init__(self):
+                                            self.content = ""
+                                        def write(self, message):
+                                            self.content += message
+                                        def flush(self):
+                                            pass
+                                    sys.stdout = StdoutRedirector()
+                                `);
+        
+                                await pyodide.runPythonAsync(code);
+        
+                                // Obtener el contenido de StdoutRedirector
+                                let output = pyodide.runPython('sys.stdout.content');
+                                resultDiv.textContent = output;
+                            } catch (error) {
+                                resultDiv.textContent = error;
+                            }
+                        });
+                    }
+        
+                    loadPyodideAndRun();
+                });
+            </script>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+    
+  <script>
+// Función que activa o desactiva el modo oscuro
+function toggleDarkMode() {
+    const body = document.body;
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    
+    // Alternar la clase 'dark-mode' en el body
+    body.classList.toggle('dark-mode');
+    
+    // Cambiar el icono de sol a luna y guardar el estado en localStorage
+    if (body.classList.contains('dark-mode')) {
+        darkModeToggle.innerHTML = '<i class="ti ti-sun"></i>';  // Icono de sol
+        localStorage.setItem('theme', 'dark');  // Guardar modo oscuro
+    } else {
+        darkModeToggle.innerHTML = '<i class="ti ti-moon"></i>';  // Icono de luna
+        localStorage.setItem('theme', 'light');  // Guardar modo claro
+    }
+}
+
+// Al cargar la página, aplicar el tema guardado y gestionar la precarga
+window.addEventListener('DOMContentLoaded', () => {
+    const currentTheme = localStorage.getItem('theme') || 'light'; // Por defecto: modo claro
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const sidebarNav = document.querySelector('.sidebar-nav');
+    const brandLogo = document.querySelector('.brand-logo');
+
+    // Inicializar opacidad para la precarga
+    document.body.style.opacity = '0';
+    if (sidebarNav) sidebarNav.style.opacity = '0';
+    if (brandLogo) brandLogo.style.opacity = '0';
+
+    // Aplicar el tema desde localStorage
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        darkModeToggle.innerHTML = '<i class="ti ti-sun"></i>';  // Icono de sol
+    } else {
+        document.body.classList.remove('dark-mode');
+        darkModeToggle.innerHTML = '<i class="ti ti-moon"></i>';  // Icono de luna
+    }
+
+    // Usar requestAnimationFrame para una transición fluida
+    requestAnimationFrame(() => {
+        document.body.style.transition = 'opacity 0.3s ease-in-out';
+        document.body.style.opacity = '1';
+
+        if (sidebarNav) {
+            sidebarNav.style.transition = 'opacity 0.3s ease-in-out';
+            sidebarNav.style.opacity = '1';
+        }
+        if (brandLogo) {
+            brandLogo.style.transition = 'opacity 0.3s ease-in-out';
+            brandLogo.style.opacity = '1';
+        }
+    });
+
+    // Añadir el event listener al botón para cambiar el tema
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+    }
+});
+</script>
+<script src="assets/js/sessions.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/js/all.min.js"></script>  
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+  <script src="../assets/js/sidebarmenu.js"></script>
+  <script src="../assets/js/app.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+</body>
+
+</html>

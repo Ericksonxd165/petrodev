@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Petrodev - Proyectos</title>
+  <link rel="icon" href="./assets/images/logos/foto-logo.ico" type="image/x-icon">  
+  <link rel="stylesheet" href="../../node_modules/simplebar/dist/simplebar.min.css">
+  <link rel="stylesheet" href="./assets/css/styles.min.css" />
+
+    <!-- Estilos CSS -->
+<style>
+    .container {
+        margin: 20px;
+    }
+
+    /* Sección de tareas */
+    .tareas {
+        margin-bottom: 30px;
+        padding: 20px;
+        background-color: #f8f8f8;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .tareas h2 {
+        margin-bottom: 15px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .lista-tareas {
+        margin-bottom: 20px;
+    }
+
+    .tarea {
+        background-color: #e9e9e9;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-entregar {
+        display: inline-block;
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        font-size: 14px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        margin-top: 15px;
+    }
+
+    .btn-entregar:hover {
+        background-color: #45a049;
+    }
+
+    /* Ventana emergente */
+    .ventana-emergente {
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .ventana-emergente form {
+        background: #333;
+        padding: 20px;
+        border-radius: 8px;
+        width: 350px;
+    }
+
+    .ventana-emergente input {
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .ventana-emergente button {
+        width: 100%;
+        padding: 12px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    .ventana-emergente button:hover {
+        background-color: #45a049;
+    }
+
+    /* Consejos de Python */
+    .consejos-python {
+        margin-top: 30px;
+        padding: 15px;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .consejo {
+        background-color: #333;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 16px;
+        text-align: center;
+    }
+    
+    /* Estilos para los botones en modo claro */
+body:not(.dark-mode) .btn-entregar {
+    background-color: #007bff; /* Azul para modo claro */
+    color: white; /* Texto blanco */
+    border: 1px solid #007bff; /* Borde azul */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+body:not(.dark-mode) button[type="submit"] {
+    background-color: #007bff; /* Azul para modo claro */
+    color: white; /* Texto blanco */
+    border: 1px solid #007bff; /* Borde azul */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+/* Estilos para los botones en modo oscuro */
+body.dark-mode .btn-entregar {
+    background-color: #ffffff; /* Fondo blanco para modo oscuro */
+    color: black; /* Texto negro */
+    border: 1px solid #333; /* Borde oscuro para mejor visibilidad */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+body.dark-mode button[type="submit"] {
+    background-color: #ffffff; /* Fondo blanco para modo oscuro */
+    color: black; /* Texto negro */
+    border: 1px solid #333; /* Borde oscuro para mejor visibilidad */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+/* Cambios al pasar el mouse */
+body:not(.dark-mode) .btn-entregar:hover,
+body:not(.dark-mode) button[type="submit"]:hover {
+    background-color: transparent; /* Fondo transparente */
+    color: #007bff; /* Texto azul */
+    border: 1px solid #007bff; /* Borde azul */
+}
+
+body.dark-mode .btn-entregar:hover,
+body.dark-mode button[type="submit"]:hover {
+    background-color: transparent; /* Fondo transparente */
+    color: #fff; /* Texto blanco */
+    border: 1px solid #fff; /* Borde blanco */
+}
+    /* Asegúrate de que el fondo del encabezado cambie en modo oscuro */
+header {
+    background-color: #f8f8f8; /* Fondo claro por defecto */
+    color: #333; /* Texto oscuro por defecto */
+}
+
+/* Estilo para modo oscuro en el encabezado */
+body.dark-mode header {
+    background-color: #333; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
+}
+
+/* Asegúrate de que los botones dentro del header también se ajusten */
+body.dark-mode header button {
+    background-color: #444; /* Fondo oscuro en botones */
+    color: #fff; /* Texto blanco */
+    border: none;
+}
+
+body.dark-mode header button:hover {
+    background-color: #555; /* Fondo más oscuro en hover */
+}
+
+/* Asegúrate de que los enlaces en el header también cambien */
+body.dark-mode header a {
+    color: #fff; /* Texto blanco en enlaces */
+}
+
+body.dark-mode header a:hover {
+    color: #4CAF50; /* Color verde en hover */
+}
+
+/* Fondo y color de los cuadros, botones y otras secciones */
+body.dark-mode .tareas, 
+body.dark-mode .tarea, 
+body.dark-mode .ventana-emergente,
+body.dark-mode .consejo,
+body.dark-mode .consejos-python {
+    background-color: #444; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
+}
+
+
+
+/* Aseguramos que el contenido comience después del encabezado */
+.container {
+    padding-top: 90px; /* Ajusta este valor según la altura de tu encabezado */
+    padding-left: 20px; /* Ajusta este valor para mover el contenido hacia la derecha */
+}
+    
+/* Modo oscuro para el fondo de .body-wrapper */
+body.dark-mode .body-wrapper {
+    background-color: #121212; /* Fondo oscuro (puedes ajustar el color) */
+    color: #fff; /* Texto en color blanco para que sea visible */
+}
+    
+/* Colores para el botón "Cerrar" en modo claro */
+    body:not(.dark-mode) #cerrar-btn {
+        background-color: #007bff; /* Azul para modo claro */
+        color: white; /* Texto blanco */
+        border: none; /* Sin borde */
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    /* Colores para el botón "Cerrar" en modo oscuro */
+    body.dark-mode #cerrar-btn {
+        background-color: #ffffff; /* Fondo blanco para modo oscuro */
+        color: black; /* Texto negro */
+        border: 1px solid #333; /* Borde oscuro */
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    /* Efecto hover para el botón "Cerrar" */
+    body:not(.dark-mode) #cerrar-btn:hover {
+        background-color: #0056b3; /* Azul más oscuro para el hover */
+    }
+
+    body.dark-mode #cerrar-btn:hover {
+        background-color: #f0f0f0; /* Fondo gris claro para hover en modo oscuro */
+        color: black; /* Asegura que el texto se mantenga negro al hacer hover */
+    }  
+    
+     /* Estilo para la sección "Tareas" en modo claro */
+    .tareas h2 {
+        color: #333; /* Color de texto oscuro en modo claro */
+    }
+
+    /* Estilo para la sección "Tareas" en modo oscuro */
+    body.dark-mode .tareas h2 {
+        color: white; /* Color de texto blanco en modo oscuro */
+    }
+
+    .tareas p {
+        color: #333; /* Color de texto para los párrafos en modo claro */
+    }
+
+    /* Estilo para los párrafos en modo oscuro */
+    body.dark-mode .tareas p {
+        color: white; /* Cambia el color a blanco en modo oscuro */
+    }
+    
+        /* Estilo para la sección "consejos-python" */
+    .consejos-python {
+        margin-top: 30px;
+        padding: 5px;
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #333; /* Fondo oscuro para coincidir con .consejo */
+        color: white; /* Texto blanco */
+        width: 100%; /* Se asegura que ocupe todo el espacio disponible */
+        max-width: 600px; /* Establece un ancho máximo mayor para hacerla más larga */
+        white-space: nowrap; /* Evita que el texto se envuelva a la siguiente línea */
+        overflow: hidden; /* Si el texto es más largo, se oculta */
+        text-overflow: ellipsis; /* Muestra "..." si el texto es demasiado largo */
+    }
+
+    /* Estilo para el "consejo" */
+    .consejo {
+        background-color: #333; /* Fondo oscuro */
+        color: white; /* Texto blanco */
+        padding: 1px 1px; /* Padding consistente */
+        border-radius: 5px;
+        font-size: 16px;
+        text-align: center;
+        width: 100%; /* Asegura que ocupe todo el espacio disponible dentro de su contenedor */
+        box-sizing: border-box; /* Asegura que el padding no afecte las dimensiones totales */
+    }
+
+    /* Asegurando que los dos divs tengan las mismas dimensiones */
+    .consejos-python,
+    .consejo {
+        margin: 0 auto; /* Centrado de los divs */
+    }
+    
+    /* Estilo para las tareas en modo normal (modo claro) */
+.tarea {
+    background-color: #e9e9e9; /* Fondo gris claro para tareas en modo normal */
+    color: black; /* Texto negro */
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+/* Estilo para las tareas en modo oscuro */
+body.dark-mode .tarea {
+    background-color: #222; /* Fondo oscuro para tareas en modo oscuro */
+    color: white; /* Texto blanco */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada */
+}
+    
+/* Estilo para la ventana emergente */
+.ventana-emergente {
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente (oscuro) */
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Asegura que esté por encima de todo */
+}
+
+/* Estilo para la ventana emergente en modo oscuro */
+body.dark-mode .ventana-emergente {
+    background-color: rgba(0, 0, 0, 0.7); /* Mantiene el fondo oscuro semi-transparente */
+}
+
+/* Estilo para el formulario dentro de la ventana emergente */
+.ventana-emergente form {
+    background: #333; /* Fondo oscuro para el formulario */
+    padding: 20px;
+    border-radius: 8px;
+    width: 350px;
+}
+
+/* Estilo para el formulario en modo claro */
+body.dark-mode .ventana-emergente form {
+    background: #333; /* Fondo oscuro en modo oscuro */
+}    
+   
+/* Estilos para el sidebar en modo oscuro */
+body.dark-mode .sidebar-nav {
+    background-color: #333; /* Fondo oscuro para el sidebar */
+    color: white; /* Color de texto blanco en modo oscuro */
+}
+
+body.dark-mode .sidebar-item, 
+body.dark-mode .nav-small-cap {
+    color: white; /* Las letras de los elementos en el sidebar en modo oscuro */
+}
+
+body.dark-mode .sidebar-link {
+    color: white; /* Asegura que los enlaces también sean blancos */
+}
+
+/* Asegurando que los iconos en el sidebar sean blancos en modo oscuro */
+body.dark-mode .sidebar-link i, 
+body.dark-mode .sidebar-link .iconify-icon {
+    color: white !important; /* Fuerza que los iconos sean blancos */
+}
+
+/* Asegurando que los iconos de las nav-small-cap también sean blancos */
+body.dark-mode .nav-small-cap .nav-small-cap-icon {
+    color: white !important; /* Los iconos pequeños también serán blancos */
+}
+
+/* Asegurando que el texto dentro de .hide-menu sea blanco en modo oscuro */
+body.dark-mode .hide-menu {
+    color: white !important; /* Las letras de los items dentro de hide-menu también serán blancas */
+}
+
+/* Estilos para el modo claro (por defecto) */
+body:not(.dark-mode) .sidebar-nav {
+    background-color: #fff; /* Fondo blanco o transparente para el sidebar */
+    color: black; /* Color de texto negro en modo claro */
+}
+
+body:not(.dark-mode) .sidebar-item, 
+body:not(.dark-mode) .nav-small-cap {
+    color: black; /* Letras negras en modo claro */
+}
+
+body:not(.dark-mode) .sidebar-link {
+    color: black; /* Asegura que los enlaces sean negros */
+}
+
+/* Asegurando que los iconos en el sidebar sean de color negro en modo claro */
+body:not(.dark-mode) .sidebar-link i, 
+body:not(.dark-mode) .sidebar-link .iconify-icon {
+    color: black; /* Color negro para los iconos en modo claro */
+}
+
+/* Los iconos pequeños también tendrán color negro en modo claro */
+body:not(.dark-mode) .nav-small-cap .nav-small-cap-icon {
+    color: black; /* Los iconos pequeños serán negros */
+}
+
+/* Asegurando que el texto dentro de .hide-menu sea negro en modo claro */
+body:not(.dark-mode) .hide-menu {
+    color: black; /* Las letras de los items dentro de hide-menu serán negras en modo claro */
+}    
+    
+/* Estilo para el contenedor circular */
+.icon-circle {
+  display: inline-block;
+  padding: 3px 4px; /* Ajuste del tamaño del círculo alrededor del icono */
+  border-radius: 30%; /* Hace el div circular */
+  background-color: transparent; /* Fondo transparente por defecto */
+  position: relative; /* Para mover el contenedor si es necesario */
+}
+
+/* Estilo para cuando está en modo oscuro */
+body.dark-mode .icon-circle {
+  background-color: #fff; /* Fondo blanco en modo oscuro */
+}
+
+/* Estilo para el logo en modo claro */
+.brand-logo {
+  background-color: #ffffff; /* Fondo blanco en modo claro */
+  color: #333333; /* Color del texto en modo claro */
+}
+
+/* Estilo para el logo en modo oscuro */
+body.dark-mode .brand-logo {
+  background-color: #333333; /* Fondo oscuro en modo oscuro */
+  color: #ffffff; /* Color del texto en modo oscuro */
+}
+
+/* Si tienes una imagen de logo y quieres cambiarla en modo oscuro */
+body.dark-mode .brand-logo-img {
+  content: url('path-to-dark-logo.png'); /* Cambia la imagen para el logo en modo oscuro */
+}
+
+/* Contenedor del logo */
+.brand-logo {
+  display: flex;
+  justify-content: flex-end; /* Mueve el logo hacia la derecha */
+  align-items: center; /* Centra el contenido verticalmente */
+  padding: 10px 65px; /* Añade espaciado a la derecha */
+}
+
+/* Estilo para la imagen del logo */
+.brand-logo .logo-img img {
+  width: 125px; /* Ajusta el tamaño del logo */
+  height: auto; /* Mantén la proporción */
+  object-fit: contain; /* Asegura que la imagen no se distorsione */
+  transition: filter 0.3s ease; /* Añade una transición suave para los cambios de color */
+}
+
+/* Alterna colores en el modo oscuro */
+body.dark-mode .brand-logo .logo-img img {
+  filter: invert(1) brightness(2); /* Invierte los colores y los hace más brillantes en modo oscuro */
+}
+    
+/* Estilo para el contenedor de los consejos */
+.consejo, .consejos-python {
+    word-wrap: break-word; /* Permite que las palabras largas se dividan */
+    white-space: normal; /* El texto puede saltar a una nueva línea */
+    overflow-wrap: break-word; /* Controla el salto de palabra en texto largo */
+    width: auto; /* Ajusta el ancho según el contenido */
+    max-width: 90%; /* Limita el ancho del contenedor si es necesario */
+    padding: 5px; /* Añade algo de espaciado */
+    font-size: 16px; /* Ajusta el tamaño de la fuente según tus necesidades */
+    height: auto; /* Permite que el div se ajuste a la altura del contenido */
+    line-height: 1.5; /* Ajusta el espaciado entre las líneas de texto */
+    display: inline-block; /* Hace que el div se ajuste al tamaño del contenido sin ocupar todo el espacio */
+    box-sizing: border-box; /* Incluye el padding en el tamaño total del div */
+    margin: 0 auto; /* Centra el div horizontalmente */
+    text-align: center; /* Centra el texto dentro del div */
+}
+
+/* Estilo para centrar el contenedor de manera flexible */
+.consejo-container, .consejos-python-container {
+    display: flex; /* Usamos flexbox para centrar */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
+}
+
+/* Estilo opcional: si el contenido es más largo y necesitas más control */
+.consejo, .consejos-python {
+    max-width: 100%; /* Asegura que el contenedor no se salga del espacio disponible */
+    width: fit-content; /* Ajusta el ancho del div según el contenido */
+}
+</style>
+    
+    </head>
+
+    <body onload="showUserCedula()">
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./dashboard.html" class="text-nowrap logo-img">
+            <img src="./assets/images/logos/foto-logo.svg" alt="" />
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+       <!-- Sidebar navigation-->
+       <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+        <ul id="sidebarnav">
+          <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
+            <span class="hide-menu">Inicio</span>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./dashboard.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-grip-lines"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
+            <span class="hide-menu">HUB de Programación</span>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./library.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-book-open"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Entorno de Formación</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./modulos.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-rectangle-list"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Módulos</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./capacitacion.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-user-graduate"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Capacitación</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link activated" href="./proyectos.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-code"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Proyectos</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./editor.html" aria-expoanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-terminal"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Editor de Código</span>
+            </a>
+          </li>
+      
+      </nav>
+               
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+     <!--  Header Start -->
+<header class="app-header">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <ul class="navbar-nav">
+            <li class="nav-item d-block d-xl-none">
+                <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                    <i class="ti ti-menu-2"></i>
+                </a>
+            </li>
+            
+            <!-- Icono de la luna para el modo oscuro -->
+            <li class="nav-item">
+    <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="darkModeToggle">
+        <i class="ti ti-moon"></i> <!-- El icono de la luna que cambia a sol -->
+        <div class="notification bg-primary rounded-circle"></div>
+    </a>
+</li>
+        </ul>
+         <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+    <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">  
+        <!-- Botón "¡Empieza a Codificar!" -->
+        <a href="index.html" class="btn" style="background-color: #333; color: white; padding: 10px 20px; margin: 15px; border-radius: 5px; display: flex; align-items: center;">
+
+            <span> <i class="fa-brands fa-python"></i>    ¡Empieza a Codificar!</span>
+        </a>
+        
+        <li class="nav-item dropdown">
+            <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
+                <span id="user-cedula"></span>
+                <i class="fa-solid fa-user"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                <div class="message-body">
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-user fs-6"></i>
+                        <p class="mb-0 fs-3">My Profile</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-mail fs-6"></i>
+                        <p class="mb-0 fs-3">My Account</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-list-check fs-6"></i>
+                        <p class="mb-0 fs-3">My Task</p>
+                    </a>
+                    <Logout href="javascript:void(0)" class="btn btn-outline-primary mx-3 mt-2 d-block"  onclick="logout()">Logout</a>  
+                </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!--  Header End -->
+   <div class="container">
+    <!-- Sección de Tareas (Minimalista y elegante) -->
+    <div id="tareas" class="tareas">
+        <h2>Tareas</h2>
+        <div id="lista-tareas" class="lista-tareas">
+            <!-- Aquí se mostrarán las tareas dinámicamente, si existen -->
+            <div class="tarea">
+                <p><strong>Tarea 1:</strong>  putaaas en Python</p>
+                <button class="btn-entregar">Entregar Tarea</button>
+            </div>
+            <div class="tarea">
+                <p><strong>Tarea 2:</strong> Resuelve el ejercicio de listas</p>
+                <button class="btn-entregar">Entregar Tarea</button>
+            </div>
+        </div>
+        
+        
+        <!-- Ventana emergente para entregar la tarea -->
+        <div id="ventana-emergente" class="ventana-emergente" style="display:none;">
+            <form id="formulario-entrega">
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo" name="titulo" required>
+                <label for="nombre">Tu Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+                <label for="cedula">Cédula de Identidad:</label>
+                <input type="text" id="cedula" name="cedula" required>
+                <label for="archivo">Adjuntar Archivo:</label>
+                <input type="file" id="archivo" name="archivo" accept=".pdf,.docx,.zip,.rar" required>
+                <button type="submit">Enviar</button>
+                <button type="button" id="cerrar-btn">Cerrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Consejos de Python -->
+    <div id="consejos-python" class="consejos-python">
+        <div id="consejo" class="consejo">Consejo: Usa nombres descriptivos para tus variables.</div>
+    </div>
+</div>
+
+
+
+<!-- Script para las funcionalidades -->
+<script>
+    // Mostrar ventana emergente de entrega de tarea
+    const botonesEntregar = document.querySelectorAll(".btn-entregar");
+    botonesEntregar.forEach(btn => {
+        btn.addEventListener("click", function() {
+            document.getElementById("ventana-emergente").style.display = "flex";
+        });
+    });
+
+    // Cerrar ventana emergente
+    document.getElementById("cerrar-btn").addEventListener("click", function() {
+        document.getElementById("ventana-emergente").style.display = "none";
+    });
+
+    // Consejos de Python
+    const consejos = [
+       "Usa nombres descriptivos para tus variables.",
+    "No repitas código, utiliza funciones.",
+    "Mantén tus líneas de código lo más cortas posible.",
+    "Haz uso de las listas por comprensión.",
+    "Evita el uso excesivo de 'global'.",
+    "Haz pruebas unitarias para validar tu código.",
+    "Usa comentarios para explicar el código complicado.",
+    "No dejes código comentado en producción.",
+    "Usa el manejo de excepciones con 'try' y 'except'.",
+    "Escribe funciones que hagan una sola cosa.",
+    "Usa el operador ternario para condiciones simples.",
+    "Aprende a usar las expresiones generadoras.",
+    "Evita usar demasiados 'print' para depuración.",
+    "Utiliza 'enumerate' para obtener índices en bucles.",
+    "Aplica el principio DRY: Don't Repeat Yourself.",
+    "Opta por 'list comprehension' en lugar de bucles.",
+    "Organiza tu código en módulos reutilizables.",
+    "Lee y entiende los errores de Python.",
+    "Usa herramientas como linters para mejorar el código.",
+    "Aprende a usar las 'lambda' functions para simplificar código.",
+    "Especifica tipos de datos en las funciones utilizando anotaciones.",
+    "Evita los bucles innecesarios, usa funciones integradas.",
+    "Usa 'zip' para iterar sobre varias listas al mismo tiempo.",
+    "Haz uso de los decoradores para reutilizar lógica en funciones.",
+    "Utiliza 'with' para manejar archivos, garantizando su cierre automático.",
+    "Haz que tus clases sigan el principio SOLID de la programación orientada a objetos.",
+    "Usa 'assert' para asegurar condiciones en las pruebas.",
+    "Prefiere el uso de bibliotecas estándar antes de crear tu propia implementación.",
+    "Maneja adecuadamente las fechas y horas con el módulo 'datetime'.",
+    "Usa 'defaultdict' cuando necesites un diccionario con valores por defecto.",
+    "Evita las dependencias circulares entre módulos.",
+    "Utiliza 'map' y 'filter' para funciones de transformación y filtrado de datos.",
+    "Usa la sintaxis 'f-string' para una interpolación de cadenas más eficiente.",
+    "Evita mutar objetos dentro de funciones, a menos que sea necesario.",
+    "Crea tests automatizados para tu código para evitar errores inesperados.",
+    "Usa el manejo adecuado de memoria con 'gc' para limpiar objetos no referenciados.",
+    "Establece un estilo de codificación consistente usando PEP 8.",
+    "Usa módulos y bibliotecas externas solo cuando no encuentres solución en la biblioteca estándar.",
+    "Haz uso de las funciones recursivas con precaución, evitando desbordamientos de pila.",
+    "Prefiere el uso de conjuntos en lugar de listas para evitar elementos duplicados.",
+    "Usa 'unittest' para realizar pruebas de unidades en tu código.",
+    "Evita escribir código dependiente de la implementación de Python, manténlo lo más genérico posible.",
+    "Prefiere las variables inmutables para evitar efectos secundarios no deseados.",
+    "Usa 'args' y 'kwargs' cuando no estés seguro del número de parámetros a recibir en una función.",
+    "Presta atención a la eficiencia de las búsquedas utilizando diccionarios y conjuntos.",
+    "Aprovecha la funcionalidad de 'itertools' para manejar iteradores de manera más eficiente.",
+    "Usa 'try-except' para manejar errores, pero evita usar 'except' de forma general.",
+    "Escribe documentación clara y concisa para facilitar el mantenimiento del código.",
+    "Familiarízate con 'asyncio' para manejar programación asíncrona de manera eficiente.",
+    "Haz que tu código sea fácil de mantener con nombres de variables y funciones autoexplicativas."
+    ];
+
+    // Función para obtener un consejo aleatorio
+    function obtenerConsejoAleatorio() {
+        const indiceAleatorio = Math.floor(Math.random() * consejos.length);
+        return consejos[indiceAleatorio];
+    }
+
+    // Mostrar un consejo aleatorio cuando se carga la página
+    document.getElementById("consejo").innerText = "Consejo: " + obtenerConsejoAleatorio();
+
+    // Cambiar el consejo aleatoriamente cada 6 segundos
+    setInterval(function() {
+        document.getElementById("consejo").innerText = "Consejo: " + obtenerConsejoAleatorio();
+    }, 6000); // Cambiar cada 6 segundos
+</script>
+        
+<script>
+// Función que activa o desactiva el modo oscuro
+function toggleDarkMode() {
+    const body = document.body;
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    
+    // Alternar la clase 'dark-mode' en el body
+    body.classList.toggle('dark-mode');
+    
+    // Cambiar el icono de sol a luna y guardar el estado en localStorage
+    if (body.classList.contains('dark-mode')) {
+        darkModeToggle.innerHTML = '<i class="ti ti-sun"></i>';  // Icono de sol
+        localStorage.setItem('theme', 'dark');  // Guardar modo oscuro
+    } else {
+        darkModeToggle.innerHTML = '<i class="ti ti-moon"></i>';  // Icono de luna
+        localStorage.setItem('theme', 'light');  // Guardar modo claro
+    }
+}
+
+// Al cargar la página, aplicar el tema guardado y gestionar la precarga
+window.addEventListener('DOMContentLoaded', () => {
+    const currentTheme = localStorage.getItem('theme') || 'light'; // Por defecto: modo claro
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const sidebarNav = document.querySelector('.sidebar-nav');
+    const brandLogo = document.querySelector('.brand-logo');
+
+    // Inicializar opacidad para la precarga
+    document.body.style.opacity = '0';
+    if (sidebarNav) sidebarNav.style.opacity = '0';
+    if (brandLogo) brandLogo.style.opacity = '0';
+
+    // Aplicar el tema desde localStorage
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        darkModeToggle.innerHTML = '<i class="ti ti-sun"></i>';  // Icono de sol
+    } else {
+        document.body.classList.remove('dark-mode');
+        darkModeToggle.innerHTML = '<i class="ti ti-moon"></i>';  // Icono de luna
+    }
+
+    // Usar requestAnimationFrame para una transición fluida
+    requestAnimationFrame(() => {
+        document.body.style.transition = 'opacity 0.3s ease-in-out';
+        document.body.style.opacity = '1';
+
+        if (sidebarNav) {
+            sidebarNav.style.transition = 'opacity 0.3s ease-in-out';
+            sidebarNav.style.opacity = '1';
+        }
+        if (brandLogo) {
+            brandLogo.style.transition = 'opacity 0.3s ease-in-out';
+            brandLogo.style.opacity = '1';
+        }
+    });
+
+    // Añadir el event listener al botón para cambiar el tema
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+    }
+});
+</script>
+       
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="assets/js/sessions.js" ></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/js/all.min.js"></script>
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+  <script src="../assets/js/sidebarmenu.js"></script>
+  <script src="../assets/js/app.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+</body>
+
+</html>

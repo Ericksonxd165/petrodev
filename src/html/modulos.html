@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Petrodev - Módulos</title>
+  <link rel="icon" href="./assets/images/logos/foto-logo.ico" type="image/x-icon">  
+  <link rel="stylesheet" href="../../node_modules/simplebar/dist/simplebar.min.css">
+  <link rel="stylesheet" href="./assets/css/styles.min.css" />
+   <style> 
+   
+    /* Estilos generales para los módulos */
+.card {
+    border-radius: 15px; /* Bordes redondeados */
+    overflow: hidden; /* Evita que los bordes redondeados se rompan */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para mayor profundidad */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave al pasar el ratón */
+    border: 2px solid transparent; /* Borde transparente por defecto */
+}
+
+.card:hover {
+    transform: translateY(-10px); /* Efecto de elevación al pasar el ratón */
+    box-shadow: 0 6px 15px rgba(255, 255, 255, 0.7); /* Brillo blanco más intenso */
+    border: 2px solid #fff; /* Borde blanco al pasar el ratón */
+}
+
+/* Estilos para el título de los módulos */
+.card-title {
+    font-weight: bold;
+    font-size: 1.25rem; /* Tamaño de fuente más grande */
+    color: #333; /* Color oscuro para el texto */
+    margin-bottom: 10px;
+}
+
+/* Estilo para la subcadena del módulo */
+.card-subtitle {
+    font-size: 1rem;
+    color: #6c757d; /* Gris para la subtitulación */
+    margin-bottom: 10px;
+}
+
+/* Estilos para el texto descriptivo */
+.card-text {
+    font-size: 0.95rem;
+    color: #444; /* Gris oscuro para el texto */
+}
+
+/* Estilo para el fondo de las tarjetas */
+body:not(.dark-mode) .card-body {
+    background-color: #ffffff; /* Fondo blanco para modo claro */
+}
+
+body.dark-mode .card-body {
+    background-color: #2d2d2d; /* Fondo oscuro para modo oscuro */
+    color: #fff; /* Texto blanco en modo oscuro */
+}
+
+/* Estilo para las tarjetas generales en modo oscuro */
+body.dark-mode .card {
+    background-color: #333; /* Fondo oscuro para las tarjetas generales en modo oscuro */
+    color: #fff; /* Texto blanco */
+    border: 2px solid #fff; /* Borde blanco para tarjetas generales en modo oscuro */
+}
+
+/* Estilo específico para las tarjetas dentro de .container-fluid en modo oscuro */
+body.dark-mode .container-fluid .card {
+    background-color: #333; /* Fondo oscuro para las tarjetas dentro del contenedor .container-fluid */
+    color: #fff; /* Texto blanco */
+    border: 2px solid #fff; /* Borde blanco para las tarjetas dentro de .container-fluid */
+}
+
+/* Estilo para el cuerpo de las tarjetas dentro de .container-fluid en modo oscuro */
+body.dark-mode .container-fluid .card .card-body {
+    background-color: #333; /* Fondo oscuro en el cuerpo de la tarjeta */
+    color: #fff; /* Texto blanco */
+}
+
+/* Efecto de sombra más intensa al pasar el ratón en tarjetas dentro de .container-fluid (modo oscuro) */
+body.dark-mode .container-fluid .card.mb-4:hover {
+    box-shadow: 0 6px 15px rgba(255, 255, 255, 0.7); /* Brillo blanco más intenso */
+    border: 2px solid #fff; /* Borde blanco al pasar el ratón */
+}
+
+/* Estilo para el título de las tarjetas dentro de .container-fluid en modo oscuro */
+body.dark-mode .container-fluid .card .card-title {
+    color: #fff; /* Texto blanco para el título */
+}
+
+/* Estilo para la subtitulación de las tarjetas dentro de .container-fluid en modo oscuro */
+body.dark-mode .container-fluid .card .card-subtitle {
+    color: #b0b0b0; /* Gris claro para la subtitulación */
+}
+
+/* Estilo para el texto descriptivo en las tarjetas dentro de .container-fluid en modo oscuro */
+body.dark-mode .container-fluid .card .card-text {
+    color: #ccc; /* Gris claro para el texto */
+}
+
+/* Efecto en modo oscuro al pasar el ratón sobre las tarjetas */
+body.dark-mode .card:hover {
+    box-shadow: 0 6px 15px rgba(255, 255, 255, 0.7); /* Sombra blanca más intensa en hover */
+    border: 2px solid #fff; /* Borde blanco al pasar el ratón en modo oscuro */
+}
+
+/* Agregar espacio entre las tarjetas */
+.card.mb-4 {
+    margin-bottom: 20px;
+}
+
+/* Para los módulos en dispositivos móviles */
+@media (max-width: 768px) {
+    .col-md-3 {
+        margin-bottom: 20px; /* Separación en dispositivos pequeños */
+    }
+}   
+       
+ /* Estilo para las subtitulaciones en modo oscuro */
+body.dark-mode .card .card-subtitle {
+    color: #FFA500 !important; /* Naranja para el texto de subtítulo en modo oscuro */
+}      
+ 
+       
+    </style>
+  
+</head>
+
+<body onload="showUserCedula()">
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./dashboard.html" class="text-nowrap logo-img">
+            <img src="./assets/images/logos/foto-logo.svg" alt="" />
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+       <!-- Sidebar navigation-->
+       <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+        <ul id="sidebarnav">
+          <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
+            <span class="hide-menu">Inicio</span>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./dashboard.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-grip-lines"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
+            <span class="hide-menu">HUB de Programación</span>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./library.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-book-open"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Entorno de Formación</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link  activated" href="./modulos.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-rectangle-list"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Módulos</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./capacitacion.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-user-graduate"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Capacitación</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./proyectos.html" aria-expanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-code"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Proyectos</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./editor.html" aria-expoanded="false">
+              <span class="icon-container">
+                <div class="icon-circle">
+                  <i class="fa-solid fa-terminal"></i>
+                </div>
+              </span>
+              <span class="hide-menu">Editor de Código</span>
+            </a>
+          </li>
+      
+      </nav>
+               
+          
+         
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+     <!--  Header Start -->
+<header class="app-header">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <ul class="navbar-nav">
+            <li class="nav-item d-block d-xl-none">
+                <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                    <i class="ti ti-menu-2"></i>
+                </a>
+            </li>
+            
+            <!-- Icono de la luna para el modo oscuro -->
+            <li class="nav-item">
+    <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="darkModeToggle">
+        <i class="ti ti-moon"></i> <!-- El icono de la luna que cambia a sol -->
+        <div class="notification bg-primary rounded-circle"></div>
+    </a>
+</li>
+        </ul>
+         <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+    <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">  
+        <!-- Botón "¡Empieza a Codificar!" -->
+        <a href="index.html" class="btn" style="background-color: #333; color: white; padding: 10px 20px; border-radius: 5px; display: flex; align-items: center;">
+            <span> <i class="fa-brands fa-python"></i>    ¡Empieza a Codificar!</span>
+
+        </a>
+        
+        <li class="nav-item dropdown">
+            <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
+              <span id="user-cedula"></span>
+              <i class="fa-solid fa-user"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                <div class="message-body">
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-user fs-6"></i>
+                        <p class="mb-0 fs-3">My Profile</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-mail fs-6"></i>
+                        <p class="mb-0 fs-3">My Account</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-list-check fs-6"></i>
+                        <p class="mb-0 fs-3">My Task</p>
+                    </a>
+                    <Logout href="javascript:void(0)" class="btn btn-outline-primary mx-3 mt-2 d-block"  onclick="logout()">Logout</a>
+                </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!--  Header End -->
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title fw-semibold mb-4">Módulos</h5>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <h6 class="card-title">Módulo I</h6>
+                    <h7 class="card-subtitle mb-2 text-muted">Subproyecto I</h7>
+                    <p class="card-text">Información adicional sobre el Módulo I.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <h6 class="card-title">Módulo II</h6>
+                    <h7 class="card-subtitle mb-2 text-muted">Subproyecto II</h7>
+                    <p class="card-text">Información adicional sobre el Módulo II.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <h6 class="card-title">Módulo III</h6>
+                    <h7 class="card-subtitle mb-2 text-muted">Subproyecto III</h7>
+                    <p class="card-text">Información adicional sobre el Módulo III.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <h6 class="card-title">Módulo IV</h6>
+ <h7 class="card-subtitle mb-2 text-muted">Subproyecto IV</h7>
+                    <p class="card-text">Información adicional sobre el Módulo IV.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        </div>
+      </div>
+    </div>
+  </div>
+    
+   <script>
+// Función que activa o desactiva el modo oscuro
+function toggleDarkMode() {
+    const body = document.body;
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    
+    // Alternar la clase 'dark-mode' en el body
+    body.classList.toggle('dark-mode');
+    
+    // Cambiar el icono de sol a luna y guardar el estado en localStorage
+    if (body.classList.contains('dark-mode')) {
+        darkModeToggle.innerHTML = '<i class="ti ti-sun"></i>';  // Icono de sol
+        localStorage.setItem('theme', 'dark');  // Guardar modo oscuro
+    } else {
+        darkModeToggle.innerHTML = '<i class="ti ti-moon"></i>';  // Icono de luna
+        localStorage.setItem('theme', 'light');  // Guardar modo claro
+    }
+}
+
+// Al cargar la página, aplicar el tema guardado y gestionar la precarga
+window.addEventListener('DOMContentLoaded', () => {
+    const currentTheme = localStorage.getItem('theme') || 'light'; // Por defecto: modo claro
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const sidebarNav = document.querySelector('.sidebar-nav');
+    const brandLogo = document.querySelector('.brand-logo');
+
+    // Inicializar opacidad para la precarga
+    document.body.style.opacity = '0';
+    if (sidebarNav) sidebarNav.style.opacity = '0';
+    if (brandLogo) brandLogo.style.opacity = '0';
+
+    // Aplicar el tema desde localStorage
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        darkModeToggle.innerHTML = '<i class="ti ti-sun"></i>';  // Icono de sol
+    } else {
+        document.body.classList.remove('dark-mode');
+        darkModeToggle.innerHTML = '<i class="ti ti-moon"></i>';  // Icono de luna
+    }
+
+    // Usar requestAnimationFrame para una transición fluida
+    requestAnimationFrame(() => {
+        document.body.style.transition = 'opacity 0.3s ease-in-out';
+        document.body.style.opacity = '1';
+
+        if (sidebarNav) {
+            sidebarNav.style.transition = 'opacity 0.3s ease-in-out';
+            sidebarNav.style.opacity = '1';
+        }
+        if (brandLogo) {
+            brandLogo.style.transition = 'opacity 0.3s ease-in-out';
+            brandLogo.style.opacity = '1';
+        }
+    });
+
+    // Añadir el event listener al botón para cambiar el tema
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+    }
+});
+</script>
+<script src="assets/js/sessions.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/js/all.min.js"></script>
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+  <script src="../assets/js/sidebarmenu.js"></script>
+  <script src="../assets/js/app.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+</body>

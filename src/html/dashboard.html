@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Petrodev -  Dashboard</title>
+  <link rel="icon" href="./assets/images/logos/foto-logo.ico" type="image/x-icon">  
+  <link rel="stylesheet" href="../../node_modules/simplebar/dist/simplebar.min.css">
+  <link rel="stylesheet" href="./assets/css/styles.min.css" />
+
+    <style>
+   /* Modo oscuro */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.dark-mode .card {
+  background-color: #1e1e1e;
+  border-color: #333;
+}
+
+.dark-mode .card-title,
+.dark-mode .card-subtitle {
+  color: #e0e0e0;
+}
+
+.dark-mode .progress-bar {
+  background-color: #757575;
+}
+
+.dark-mode a {
+  color: #bb86fc;
+}
+
+.dark-mode .table thead {
+  background-color: #333;
+  color: #e0e0e0;
+}
+
+.dark-mode .table tbody tr {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+.dark-mode .btn-primary {
+  background-color: #bb86fc;
+  border-color: #bb86fc;
+}
+
+.dark-mode .btn-primary:hover {
+  background-color: #9b68d4;
+}
+    
+/* Estilo general para la tabla sin bordes redondeados */
+.dark-mode .table {
+  border: 1px solid #555555; /* Borde de la tabla con color gris claro */
+  padding: 10px; /* Espacio alrededor de la tabla */
+  width: 100%; /* Asegura que la tabla cubra todo el espacio disponible */
+  background-color: #333333; /* Fondo gris oscuro para el cuerpo de la tabla */
+  overflow: hidden; /* Asegura que el contenido de la tabla no se desborde */
+}
+
+/* Estilo para las celdas en la tabla */
+.dark-mode .table th, .dark-mode .table td {
+  background-color: #333333; /* Fondo gris oscuro para las celdas */
+  color: #ffffff; /* Texto blanco en las celdas */
+  border-color: #555555; /* Borde gris claro alrededor de las celdas */
+  padding: 15px; /* Aumenta el espacio dentro de las celdas */
+  text-align: left; /* Asegura que el texto se alinee a la izquierda */
+}
+
+/* Estilo para el encabezado de la tabla sin bordes redondeados */
+.dark-mode thead th {
+  background-color: #444444; /* Fondo gris más oscuro para el encabezado de la tabla */
+  color: #ffffff; /* Texto blanco en los encabezados */
+  border-bottom: 1px solid #555555; /* Línea de borde en blanco para separar los encabezados */
+}
+
+/* Estilo para los enlaces dentro de la tabla en modo oscuro */
+.dark-mode .table a {
+  color: #ffffff; /* Enlace blanco en modo oscuro */
+  text-decoration: none; /* Eliminar subrayado de los enlaces */
+}
+
+.dark-mode .table a:hover {
+  color: #bbbbbb; /* Enlace gris claro al pasar el ratón */
+}
+
+/* Estilo para los enlaces en las celdas en modo oscuro */
+.dark-mode .table td a {
+  color: #ffffff; /* Enlace blanco en modo oscuro */
+  text-decoration: none;
+}
+
+.dark-mode .table td a:hover {
+  color: #bbbbbb; /* Enlace gris claro al pasar el ratón */
+}  
+        
+/* Estilo para los enlaces dentro de la tabla en modo oscuro */
+.dark-mode .table .link-primary {
+  color: #ffffff !important; /* Las letras del enlace serán blancas en modo oscuro */
+  text-decoration: none; /* Eliminar subrayado del enlace */
+}
+
+/* Cambio de color del enlace al pasar el ratón */
+.dark-mode .table .link-primary:hover {
+  color: #007bff !important; /* El enlace se vuelve azul brillante cuando se pasa el ratón */
+}
+        
+ #lista-tareas-pendientes {
+  margin-top: -45px;  /* Elimina márgenes superiores */
+  padding-bottom: 0px;  /* Puedes ajustar el relleno superior para posicionarlo mejor */
+}       
+     
+   /* Por defecto, la imagen tiene colores normales */
+#product-image {
+    transition: all 0.3s ease-in-out; /* Para suavizar el cambio */
+}
+
+/* Estilo para cuando el modo oscuro está activado */
+body.dark-mode #product-image {
+    filter: invert(1) brightness(0.8); /* Ajuste de color: invertir colores y ajustar el brillo */
+}
+
+/* Estilo para cuando el modo oscuro está activado y se quiere un efecto más pronunciado */
+body.dark-mode #product-image:hover {
+    filter: invert(1) brightness(0.5); /* Cambiar más el brillo cuando se pasa el mouse */
+}     
+    </style>
+    
+    </head>
+
+<body onload="showUserCedula()">
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./dashboard.html" class="text-nowrap logo-img">
+            <img src="./assets/images/logos/foto-logo.svg" alt="" />
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+       <!-- Sidebar navigation-->
+<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+  <ul id="sidebarnav">
+    <li class="nav-small-cap">
+      <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
+      <span class="hide-menu">Inicio</span>
+    </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link activated" href="./dashboard.html" aria-expanded="false">
+        <span class="icon-container">
+          <div class="icon-circle">
+            <i class="fa-solid fa-grip-lines"></i>
+          </div>
+        </span>
+        <span class="hide-menu">Dashboard</span>
+      </a>
+    </li>
+    <li class="nav-small-cap">
+      <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
+      <span class="hide-menu">HUB de Programación</span>
+    </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="./library.html" aria-expanded="false">
+        <span class="icon-container">
+          <div class="icon-circle">
+            <i class="fa-solid fa-book-open"></i>
+          </div>
+        </span>
+        <span class="hide-menu">Entorno de Formación</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="./modulos.html" aria-expanded="false">
+        <span class="icon-container">
+          <div class="icon-circle">
+            <i class="fa-solid fa-rectangle-list"></i>
+          </div>
+        </span>
+        <span class="hide-menu">Módulos</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="./capacitacion.html" aria-expanded="false">
+        <span class="icon-container">
+          <div class="icon-circle">
+            <i class="fa-solid fa-user-graduate"></i>
+          </div>
+        </span>
+        <span class="hide-menu">Capacitación</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="./proyectos.html" aria-expanded="false">
+        <span class="icon-container">
+          <div class="icon-circle">
+            <i class="fa-solid fa-code"></i>
+          </div>
+        </span>
+        <span class="hide-menu">Proyectos</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="./editor.html" aria-expoanded="false">
+        <span class="icon-container">
+          <div class="icon-circle">
+            <i class="fa-solid fa-terminal"></i>
+          </div>
+        </span>
+        <span class="hide-menu">Editor de Código</span>
+      </a>
+    </li>
+
+</nav>
+          
+         
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+     <!--  Header Start -->
+<header class="app-header">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <ul class="navbar-nav">
+            <li class="nav-item d-block d-xl-none">
+                <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                    <i class="ti ti-menu-2"></i>
+                </a>
+            </li>
+            
+            <!-- Icono de la luna para el modo oscuro -->
+            <li class="nav-item">
+    <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="darkModeToggle">
+        <i class="ti ti-moon"></i> <!-- El icono de la luna que cambia a sol -->
+        <div class="notification bg-primary rounded-circle"></div>
+    </a>
+</li>
+        </ul>
+         <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+    <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">  
+        <!-- Botón "¡Empieza a Codificar!" -->
+        <a href="index.html" class="btn" style="background-color: #333; color: white; padding: 10px 20px; border-radius: 5px; display: flex; align-items: center;">
+          <span> <i class="fa-brands fa-python"></i>    ¡Empieza a Codificar!</span>
+        </a>
+        
+        <li class="nav-item dropdown">
+            <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
+              <span id="user-cedula"></span >
+              <i class="fa-solid fa-user"></i>
+
+            </a>
+            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                <div class="message-body">
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-user fs-6"></i>
+                        <p class="mb-0 fs-3">My Profile</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-mail fs-6"></i>
+                        <p class="mb-0 fs-3">My Account</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-list-check fs-6"></i>
+                        <p class="mb-0 fs-3">My Task</p>
+                    </a>
+                    <Logout href="javascript:void(0)" class="btn btn-outline-primary mx-3 mt-2 d-block"  onclick="logout()">Logout</a>
+                </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!--  Header End -->
+      <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title d-flex align-items-center gap-2 mb-4">
+                            Traffic Overview
+                            <span>
+                        
+                            </span>
+                        </h5>
+                        <div id="traffic-overview" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-body text-center">
+              <img src="./assets/images/backgrounds/product-tip.png" alt="image" class="img-fluid" width="205" id="product-image">
+              <h4 class="mt-7">Productivity Tips!</h4>
+              <p class="card-subtitle mt-2 mb-3">Duis at orci justo nulla in libero id leo
+                molestie sodales phasellus justo.</p>
+                <button class="btn btn-primary mb-3">View All Tips</button>
+            </div>
+          </div>
+        </div>
+       <div class="col-lg-8">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Recursos Útiles</h5>
+                <div class="table-responsive">
+                  <table class="table text-nowrap align-middle mb-0">
+                    <thead>
+                      <tr class="border-2 border-bottom border-primary border-0">
+                        <th scope="col" class="ps-0">Recurso</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col" class="text-center">Enlace</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                      <tr>
+                        <th scope="row" class="ps-0 fw-medium">
+                          <span class="table-link1 text-truncate d-block">Documentación de Python</span>
+                        </th>
+                        <td>
+                          <p class="mb-0 fs-3">Documentación oficial de Python.</p>
+                        </td>
+                        <td class="text-center fw-medium">
+                          <a href="https://docs.python.org/" target="_blank" class="link-primary text-dark fw-medium d-block">Visitar</a>
+                        </td>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card">
+          <div class="card-body">
+  <h5 class="card-title d-flex align-items-center gap-2 mb-5 pb-3">Tareas en progreso</h5>
+      <div class="row" id="lista-tareas-pendientes">
+
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    
+<script>
+
+function showUserCedula() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        document.getElementById('user-cedula').textContent = user.cedula;
+      }
+    }
+
+    // Manejar el cierre de sesión
+    async function logout() {
+      const response = await fetch('/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        localStorage.removeItem('user');
+        window.location.href = '/index.html';
+      } else {
+        alert(result.message);
+      }
+    }
+// Función que activa o desactiva el modo oscuro
+function toggleDarkMode() {
+    const body = document.body;
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    
+    // Alternar la clase 'dark-mode' en el body
+    body.classList.toggle('dark-mode');
+    
+    // Cambiar el icono de sol a luna y guardar el estado en localStorage
+    if (body.classList.contains('dark-mode')) {
+        darkModeToggle.innerHTML = '<i class="ti ti-sun"></i>';  // Icono de sol
+        localStorage.setItem('theme', 'dark');  // Guardar modo oscuro
+    } else {
+        darkModeToggle.innerHTML = '<i class="ti ti-moon"></i>';  // Icono de luna
+        localStorage.setItem('theme', 'light');  // Guardar modo claro
+    }
+}
+
+// Al cargar la página, aplicar el tema guardado y gestionar la precarga
+window.addEventListener('DOMContentLoaded', () => {
+    const currentTheme = localStorage.getItem('theme') || 'light'; // Por defecto: modo claro
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const sidebarNav = document.querySelector('.sidebar-nav');
+    const brandLogo = document.querySelector('.brand-logo');
+
+    // Inicializar opacidad para la precarga
+    document.body.style.opacity = '0';
+    if (sidebarNav) sidebarNav.style.opacity = '0';
+    if (brandLogo) brandLogo.style.opacity = '0';
+
+    // Aplicar el tema desde localStorage
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        darkModeToggle.innerHTML = '<i class="ti ti-sun"></i>';  // Icono de sol
+    } else {
+        document.body.classList.remove('dark-mode');
+        darkModeToggle.innerHTML = '<i class="ti ti-moon"></i>';  // Icono de luna
+    }
+
+    // Usar requestAnimationFrame para una transición fluida
+    requestAnimationFrame(() => {
+        document.body.style.transition = 'opacity 0.3s ease-in-out';
+        document.body.style.opacity = '1';
+
+        if (sidebarNav) {
+            sidebarNav.style.transition = 'opacity 0.3s ease-in-out';
+            sidebarNav.style.opacity = '1';
+        }
+        if (brandLogo) {
+            brandLogo.style.transition = 'opacity 0.3s ease-in-out';
+            brandLogo.style.opacity = '1';
+        }
+    });
+
+    // Añadir el event listener al botón para cambiar el tema
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+    }
+});
+</script>
+<script src="assets/js/sessions.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/js/all.min.js"></script>  
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+  <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+  <script src="../assets/js/sidebarmenu.js"></script>
+  <script src="../assets/js/app.min.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+</body>
+
+</html>

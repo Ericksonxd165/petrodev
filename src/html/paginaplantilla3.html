@@ -1,0 +1,541 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SeoDash Free Bootstrap Admin Template by Adminmart</title>
+  <link rel="shortcut icon" type="image/png" href="./assets/images/logos/seodashlogo.png" />
+  <link rel="stylesheet" href=".././node_modules/simplebar/dist/simplebar.min.css">
+  <link rel="stylesheet" href="./assets/css/styles.min.css" />
+        <style>
+    /* Estilo para las flechas de navegación */
+    .arrow {
+      font-size: 4rem; /* Flechas grandes */
+      color: #000; /* Color negro */
+      cursor: pointer;
+      transition: all 0.3s ease; /* Animación suave */
+      padding: 10px; /* Espaciado alrededor de la flecha */
+    }
+
+    /* Efecto de hover: cambia a azul */
+    .arrow:hover {
+      color: #007bff; /* Cambia el color a azul al pasar el mouse */
+    }
+
+    /* Efecto cuando se hace clic */
+    .arrow:active {
+      color: #fff; /* Cambia el color a blanco */
+      border: 2px solid #007bff; /* Borde azul al hacer clic */
+      transform: scale(1.2); /* Aumenta un poco más el tamaño */
+      box-shadow: 0 0 10px rgba(0, 123, 255, 0.8); /* Resplandor azul */
+    }
+
+    /* Contenedor para las flechas */
+        .arrow-container {
+            display: flex;
+            justify-content: flex-end; /* Alinea las flechas a la derecha */
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 0; /* Ajuste al borde derecho */
+            padding: 0 15px;
+            z-index: 10;
+        }
+
+       
+
+        .arrow-container span {
+            visibility: visible;
+            margin-left: 10px; /* Para darle un espacio entre las flechas si es necesario */
+        }
+
+    /* Animación para mostrar las flechas en el ingreso */
+    .arrow {
+      animation: slideIn 0.5s ease-in-out;
+    }
+
+    @keyframes slideIn {
+      0% {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+            
+/* Estilo por defecto para el título h3 (modo claro) */
+h3.mb-4.text-center.fw-bold {
+    color: black; /* Texto negro en modo claro */
+}
+
+/* Estilos para cuando el modo oscuro está activado */
+@media (prefers-color-scheme: dark) {
+    h3.mb-4.text-center.fw-bold {
+        color: white; /* Texto blanco en modo oscuro */
+    }
+}    
+            
+
+
+/* Estilo para el texto en el modo claro */
+.title-container h3 {
+    color: black; /* Texto negro por defecto */
+    margin: 0; /* Elimina márgenes adicionales */
+    padding-top: 10px; /* Espaciado extra para mover el texto hacia abajo */
+    line-height: 1.2; /* Ajusta la altura de la línea para centrar verticalmente el texto */
+}
+
+/* Estilo para el texto en el modo oscuro */
+@media (prefers-color-scheme: dark) {
+    .title-container h3 {
+        color: white; /* Texto blanco en modo oscuro */
+    }
+}     
+            
+/* Estilo solo para el h3 dentro de .titulo-python */
+.titulo-python h3 {
+    background-color: #333; /* Fondo oscuro para el contenedor */
+    border-radius: 30px; /* Bordes redondeados */
+    text-align: center; /* Centra el texto dentro del contenedor */
+    margin: 0 auto; /* Centra el contenedor en el espacio disponible */
+    display: block; /* Hace que el div ocupe solo el espacio necesario */
+}      
+
+            /* Estilos para los botones de tipo enlace */
+body:not(.dark-mode) a.btn.btn-primary {
+    background-color: #007bff; /* Azul para modo claro */
+    color: white; /* Texto blanco */
+    border: 1px solid #007bff; /* Borde azul */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+body:not(.dark-mode) a.btn.btn-primary:hover {
+    background-color: transparent; /* Fondo transparente */
+    color: #007bff; /* Texto azul */
+    border: 1px solid #007bff; /* Borde azul */
+}
+
+/* Estilos para los botones de tipo enlace en modo oscuro */
+body.dark-mode a.btn.btn-primary {
+    background-color: #ffffff; /* Fondo blanco para modo oscuro */
+    color: black; /* Texto negro */
+    border: 1px solid #333; /* Borde gris oscuro */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+body.dark-mode a.btn.btn-primary:hover {
+    background-color: transparent; /* Fondo transparente */
+    color: #fff; /* Texto blanco */
+    border: 1px solid #fff; /* Borde blanco */
+}
+
+/* Estilos para .card-body */
+body:not(.dark-mode) .card-body {
+    background-color: #f8f9fa; /* Gris claro para modo claro */
+}
+
+body.dark-mode .card-body {
+    background-color: #333; /* Fondo oscuro para modo oscuro */
+}
+
+/* Bordes blancos para imágenes dentro de .card-img-top */
+.card-img-top {
+    border: 3px solid #fff; /* Borde blanco */
+    transition: border 0.3s ease-in-out; /* Transición suave */
+}
+
+/* Cambios al pasar el mouse sobre las imágenes */
+.card-img-top:hover {
+    border-color: #007bff; /* Borde azul en hover */
+}
+
+/* Estilos para el texto dentro de .card-body en modo claro */
+body:not(.dark-mode) .card-body {
+    color: #333; /* Texto oscuro en modo claro */
+}
+
+/* Estilos para el texto dentro de .card-body en modo oscuro */
+body.dark-mode .card-body {
+    color: #fff; /* Texto blanco en modo oscuro */
+}
+
+/* Estilos para los títulos de los cards */
+body:not(.dark-mode) .card-title {
+    color: #333; /* Títulos oscuros en modo claro */
+}
+
+body.dark-mode .card-title {
+    color: #fff; /* Títulos blancos en modo oscuro */
+}
+
+/* Estilos para los textos de los cards (descripción o cuerpo del card) */
+body:not(.dark-mode) .card-text {
+    color: #666; /* Texto gris claro en modo claro */
+}
+
+body.dark-mode .card-text {
+    color: #fff; /* Texto blanco en modo oscuro */
+}
+
+/* Asegura que los botones dentro de los cards también tengan texto blanco en modo oscuro */
+body.dark-mode .card-footer .btn {
+    color: #fff; /* Botones con texto blanco en modo oscuro */
+}
+            
+/* Estilos para las imágenes en modo oscuro */
+body.dark-mode .card-img-top {
+    transition: border-color 0.3s ease; /* Suaviza la transición del borde */
+}
+
+/* Efecto hover en modo oscuro */
+body.dark-mode .card-img-top:hover {
+    border: 3px solid orange; /* Borde naranja al pasar el mouse */
+}
+
+/* Estilo por defecto para las imágenes en modo claro (sin borde) */
+body:not(.dark-mode) .card-img-top {
+    transition: border-color 0.3s ease; /* Suaviza la transición del borde */
+}
+
+/* Si prefieres un borde en modo claro (opcional) */
+body:not(.dark-mode) .card-img-top:hover {
+    border: 3px solid #007bff; /* Borde azul al pasar el mouse en modo claro */
+}            
+            
+ /* Estilo para el contenedor circular */
+.icon-circle {
+  display: inline-block;
+  padding: 3px 4px; /* Ajuste del tamaño del círculo alrededor del icono */
+  border-radius: 30%; /* Hace el div circular */
+  background-color: transparent; /* Fondo transparente por defecto */
+  position: relative; /* Para mover el contenedor si es necesario */
+}
+            
+  </style>
+ 
+
+<body>
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./dashboard.html" class="text-nowrap logo-img">
+            <img src="./assets/images/logos/foto-logo.svg" alt="" />
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+      <!-- Sidebar navigation-->
+<nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+  <ul id="sidebarnav">
+    <li class="nav-small-cap">
+      <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
+      <span class="hide-menu">Inicio</span>
+    </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="./dashboard.html" aria-expanded="false">
+        <span class="icon-container">
+          <div class="icon-circle">
+            <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon>
+          </div>
+        </span>
+        <span class="hide-menu">Dashboard</span>
+      </a>
+    </li>
+    <li class="nav-small-cap">
+      <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
+      <span class="hide-menu">HUB de Programación</span>
+    </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+        <span class="icon-container">
+          <div class="icon-circle">
+            <iconify-icon icon="solar:layers-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
+          </div>
+        </span>
+        <span class="hide-menu">Entorno de Formación</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
+        <span class="icon-container">
+          <div class="icon-circle">
+            <iconify-icon icon="solar:danger-circle-bold-duotone" class="fs-6"></iconify-icon>
+          </div>
+        </span>
+        <span class="hide-menu">Módulos</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
+        <span class="icon-container">
+          <div class="icon-circle">
+            <iconify-icon icon="solar:bookmark-square-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
+          </div>
+        </span>
+        <span class="hide-menu">Capacitación</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
+        <span class="icon-container">
+          <div class="icon-circle">
+            <iconify-icon icon="solar:file-text-bold-duotone" class="fs-6"></iconify-icon>
+          </div>
+        </span>
+        <span class="hide-menu">Proyectos</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
+        <span class="icon-container">
+          <div class="icon-circle">
+            <iconify-icon icon="solar:text-field-focus-bold-duotone" class="fs-6"></iconify-icon>
+          </div>
+        </span>
+        <span class="hide-menu">Editor de Código</span>
+      </a>
+    </li>
+    <li class="nav-small-cap">
+      <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-6"></iconify-icon>
+      <span class="hide-menu">Gestión de Usuario</span>
+    </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+        <span class="icon-container">
+          <div class="icon-circle">
+            <iconify-icon icon="solar:login-3-bold-duotone" class="fs-6"></iconify-icon>
+          </div>
+        </span>
+        <span class="hide-menu">Login</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
+        <span class="icon-container">
+          <div class="icon-circle">
+            <iconify-icon icon="solar:user-plus-rounded-bold-duotone" class="fs-6"></iconify-icon>
+          </div>
+        </span>
+        <span class="hide-menu">Registro</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+          
+         
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+     <!--  Header Start -->
+<header class="app-header">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <ul class="navbar-nav">
+            <li class="nav-item d-block d-xl-none">
+                <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                    <i class="ti ti-menu-2"></i>
+                </a>
+            </li>
+            
+            <!-- Icono de la luna para el modo oscuro -->
+            <li class="nav-item">
+    <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="darkModeToggle">
+        <i class="ti ti-moon"></i> <!-- El icono de la luna que cambia a sol -->
+        <div class="notification bg-primary rounded-circle"></div>
+    </a>
+</li>
+        </ul>
+         <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+    <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">  
+        <!-- Botón "¡Empieza a Codificar!" -->
+        <a href="index.html" class="btn" style="background-color: #333; color: white; padding: 10px 20px; border-radius: 5px; display: flex; align-items: center;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Logo" width="25" height="25" style="margin-right: 10px;">
+            <span>¡Empieza a Codificar!</span>
+        </a>
+        
+        <li class="nav-item dropdown">
+            <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="../assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
+            </a>
+            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                <div class="message-body">
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-user fs-6"></i>
+                        <p class="mb-0 fs-3">My Profile</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-mail fs-6"></i>
+                        <p class="mb-0 fs-3">My Account</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-list-check fs-6"></i>
+                        <p class="mb-0 fs-3">My Task</p>
+                    </a>
+                    <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!--  Header End -->
+     <!-- Sesiones de Python -->
+<div class="container mt-4">
+  <!-- Título de la sección -->
+ <div class="titulo-python">
+    <h3 class="mb-4 text-center fw-bold">Sesiones de Python</h3>
+</div>
+  <!-- Cards -->
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <!-- Card 1 -->
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 1">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Introducción al sexo</h5>
+          <p class="card-text">Conceptos básicos y sintaxis inicial.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+    <!-- Card 2 -->
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 2">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Estructuras de Control</h5>
+          <p class="card-text">Uso de condicionales y bucles.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+    <!-- Card 3 -->
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+    <!-- Card 4 -->
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 4">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Manejo de Excepciones</h5>
+          <p class="card-text">Control de errores y excepciones.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+    <!-- Card 5 -->
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 5">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Programación Orientada a Objetos</h5>
+          <p class="card-text">Clases, objetos y métodos.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+    <!-- Card 6 -->
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 6">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Proyectos Prácticos</h5>
+          <p class="card-text">Aplicación de lo aprendido en proyectos reales.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          <!-- Contenedor para las flechas -->
+            <div class="arrow-container">
+                <span class="arrow" onclick="window.location.href='ui-card.html'">&#8593;</span> <!-- Flecha hacia arriba -->
+                <span class="arrow" style="visibility: hidden;">&#8594;</span> <!-- No flecha hacia adelante -->
+            </div>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+    
+<script>
+// Función que activa o desactiva el modo oscuro
+function toggleDarkMode() {
+    const body = document.body;
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    
+    // Alternar la clase 'dark-mode' en el body
+    body.classList.toggle('dark-mode');
+    
+    // Cambiar el icono de sol a luna
+    if (body.classList.contains('dark-mode')) {
+        darkModeToggle.innerHTML = '<i class="ti ti-sun"></i>';  // Sol (modo claro)
+        localStorage.setItem('theme', 'dark');  // Guardamos el modo oscuro activado
+    } else {
+        darkModeToggle.innerHTML = '<i class="ti ti-moon"></i>';  // Luna (modo oscuro)
+        localStorage.setItem('theme', 'light');  // Guardamos el modo claro activado
+    }
+}
+
+// Al cargar la página, aplicar el tema guardado
+window.addEventListener('DOMContentLoaded', () => {
+    const currentTheme = localStorage.getItem('theme');
+    const darkModeToggle = document.getElementById('darkModeToggle');
+
+    // Establecer opacidad 0 para el body y elementos importantes para evitar parpadeo
+    document.body.style.opacity = '0';
+    document.querySelector('.sidebar-nav').style.opacity = '0';
+    document.querySelector('.brand-logo').style.opacity = '0';
+
+    // Aplicar el modo oscuro si está activado en localStorage
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        darkModeToggle.innerHTML = '<i class="ti ti-sun"></i>';  // Icono de sol
+    } else {
+        document.body.classList.remove('dark-mode');
+        darkModeToggle.innerHTML = '<i class="ti ti-moon"></i>';  // Icono de luna
+    }
+
+    // Usar requestAnimationFrame para asegurar que la opacidad se aplique de manera sincronizada
+    requestAnimationFrame(() => {
+        document.body.style.transition = 'opacity 0.3s ease-in-out';
+        document.body.style.opacity = '1';
+        document.querySelector('.sidebar-nav').style.transition = 'opacity 0.3s ease-in-out';
+        document.querySelector('.sidebar-nav').style.opacity = '1';
+        document.querySelector('.brand-logo').style.transition = 'opacity 0.3s ease-in-out';
+        document.querySelector('.brand-logo').style.opacity = '1';
+    });
+
+    // Añadir el event listener al icono para cambiar el modo
+    darkModeToggle.addEventListener('click', toggleDarkMode);
+});
+</script>
+    
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+  <script src="../assets/js/sidebarmenu.js"></script>
+  <script src="../assets/js/app.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+</body>
+
+</html>
