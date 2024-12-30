@@ -34,12 +34,23 @@ db.connect((err) => {
   console.log('Conectado a la base de datos');
 });
 
-// Función para validar la contraseña
-function validatePassword(password) {
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  return passwordRegex.test(password);
-}
+// Crear la tabla projects si no existe
+const createProjectsTable = `
+  CREATE TABLE IF NOT EXISTS projects (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    code TEXT NOT NULL,
+    user_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  )
+`;
+db.query(createProjectsTable, (err, result) => {
+  if (err) throw err;
+  console.log('Tabla projects creada o ya existe');
+});
 
+// Ruta para manejar el registro
 app.post('/register', async (req, res) => {
   const { nombre, cedula, email, password } = req.body;
 
@@ -87,6 +98,7 @@ app.post('/register', async (req, res) => {
 });
 
 // Ruta para manejar el inicio de sesión
+// Ruta para manejar el inicio de sesión
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
 
@@ -118,6 +130,69 @@ app.post('/logout', (req, res) => {
     return res.status(200).json({ message: 'Sesión cerrada exitosamente' });
   });
 });
+
+// Ruta para manejar el guardado de proyectos
+// Ruta para manejar el guardado de proyectos
+app.post('/saveProject', (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ message: 'Usuario no autenticado' });
+  }
+
+  const { title, code } = req.body;
+  const userId = req.session.user.id;
+
+  const sql = 'INSERT INTO projects (title, code, user_id) VALUES (?, ?, ?)';
+  db.query(sql, [title, code, userId], (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error al guardar el proyecto' });
+    } else {
+      return res.status(200).json({ message: 'Proyecto guardado exitosamente' });
+    }
+  });
+});
+
+
+// Ruta para obtener los proyectos del usuario autenticado
+// Ruta para obtener los proyectos del usuario autenticado
+app.get('/getProjects', (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ message: 'Usuario no autenticado' });
+  }
+
+  const userId = req.session.user.id;
+
+  const sql = 'SELECT id, title FROM projects WHERE user_id = ?';
+  db.query(sql, [userId], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error al obtener los proyectos' });
+    } else {
+      return res.status(200).json(results);
+    }
+  });
+});
+
+// Ruta para obtener el contenido de un proyecto
+app.get('/getProjectContent/:id', (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ message: 'Usuario no autenticado' });
+  }
+
+  const projectId = req.params.id;
+  const userId = req.session.user.id;
+
+  const sql = 'SELECT code FROM projects WHERE id = ? AND user_id = ?';
+  db.query(sql, [projectId, userId], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error al obtener el contenido del proyecto' });
+    } else if (results.length === 0) {
+      return res.status(404).json({ message: 'Proyecto no encontrado' });
+    } else {
+      return res.status(200).json(results[0]);
+    }
+  });
+});
+
+
 
 // Servir archivos estáticos desde la carpeta src/html
 app.use(express.static(path.join(__dirname, 'html')));

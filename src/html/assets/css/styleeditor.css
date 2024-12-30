@@ -34,8 +34,8 @@ background-color: #dfdfdf;
     padding: 10px;
     margin-top: 10px;
     margin: auto;
-    height: 250px;
-    width: 68%;
+    height: 100px;
+    width: 100%;
     overflow-y: auto;
     white-space: pre;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -45,29 +45,87 @@ background-color: #dfdfdf;
     display: none;
 }
 
-#run{
+
+.button-act {
+  
+    top: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-act{
 border-radius: 0px 10px 10px 0px;
-height: 50px;
-width: 50px;
+height: 30px;
+width: 30px;
 background-color: #6272a4;
 color: rgb(0, 0, 0);
 outline: none;
 border: none;
 transition: 0.5s;
-margin-left: 140px;
 margin-bottom: 10px;
+
 }
 
-#run:hover{
+.card-body{
+
+    
+}
+
+.button-act:hover{
     border-radius: 0px 10px 10px 0px;
-    height: 50px;
-    width: 50px;
     background-color: #7392f1;
     color: white;
     outline: none;
     border: none;
     cursor: pointer;
+ 
     
 
 }
 
+
+
+#run{
+
+margin-left: 10px;
+border-radius: 10px !important;
+
+}
+
+.selector{
+    display: flex;
+justify-content: flex-end;
+height: 30px;
+margin-bottom: 10px;
+}	
+
+.save{
+
+margin-right: 10px !important;
+border-radius: 10px !important;
+
+}
+
+#selection{
+width:25%;
+}
+
+@media (max-width: 600px) {
+    #selection {
+        width: 60%;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    #selection {
+        width: 40%;
+    }
+}
+
+@media (min-width: 1025px) {
+    #selection {
+        width: 25%;
+    }
+}

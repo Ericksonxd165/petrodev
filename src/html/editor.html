@@ -8,10 +8,10 @@
   <link rel="icon" href="./assets/images/logos/foto-logo.ico" type="image/x-icon">  
   <link rel="stylesheet" href="../../node_modules/simplebar/dist/simplebar.min.css">
   <link rel="stylesheet" href="./assets/css/styles.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
   <script defer src="https://cdn.jsdelivr.net/pyodide/v0.21.0/full/pyodide.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="./assets/css/styleeditor.css">
   <style>
@@ -183,63 +183,239 @@
       <div class="container-fluid">
         <div class="card">
           <div class="card-body">
-            <div id="editor" style="height: 310px; width: 70%; margin: auto;"></div>
-            <button id="run" disabled><i class="fa-solid fa-play"></i></button>
-            <div id="loading">Cargando...</div>
+            <div class="selector">    
+
+<select name="projects" id="projects" style="border-radius:5px 0px 0px 5px ;">
+  <option value="">-selecciona un proyecto</option>
+</select>
+<button class="button-act" id="open-project" style="margin-right: 10px;"><i class="fa-solid fa-file"></i></i></button> 
+
+              <button class="button-act  save" id="download"><i class="fa-solid fa-file-arrow-down"></i></button>
+              <button class="button-act  save" id="save"><i class="fa-solid fa-floppy-disk"></i></button>
+
+              <select name="Sintaxis" id="selection" style="border-radius:5px 0px 0px 5px ;">
+                <option value="">-Selecciona una sintaxis de código-</option>
+                <option value="variables">Declaración de Variables</option>
+                <option value="conditionals">Condicionales</option>
+                <option value="loops">Bucles</option>
+                <option value="while_loops">Bucles While</option>
+                <option value="functions">Funciones</option>
+                <option value="classes">Clases</option>
+                <option value="exceptions">Manejo de Excepciones</option>
+                <option value="modules">Módulos</option>
+                <option value="comprehensions">Comprensiones</option>
+                <option value="decorators">Decoradores</option>
+                <option value="generators">Generadores</option>
+                <option value="objects">Creación de Objetos</option>
+                <option value="switch">Selectores Switch</option>
+                <option value="ternary">Operadores Ternarios</option>
+                <option value="math_methods">Métodos Matemáticos</option>
+              </select>
+              <button class="button-act" id="search"><i class="fa-solid fa-paste"></i></button> 
+              <button class="button-act" id="run" disabled>
+                <i id="run-icon" class="fa-solid fa-play"></i>
+                <i id="loading-icon" class="fa-solid fa-spinner fa-spin" style="display: none;"></i>
+              </button>
+            </div>
+            <div id="editor" style="height: 310px; width: 100%;"></div>
             <div id="result"></div>
+    <!-- Modal para descargar el archivo -->
+<div class="modal fade" id="downloadModal" tabindex="-1" aria-labelledby="downloadModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="downloadModalLabel">Descargar Archivo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="downloadForm">
+          <div class="mb-3">
+            <label for="fileTitle" class="form-label">Título del Archivo</label>
+            <input type="text" class="form-control" id="fileTitle" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Descargar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+            <!-- Modal -->
+            <div class="modal fade" id="saveModal" tabindex="-1" aria-labelledby="saveModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="saveModalLabel">Guardar Proyecto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="saveForm">
+                      <div class="mb-3">
+                        <label for="projectTitle" class="form-label">Título del Proyecto</label>
+                        <input type="text" class="form-control" id="projectTitle" required>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Guardar</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+    
             <script>
-                document.addEventListener("DOMContentLoaded", function() {
-                    var editor = CodeMirror(document.getElementById('editor'), {
-                        value: "print('¡Hola, mundo!')",
-                        mode: "python",
-                        lineNumbers: true
-                    });
-        
-                    async function loadPyodideAndRun() {
-                        document.getElementById('loading').style.display = 'block';
-                        let pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.21.0/full/" });
-        
-                        await pyodide.loadPackage('micropip');
-                        await pyodide.runPythonAsync(`
-                            import micropip
-                            await micropip.install('discutils')
-                        `);
-        
-                        document.getElementById('loading').style.display = 'none';
-                        document.getElementById('run').disabled = false;
-        
-                        document.getElementById('run').addEventListener('click', async () => {
-                            let code = editor.getValue();
-                            let resultDiv = document.getElementById('result');
-                            resultDiv.textContent = ''; // Clear previous result
-                            try {
-                                // Redirigir la salida estándar a resultDiv
-                                pyodide.runPython(`
-                                    import sys
-                                    class StdoutRedirector:
-                                        def __init__(self):
-                                            self.content = ""
-                                        def write(self, message):
-                                            self.content += message
-                                        def flush(self):
-                                            pass
-                                    sys.stdout = StdoutRedirector()
-                                `);
-        
-                                await pyodide.runPythonAsync(code);
-        
-                                // Obtener el contenido de StdoutRedirector
-                                let output = pyodide.runPython('sys.stdout.content');
-                                resultDiv.textContent = output;
-                            } catch (error) {
-                                resultDiv.textContent = error;
-                            }
-                        });
-                    }
-        
-                    loadPyodideAndRun();
+              document.addEventListener("DOMContentLoaded", function() {
+                var editor = CodeMirror(document.getElementById('editor'), {
+                  value: "print('¡Hola, mundo!')",
+                  mode: "python",
+                  lineNumbers: true
                 });
+    
+                const snippets = {
+                  variables: "x = 10\ny = 'Hola, mundo!'",
+                  conditionals: "if x > 0:\n    print('x es positivo')\nelse:\n    print('x es negativo o cero')",
+                  loops: "for i in range(5):\n    print(i)",
+                  while_loops: "x = 0\nwhile x < 5:\n    print(x)\n    x += 1",
+                  functions: "def saludar(nombre):\n    print(f'Hola, {nombre}')\nsaludar('Mundo')",
+                  classes: "class Persona:\n    def __init__(self, nombre, edad):\n        self.nombre = nombre\n        self.edad = edad\n\n    def saludar(self):\n        print(f'Hola, me llamo {self.nombre} y tengo {self.edad} años')\npersona = Persona('Juan', 30)\npersona.saludar()",
+                  exceptions: "try:\n    x = 1 / 0\nexcept ZeroDivisionError:\n    print('No se puede dividir por cero')",
+                  modules: "import math\nprint(math.sqrt(16))",
+                  comprehensions: "cuadrados = [x**2 for x in range(10)]\nprint(cuadrados)",
+                  decorators: "def decorador(func):\n    def wrapper():\n        print('Función decorada')\n        func()\n    return wrapper\n\n@decorador\ndef saludar():\n    print('Hola, mundo!')\nsaludar()",
+                  generators: "def generador():\n    yield 1\n    yield 2\n    yield 3\ngen = generador()\nfor val in gen:\n    print(val)",
+                  objects: "class Coche:\n    def __init__(self, marca, modelo):\n        self.marca = marca\n        self.modelo = modelo\n\n    def mostrar_info(self):\n        print(f'Marca: {self.marca}, Modelo: {self.modelo}')\ncoche = Coche('Toyota', 'Corolla')\ncoche.mostrar_info()",
+                  switch: "def switch_demo(argument):\n    switcher = {\n        1: 'Opción 1',\n        2: 'Opción 2',\n        3: 'Opción 3'\n    }\n    return switcher.get(argument, 'Opción inválida')\nprint(switch_demo(1))",
+                  ternary: "x = 5\ny = 10\nresultado = 'x es mayor' if x > y else 'y es mayor'\nprint(resultado)",
+                  math_methods: "import math\nprint(math.pi)\nprint(math.e)\nprint(math.sqrt(16))\nprint(math.sin(math.radians(90)))"
+                };
+    
+                document.getElementById('search').addEventListener('click', () => {
+                  const select = document.getElementById('selection');
+                  const selectedValue = select.value;
+                  if (snippets[selectedValue]) {
+                    editor.setValue(snippets[selectedValue]);
+                  }
+                });
+    
+                document.getElementById('save').addEventListener('click', () => {
+                  const saveModal = new bootstrap.Modal(document.getElementById('saveModal'));
+                  saveModal.show();
+                });
+    
+                document.getElementById('download').addEventListener('click', () => {
+                  const downloadModal = new bootstrap.Modal(document.getElementById('downloadModal'));
+                  downloadModal.show();
+                });
+    
+                document.getElementById('downloadForm').addEventListener('submit', (event) => {
+                  event.preventDefault();
+                  const title = document.getElementById('fileTitle').value;
+                  const code = editor.getValue();
+                  const blob = new Blob([code], { type: 'text/plain' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `${title}.py`;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                  URL.revokeObjectURL(url);
+                  const downloadModal = bootstrap.Modal.getInstance(document.getElementById('downloadModal'));
+                  downloadModal.hide();
+                });
+    
+                // Cargar proyectos del usuario autenticado
+                async function loadProjects() {
+                  const response = await fetch('/getProjects');
+                  if (response.ok) {
+                    const projects = await response.json();
+                    const projectsSelect = document.getElementById('projects');
+                    projects.forEach(project => {
+                      const option = document.createElement('option');
+                      option.value = project.id;
+                      option.textContent = project.title;
+                      projectsSelect.appendChild(option);
+                    });
+                  } else {
+                    console.error('Error al cargar los proyectos');
+                  }
+                }
+    
+                loadProjects();
+    
+                document.getElementById('open-project').addEventListener('click', async () => {
+                  const projectsSelect = document.getElementById('projects');
+                  const projectId = projectsSelect.value;
+                  if (projectId) {
+                    const response = await fetch(`/getProjectContent/${projectId}`);
+                    if (response.ok) {
+                      const project = await response.json();
+                      editor.setValue(project.code);
+                    } else {
+                      console.error('Error al cargar el contenido del proyecto');
+                    }
+                  } else {
+                    alert('Por favor, selecciona un proyecto');
+                  }
+                });
+    
+                async function loadPyodideAndRun() {
+                  const runButton = document.getElementById('run');
+                  const runIcon = document.getElementById('run-icon');
+                  const loadingIcon = document.getElementById('loading-icon');
+                  runIcon.style.display = 'none';
+                  loadingIcon.style.display = 'inline-block';
+                  runButton.disabled = true;
+    
+                  const pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.21.0/full/" });
+    
+                  await pyodide.loadPackage('micropip');
+                  await pyodide.runPythonAsync(`
+                    import micropip
+                    await micropip.install('discutils')
+                  `);
+    
+                  runIcon.style.display = 'inline-block';
+                  loadingIcon.style.display = 'none';
+                  runButton.disabled = false;
+    
+                  runButton.addEventListener('click', async () => {
+                    const code = editor.getValue();
+                    const resultDiv = document.getElementById('result');
+                    resultDiv.textContent = 'Ejecutando...';
+                    try {
+                      // Redirigir la salida estándar a resultDiv
+                      pyodide.runPython(`
+                        import sys
+                        class StdoutRedirector:
+                          def __init__(self):
+                            self.content = ""
+                          def write(self, message):
+                            self.content += message
+                          def flush(self):
+                            pass
+                        sys.stdout = StdoutRedirector()
+                      `);
+    
+                      await pyodide.runPythonAsync(code);
+    
+                      // Obtener el contenido de StdoutRedirector
+                      let output = pyodide.runPython('sys.stdout.content');
+                      resultDiv.textContent = output;
+                    } catch (error) {
+                      resultDiv.textContent = error;
+                    }
+                  });
+                }
+    
+                loadPyodideAndRun().then(() => {
+                  const runIcon = document.getElementById('run-icon');
+                  const loadingIcon = document.getElementById('loading-icon');
+                  runIcon.style.display = 'inline-block';
+                  loadingIcon.style.display = 'none';
+                  const runButton = document.getElementById('run');
+                  runButton.disabled = false;
+                });
+              });
             </script>
+            </form>
               </div>
             </div>
           </div>
