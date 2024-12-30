@@ -151,6 +151,25 @@ app.post('/saveProject', (req, res) => {
   });
 });
 
+// Ruta para actualizar un proyecto existente
+app.put('/updateProject/:id', (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ message: 'Usuario no autenticado' });
+  }
+
+  const projectId = req.params.id;
+  const { title, code } = req.body;
+  const userId = req.session.user.id;
+
+  const sql = 'UPDATE projects SET title = ?, code = ? WHERE id = ? AND user_id = ?';
+  db.query(sql, [title, code, projectId, userId], (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error al actualizar el proyecto' });
+    } else {
+      return res.status(200).json({ message: 'Proyecto actualizado exitosamente' });
+    }
+  });
+});
 
 // Ruta para obtener los proyectos del usuario autenticado
 // Ruta para obtener los proyectos del usuario autenticado

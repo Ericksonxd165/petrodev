@@ -184,15 +184,13 @@
         <div class="card">
           <div class="card-body">
             <div class="selector">    
-
-<select name="projects" id="projects" style="border-radius:5px 0px 0px 5px ;">
-  <option value="">-selecciona un proyecto</option>
-</select>
-<button class="button-act" id="open-project" style="margin-right: 10px;"><i class="fa-solid fa-file"></i></i></button> 
-
+              <select name="projects" id="projects" style="border-radius:5px 0px 0px 5px ;">
+                <option value="">-selecciona un proyecto-</option>
+              </select>
+              <button class="button-act" id="open-project" style="margin-right: 10px;"><i class="fa-solid fa-file"></i></button> 
               <button class="button-act  save" id="download"><i class="fa-solid fa-file-arrow-down"></i></button>
               <button class="button-act  save" id="save"><i class="fa-solid fa-floppy-disk"></i></button>
-
+    
               <select name="Sintaxis" id="selection" style="border-radius:5px 0px 0px 5px ;">
                 <option value="">-Selecciona una sintaxis de código-</option>
                 <option value="variables">Declaración de Variables</option>
@@ -219,27 +217,29 @@
             </div>
             <div id="editor" style="height: 310px; width: 100%;"></div>
             <div id="result"></div>
-    <!-- Modal para descargar el archivo -->
-<div class="modal fade" id="downloadModal" tabindex="-1" aria-labelledby="downloadModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="downloadModalLabel">Descargar Archivo</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="downloadForm">
-          <div class="mb-3">
-            <label for="fileTitle" class="form-label">Título del Archivo</label>
-            <input type="text" class="form-control" id="fileTitle" required>
-          </div>
-          <button type="submit" class="btn btn-primary">Descargar</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-            <!-- Modal -->
+    
+            <!-- Modal para descargar el archivo -->
+            <div class="modal fade" id="downloadModal" tabindex="-1" aria-labelledby="downloadModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="downloadModalLabel">Descargar Archivo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="downloadForm">
+                      <div class="mb-3">
+                        <label for="fileTitle" class="form-label">Título del Archivo</label>
+                        <input type="text" class="form-control" id="fileTitle" required>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Descargar</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+            <!-- Modal para guardar el proyecto -->
             <div class="modal fade" id="saveModal" tabindex="-1" aria-labelledby="saveModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
@@ -294,9 +294,56 @@
                   }
                 });
     
-                document.getElementById('save').addEventListener('click', () => {
-                  const saveModal = new bootstrap.Modal(document.getElementById('saveModal'));
-                  saveModal.show();
+                document.getElementById('save').addEventListener('click', async () => {
+                  const projectsSelect = document.getElementById('projects');
+                  const projectId = projectsSelect.value;
+                  const code = editor.getValue();
+    
+                  if (projectId) {
+                    // Actualizar proyecto existente
+                    const response = await fetch(`/updateProject/${projectId}`, {
+                      method: 'PUT',
+                      headers: {
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({ title: projectsSelect.options[projectsSelect.selectedIndex].text, code })
+                    });
+    
+                    if (response.ok) {
+                      alert('Proyecto actualizado exitosamente');
+                    } else {
+                      const result = await response.json();
+                      alert('Error al actualizar el proyecto: ' + result.message);
+                    }
+                  } else {
+                    // Abrir ventana modal para guardar nuevo proyecto
+                    const saveModal = new bootstrap.Modal(document.getElementById('saveModal'));
+                    saveModal.show();
+                  }
+                });
+    
+                document.getElementById('saveForm').addEventListener('submit', async (event) => {
+                  event.preventDefault();
+                  const title = document.getElementById('projectTitle').value;
+                  const code = editor.getValue();
+    
+                  const response = await fetch('/saveProject', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ title, code })
+                  });
+    
+                  if (response.ok) {
+                    alert('Proyecto guardado exitosamente');
+                    const saveModal = bootstrap.Modal.getInstance(document.getElementById('saveModal'));
+                    saveModal.hide();
+                    loadProjects(); // Recargar la lista de proyectos
+                  } else {
+                    const result = await response.json();
+                    alert('Error al guardar el proyecto: ' + result.message);
+                  }
                 });
     
                 document.getElementById('download').addEventListener('click', () => {
@@ -327,6 +374,7 @@
                   if (response.ok) {
                     const projects = await response.json();
                     const projectsSelect = document.getElementById('projects');
+                    projectsSelect.innerHTML = '<option value="">-selecciona un proyecto-</option>'; // Limpiar opciones anteriores
                     projects.forEach(project => {
                       const option = document.createElement('option');
                       option.value = project.id;
