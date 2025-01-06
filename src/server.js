@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const path = require('path');
 const validator = require('validator');
 const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
 
 const app = express();
 const port = 3000;
@@ -12,14 +13,6 @@ const port = 3000;
 // Configurar body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-// Configurar la sesión
-app.use(session({
-  secret: 'secret-key',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false } // Cambia a true si usas HTTPS
-}));
 
 // Configurar la conexión a la base de datos
 const db = mysql.createConnection({
@@ -34,21 +27,26 @@ db.connect((err) => {
   console.log('Conectado a la base de datos');
 });
 
-// Crear la tabla projects si no existe
-const createProjectsTable = `
-  CREATE TABLE IF NOT EXISTS projects (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    code TEXT NOT NULL,
-    user_id INT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
-  )
-`;
-db.query(createProjectsTable, (err, result) => {
-  if (err) throw err;
-  console.log('Tabla projects creada o ya existe');
-});
+// Configurar la sesión
+const sessionStore = new MySQLStore({}, db);
+
+app.use(session({
+  secret: 'secret-key',
+  resave: false,
+  saveUninitialized: true,
+  store: sessionStore,
+  cookie: { secure: false } // Cambia a true si usas HTTPS
+}));
+
+// Middleware de autenticación
+function isAuthenticated(req, res, next) {
+  if (req.session.user) {
+    return next();
+  } else {
+    return res.status(401).json({ message: 'Usuario no autenticado' });
+  }
+}
+
 
 // Ruta para manejar el registro
 app.post('/register', async (req, res) => {
@@ -98,7 +96,6 @@ app.post('/register', async (req, res) => {
 });
 
 // Ruta para manejar el inicio de sesión
-// Ruta para manejar el inicio de sesión
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
 
@@ -131,7 +128,23 @@ app.post('/logout', (req, res) => {
   });
 });
 
-// Ruta para manejar el guardado de proyectos
+
+// Ruta para verificar la autenticación
+app.get('/checkAuth', (req, res) => {
+  if (req.session.user) {
+    return res.status(200).json({ authenticated: true });
+  } else {
+    return res.status(200).json({ authenticated: false });
+  }
+});
+
+// Rutas protegidas
+app.use('/dashboard', isAuthenticated);
+app.use('/saveProject', isAuthenticated);
+app.use('/updateProject/:id', isAuthenticated);
+app.use('/getProjects', isAuthenticated);
+app.use('/getProjectContent/:id', isAuthenticated);
+
 // Ruta para manejar el guardado de proyectos
 app.post('/saveProject', (req, res) => {
   if (!req.session.user) {
@@ -172,12 +185,7 @@ app.put('/updateProject/:id', (req, res) => {
 });
 
 // Ruta para obtener los proyectos del usuario autenticado
-// Ruta para obtener los proyectos del usuario autenticado
-app.get('/getProjects', (req, res) => {
-  if (!req.session.user) {
-    return res.status(401).json({ message: 'Usuario no autenticado' });
-  }
-
+app.get('/getProjects', isAuthenticated, (req, res) => {
   const userId = req.session.user.id;
 
   const sql = 'SELECT id, title FROM projects WHERE user_id = ?';
@@ -191,11 +199,7 @@ app.get('/getProjects', (req, res) => {
 });
 
 // Ruta para obtener el contenido de un proyecto
-app.get('/getProjectContent/:id', (req, res) => {
-  if (!req.session.user) {
-    return res.status(401).json({ message: 'Usuario no autenticado' });
-  }
-
+app.get('/getProjectContent/:id', isAuthenticated, (req, res) => {
   const projectId = req.params.id;
   const userId = req.session.user.id;
 

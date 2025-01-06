@@ -873,6 +873,19 @@ print("Saturación final:", saturacion_final)</code></pre>
       
 
 <script>
+
+fetch('/checkAuth')
+      .then(response => response.json())
+      .then(data => {
+        if (!data.authenticated) {
+          window.location.href = 'index.html';
+        }
+      })
+      .catch(error => {
+        console.error('Error al verificar la autenticación:', error);
+        window.location.href = 'index.html';
+      });
+
   const examples = document.querySelectorAll('.example');
   let currentExample = 0;
 
