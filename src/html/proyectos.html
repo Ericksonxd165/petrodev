@@ -659,16 +659,10 @@ body.dark-mode .brand-logo .logo-img img {
     <!-- Sección de Tareas (Minimalista y elegante) -->
     <div id="tareas" class="tareas">
         <h2>Proyectos Guardados</h2>
-        <div id="lista-tareas" class="lista-tareas">
+        <div id="lista-tareas" class="lista-tareas contenedor-tareas">
             <!-- Aquí se mostrarán las tareas dinámicamente, si existen -->
-            <div class="tarea">
-                <p><strong>Proyecto</strong> Nombre del proyecto</p>
-                <button class="btn-entregar">Editar</button>
-            </div>
-            <div class="tarea">
-                <p><strong>Proyecto:</strong> Nombre del proyecto</p>
-                <button class="btn-entregar">Ediar</button>
-            </div>
+            <div id="tareas" class="tareas">
+      
             
         </div>
         
@@ -700,6 +694,58 @@ body.dark-mode .brand-logo .logo-img img {
 
 <!-- Script para las funcionalidades -->
 <script>
+
+document.addEventListener("DOMContentLoaded", function() {
+    fetch('/checkAuth')
+      .then(response => response.json())
+      .then(data => {
+        if (!data.authenticated) {
+          window.location.href = 'index.html';
+        } else {
+          // Mostrar la cédula del usuario
+          document.getElementById('user-cedula').textContent = data.user.cedula;
+        }
+      })
+      .catch(error => {
+        console.error('Error al verificar la autenticación:', error);
+        window.location.href = 'index.html';
+      });
+  });
+
+  function showUserCedula() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      document.getElementById('user-cedula').textContent = user.cedula;
+    }
+  };
+
+ document.addEventListener("DOMContentLoaded", function() {
+    fetch('/getProjects')
+      .then(response => response.json())
+      .then(projects => {
+        const listaTareas = document.getElementById('lista-tareas');
+        projects.forEach(project => {
+          const tareaDiv = document.createElement('div');
+          tareaDiv.className = 'tarea';
+          tareaDiv.innerHTML = `
+            <p><strong>Proyecto:</strong> ${project.title}</p>
+            <p><strong>Fecha:</strong> ${new Date(project.created_at).toLocaleDateString()}</p>
+            <button class="btn-entregar" onclick="editarProyecto(${project.id})">Editar</button>
+          `;
+          listaTareas.appendChild(tareaDiv);
+        });
+      })
+      .catch(error => {
+        console.error('Error al cargar los proyectos:', error);
+      });
+  });
+
+  function editarProyecto(projectId) {
+    window.location.href = `editor.html?projectId=${projectId}`;
+  }
+
+
+
     // Mostrar ventana emergente de entrega de tarea
     const botonesEntregar = document.querySelectorAll(".btn-entregar");
     botonesEntregar.forEach(btn => {

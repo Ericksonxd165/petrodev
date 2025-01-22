@@ -387,6 +387,8 @@
                 }
     
                 loadProjects();
+
+                
     
                 document.getElementById('open-project').addEventListener('click', async () => {
                   const projectsSelect = document.getElementById('projects');
@@ -403,6 +405,33 @@
                     alert('Por favor, selecciona un proyecto');
                   }
                 });
+
+                const urlParams = new URLSearchParams(window.location.search);
+    const projectId = urlParams.get('projectId');
+
+    if (projectId) {
+      // Cargar el proyecto seleccionado
+      fetch(`/getProjectContent/${projectId}`)
+        .then(response => response.json())
+        .then(project => {
+          editor.setValue(project.code);
+          document.getElementById('projects').value = projectId;
+        })
+        .catch(error => console.error('Error al cargar el proyecto:', error));
+    }
+
+    document.getElementById('open-project').addEventListener('click', function() {
+      const selectedProjectId = document.getElementById('projects').value;
+      if (selectedProjectId) {
+        fetch(`/getProjectContent/${selectedProjectId}`)
+          .then(response => response.json())
+          .then(project => {
+            editor.setValue(project.code);
+          })
+          .catch(error => console.error('Error al cargar el proyecto:', error));
+      }
+    });
+
     
                 async function loadPyodideAndRun() {
                   const runButton = document.getElementById('run');
@@ -474,6 +503,50 @@
   </div>
     
   <script>
+
+document.addEventListener("DOMContentLoaded", function() {
+    fetch('/checkAuth')
+      .then(response => response.json())
+      .then(data => {
+        if (!data.authenticated) {
+          window.location.href = 'index.html';
+        } else {
+          // Mostrar la cédula del usuario
+          document.getElementById('user-cedula').textContent = data.user.cedula;
+        }
+      })
+      .catch(error => {
+        console.error('Error al verificar la autenticación:', error);
+        window.location.href = 'index.html';
+      });
+  });
+
+  function showUserCedula() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      document.getElementById('user-cedula').textContent = user.cedula;
+    }
+  };
+  
+document.addEventListener("DOMContentLoaded", function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const projectId = urlParams.get('projectId');
+
+    if (projectId) {
+      fetch(`/getProjectContent/${projectId}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.code) {
+            editor.setValue(data.code);
+          } else {
+            console.error('Error al cargar el contenido del proyecto:', data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error al cargar el contenido del proyecto:', error);
+        });
+    }
+  });
 
 fetch('/checkAuth')
       .then(response => response.json())

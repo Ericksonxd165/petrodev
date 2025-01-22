@@ -38,7 +38,6 @@ app.use(session({
   cookie: { secure: false } // Cambia a true si usas HTTPS
 }));
 
-// Middleware de autenticación
 function isAuthenticated(req, res, next) {
   if (req.session.user) {
     return next();
@@ -47,6 +46,47 @@ function isAuthenticated(req, res, next) {
   }
 }
 
+// Ruta para manejar el inicio de sesión
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+
+  const sql = 'SELECT * FROM usuarios WHERE email = ?';
+  db.query(sql, [email], async (err, results) => {
+    if (err) throw err;
+    if (results.length > 0) {
+      const user = results[0];
+      const match = await bcrypt.compare(password, user.password);
+      if (match) {
+        req.session.user = user;
+        return res.status(200).json({ message: 'Inicio de sesión exitoso', user });
+      } else {
+        return res.status(400).json({ message: 'Contraseña incorrecta' });
+      }
+    } else {
+      return res.status(400).json({ message: 'Usuario no encontrado' });
+    }
+  });
+});
+
+// Ruta para verificar la autenticación
+app.get('/checkAuth', (req, res) => {
+  if (req.session.user) {
+    return res.status(200).json({ authenticated: true, user: req.session.user });
+  } else {
+    return res.status(200).json({ authenticated: false });
+  }
+});
+
+// Ruta para manejar el cierre de sesión
+app.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error al cerrar sesión' });
+    }
+    res.clearCookie('connect.sid');
+    return res.status(200).json({ message: 'Sesión cerrada exitosamente' });
+  });
+});
 
 // Ruta para manejar el registro
 app.post('/register', async (req, res) => {
@@ -95,100 +135,11 @@ app.post('/register', async (req, res) => {
   });
 });
 
-// Ruta para manejar el inicio de sesión
-app.post('/login', (req, res) => {
-  const { email, password } = req.body;
-
-  const sql = 'SELECT * FROM usuarios WHERE email = ?';
-  db.query(sql, [email], async (err, results) => {
-    if (err) throw err;
-    if (results.length > 0) {
-      const user = results[0];
-      const match = await bcrypt.compare(password, user.password);
-      if (match) {
-        req.session.user = user;
-        return res.status(200).json({ message: 'Inicio de sesión exitoso', user });
-      } else {
-        return res.status(400).json({ message: 'Contraseña incorrecta' });
-      }
-    } else {
-      return res.status(400).json({ message: 'Usuario no encontrado' });
-    }
-  });
-});
-
-// Ruta para manejar el cierre de sesión
-app.post('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.status(500).json({ message: 'Error al cerrar sesión' });
-    }
-    res.clearCookie('connect.sid');
-    return res.status(200).json({ message: 'Sesión cerrada exitosamente' });
-  });
-});
-
-
-// Ruta para verificar la autenticación
-app.get('/checkAuth', (req, res) => {
-  if (req.session.user) {
-    return res.status(200).json({ authenticated: true });
-  } else {
-    return res.status(200).json({ authenticated: false });
-  }
-});
-
-// Rutas protegidas
-app.use('/dashboard', isAuthenticated);
-app.use('/saveProject', isAuthenticated);
-app.use('/updateProject/:id', isAuthenticated);
-app.use('/getProjects', isAuthenticated);
-app.use('/getProjectContent/:id', isAuthenticated);
-
-// Ruta para manejar el guardado de proyectos
-app.post('/saveProject', (req, res) => {
-  if (!req.session.user) {
-    return res.status(401).json({ message: 'Usuario no autenticado' });
-  }
-
-  const { title, code } = req.body;
-  const userId = req.session.user.id;
-
-  const sql = 'INSERT INTO projects (title, code, user_id) VALUES (?, ?, ?)';
-  db.query(sql, [title, code, userId], (err, result) => {
-    if (err) {
-      return res.status(500).json({ message: 'Error al guardar el proyecto' });
-    } else {
-      return res.status(200).json({ message: 'Proyecto guardado exitosamente' });
-    }
-  });
-});
-
-// Ruta para actualizar un proyecto existente
-app.put('/updateProject/:id', (req, res) => {
-  if (!req.session.user) {
-    return res.status(401).json({ message: 'Usuario no autenticado' });
-  }
-
-  const projectId = req.params.id;
-  const { title, code } = req.body;
-  const userId = req.session.user.id;
-
-  const sql = 'UPDATE projects SET title = ?, code = ? WHERE id = ? AND user_id = ?';
-  db.query(sql, [title, code, projectId, userId], (err, result) => {
-    if (err) {
-      return res.status(500).json({ message: 'Error al actualizar el proyecto' });
-    } else {
-      return res.status(200).json({ message: 'Proyecto actualizado exitosamente' });
-    }
-  });
-});
-
 // Ruta para obtener los proyectos del usuario autenticado
 app.get('/getProjects', isAuthenticated, (req, res) => {
   const userId = req.session.user.id;
 
-  const sql = 'SELECT id, title FROM projects WHERE user_id = ?';
+  const sql = 'SELECT id, title, created_at FROM projects WHERE user_id = ?';
   db.query(sql, [userId], (err, results) => {
     if (err) {
       return res.status(500).json({ message: 'Error al obtener los proyectos' });
@@ -215,11 +166,57 @@ app.get('/getProjectContent/:id', isAuthenticated, (req, res) => {
   });
 });
 
+// Ruta para manejar el guardado de proyectos
+app.post('/saveProject', isAuthenticated, (req, res) => {
+  const { title, code } = req.body;
+  const userId = req.session.user.id;
 
+  const sql = 'INSERT INTO projects (title, code, user_id) VALUES (?, ?, ?)';
+  db.query(sql, [title, code, userId], (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error al guardar el proyecto' });
+    } else {
+      return res.status(200).json({ message: 'Proyecto guardado exitosamente' });
+    }
+  });
+});
+
+// Ruta para actualizar un proyecto existente
+app.put('/updateProject/:id', isAuthenticated, (req, res) => {
+  const projectId = req.params.id;
+  const { title, code } = req.body;
+  const userId = req.session.user.id;
+
+  const sql = 'UPDATE projects SET title = ?, code = ? WHERE id = ? AND user_id = ?';
+  db.query(sql, [title, code, projectId, userId], (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error al actualizar el proyecto' });
+    } else {
+      return res.status(200).json({ message: 'Proyecto actualizado exitosamente' });
+    }
+  });
+});
+
+// Redirigir a dashboard si el usuario ya está autenticado
+app.get(['/index.html', '/register.html'], (req, res) => {
+  if (req.session.user) {
+    res.redirect('/dashboard.html');
+  } else {
+    res.sendFile(path.join(__dirname, 'html', req.path));
+  }
+});
 
 // Servir archivos estáticos desde la carpeta src/html
 app.use(express.static(path.join(__dirname, 'html')));
 
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
+});
+
+process.on('SIGINT', () => {
+  db.query('DELETE FROM sessions', (err, result) => {
+    if (err) throw err;
+    console.log('Tabla de sesiones limpiada');
+    process.exit();
+  });
 });

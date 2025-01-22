@@ -232,37 +232,7 @@ body:not(.dark-mode) a.text-primary.fw-bold {
 
 <body onload="redirectToDashboardIfLoggedIn()">
 
-  <script>
-    // Mostrar mensaje de error si está presente en la URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const message = urlParams.get('message');
-    if (message) {
-      alert(message);
-    }
-
-    // Manejar el inicio de sesión
-    async function handleLogin(event) {
-      event.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      const response = await fetch('/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      });
-
-      const result = await response.json();
-      if (response.ok) {
-        localStorage.setItem('user', JSON.stringify(result.user));
-        window.location.href = '/dashboard.html';
-      } else {
-        alert(result.message);
-      }
-    }
-  </script>
+ 
   <!-- Contenedor del ícono de modo oscuro -->
   <div id="darkModeContainer">
     <div id="darkModeToggle">
@@ -315,7 +285,54 @@ body:not(.dark-mode) a.text-primary.fw-bold {
   </div>
   <script>
   
-// Función que activa o desactiva el modo oscuro
+  function redirectToDashboardIfLoggedIn() {
+      fetch('/checkAuth')
+        .then(response => response.json())
+        .then(data => {
+          if (data.authenticated) {
+            window.location.href = 'dashboard.html';
+          }
+        })
+        .catch(error => console.error('Error al verificar la autenticación:', error));
+    }
+
+    // Manejar el inicio de sesión
+    async function handleLogin(event) {
+      event.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        localStorage.setItem('user', JSON.stringify(result.user));
+        window.location.href = '/dashboard.html';
+      } else {
+        alert(result.message);
+      }
+    }
+
+    function clearSessionStorage() {
+      // Limpiar las cookies relacionadas con la sesión
+      document.cookie.split(";").forEach(function(c) {
+        if (c.trim().startsWith('connect.sid=')) {
+          document.cookie = c.trim().split("=")[0] + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/";
+        }
+      });
+
+      // Limpiar el almacenamiento local relacionado con la sesión
+      localStorage.removeItem('user');
+    }
+
+    // Llamar a clearSessionStorage cuando el usuario cierra la sesión
+    window.addEventListener('beforeunload', clearSessionStorage);
 function toggleDarkMode() {
     const body = document.body;
     const darkModeToggle = document.getElementById('darkModeToggle');
@@ -332,7 +349,6 @@ function toggleDarkMode() {
         localStorage.setItem('theme', 'light');  // Guardar modo claro
     }
 }
-
 // Al cargar la página, aplicar el tema guardado y gestionar la precarga
 window.addEventListener('DOMContentLoaded', () => {
     const currentTheme = localStorage.getItem('theme') || 'light'; // Por defecto: modo claro
@@ -375,6 +391,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 </script>
+
 <script src="assets/js/sessions.js" ></script>
   <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
   <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

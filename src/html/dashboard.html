@@ -366,6 +366,9 @@ fetch('/checkAuth')
       .then(data => {
         if (!data.authenticated) {
           window.location.href = 'index.html';
+        } else {
+          // Mostrar la cédula del usuario
+          document.getElementById('user-cedula').textContent = data.user.cedula;
         }
       })
       .catch(error => {
@@ -373,7 +376,7 @@ fetch('/checkAuth')
         window.location.href = 'index.html';
       });
 
-function showUserCedula() {
+    function showUserCedula() {
       const user = JSON.parse(localStorage.getItem('user'));
       if (user) {
         document.getElementById('user-cedula').textContent = user.cedula;
@@ -397,6 +400,26 @@ function showUserCedula() {
         alert(result.message);
       }
     }
+
+
+    // Manejar el cierre de sesión
+    async function logout() {
+      const response = await fetch('/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        localStorage.removeItem('user');
+        window.location.href = '/index.html';
+      } else {
+        alert(result.message);
+      }
+    }
+    
 // Función que activa o desactiva el modo oscuro
 function toggleDarkMode() {
     const body = document.body;

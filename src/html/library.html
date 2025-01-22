@@ -930,6 +930,30 @@ nextVideo.addEventListener("click", () => {
 </script>
       
 <script>
+
+document.addEventListener("DOMContentLoaded", function() {
+    fetch('/checkAuth')
+      .then(response => response.json())
+      .then(data => {
+        if (!data.authenticated) {
+          window.location.href = 'index.html';
+        } else {
+          // Mostrar la cédula del usuario
+          document.getElementById('user-cedula').textContent = data.user.cedula;
+        }
+      })
+      .catch(error => {
+        console.error('Error al verificar la autenticación:', error);
+        window.location.href = 'index.html';
+      });
+  });
+
+  function showUserCedula() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      document.getElementById('user-cedula').textContent = user.cedula;
+    }
+  };
 // Función que activa o desactiva el modo oscuro
 function toggleDarkMode() {
     const body = document.body;
@@ -947,6 +971,8 @@ function toggleDarkMode() {
         localStorage.setItem('theme', 'light');  // Guardar modo claro
     }
 }
+
+
 
 // Al cargar la página, aplicar el tema guardado y gestionar la precarga
 window.addEventListener('DOMContentLoaded', () => {
