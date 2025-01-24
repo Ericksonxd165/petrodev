@@ -283,57 +283,127 @@ body:not(.dark-mode) a.text-primary.fw-bold {
       </div>
     </div>
   </div>
+
+<!-- Modal para login de administrador -->
+<div class="modal fade" id="adminLoginModal" tabindex="-1" aria-labelledby="adminLoginModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="adminLoginModalLabel">Login Administrador</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="adminLoginForm">
+          <div class="mb-3">
+            <label for="adminEmail" class="form-label">Usuario Administrador</label>
+            <input type="text" class="form-control" id="adminEmail" name="adminEmail" required>
+          </div>
+          <div class="mb-3">
+            <label for="adminPassword" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="adminPassword" name="adminPassword" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
   <script>
   
-  function redirectToDashboardIfLoggedIn() {
-      fetch('/checkAuth')
-        .then(response => response.json())
-        .then(data => {
-          if (data.authenticated) {
-            window.location.href = 'dashboard.html';
-          }
-        })
-        .catch(error => console.error('Error al verificar la autenticación:', error));
+  document.getElementById('adminLoginForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const email = document.getElementById('adminEmail').value;
+    const password = document.getElementById('adminPassword').value;
+
+    const response = await fetch('/adminLogin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      window.location.href = result.redirect;
+    } else {
+      alert(result.message);
     }
+  });
 
-    // Manejar el inicio de sesión
-    async function handleLogin(event) {
-      event.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+  let logoClickCount = 0;
 
-      const response = await fetch('/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      });
-
-      const result = await response.json();
-      if (response.ok) {
-        localStorage.setItem('user', JSON.stringify(result.user));
-        window.location.href = '/dashboard.html';
-      } else {
-        alert(result.message);
-      }
-    }
-
-    function clearSessionStorage() {
-      // Limpiar las cookies relacionadas con la sesión
-      document.cookie.split(";").forEach(function(c) {
-        if (c.trim().startsWith('connect.sid=')) {
-          document.cookie = c.trim().split("=")[0] + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/";
+  document.querySelector('.logo-img').addEventListener('click', () => {
+    logoClickCount++;
+    if (logoClickCount === 3) {
+      document.addEventListener('keydown', (event) => {
+        if (event.altKey && event.key === 'a') {
+          // Mostrar el modal de administrador
+  
+          const adminModal = new bootstrap.Modal(document.getElementById('adminLoginModal'));
+          adminModal.show();
         }
       });
-
-      // Limpiar el almacenamiento local relacionado con la sesión
-      localStorage.removeItem('user');
     }
+  });
 
-    // Llamar a clearSessionStorage cuando el usuario cierra la sesión
-    window.addEventListener('beforeunload', clearSessionStorage);
-function toggleDarkMode() {
+  function redirectToDashboardIfLoggedIn() {
+    fetch('/checkAuth')
+      .then(response => response.json())
+      .then(data => {
+        if (data.authenticated) {
+          if (data.user.rol === 'admin') {
+            window.location.href = 'admindashboard.html';
+          } else {
+            window.location.href = 'dashboard.html';
+          }
+        }
+      })
+      .catch(error => console.error('Error al verificar la autenticación:', error));
+  }
+  // Manejar el inicio de sesión
+  async function handleLogin(event) {
+    event.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    const response = await fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      localStorage.setItem('user', JSON.stringify(result.user));
+      window.location.href = '/dashboard.html';
+    } else {
+      alert(result.message);
+    }
+  }
+
+
+  function clearSessionStorage() {
+    // Limpiar las cookies relacionadas con la sesión
+    document.cookie.split(";").forEach(function(c) {
+      if (c.trim().startsWith('connect.sid=')) {
+        document.cookie = c.trim().split("=")[0] + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/";
+      }
+    });
+
+    // Limpiar el almacenamiento local relacionado con la sesión
+    localStorage.removeItem('user');
+  }
+
+  // Llamar a clearSessionStorage cuando el usuario cierra la sesión
+  window.addEventListener('beforeunload', clearSessionStorage);
+
+
+    function toggleDarkMode() {
     const body = document.body;
     const darkModeToggle = document.getElementById('darkModeToggle');
     

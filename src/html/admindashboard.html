@@ -1,11 +1,8 @@
-<!doctype html>
-<html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Petrodev - Cursos</title>
-  <link rel="icon" href="./assets/images/logos/foto-logo.ico" type="image/x-icon">  
+  <title>Petrodev - Administrador</title>
+  <link rel="shortcut icon" type="image/png" href="./assets/images/logos/foto-logo.ico" />
   <link rel="stylesheet" href=".././node_modules/simplebar/dist/simplebar.min.css">
   <link rel="stylesheet" href="./assets/css/styles.min.css" />
         <style>
@@ -79,23 +76,14 @@ h3.mb-4.text-center.fw-bold {
     }
 }    
             
- /* Estilo para el contenedor del título */
-.title-container {
-    background-color: #333; /* Fondo oscuro para el contenedor */
-    display: inline-block; /* Ajusta el tamaño del contenedor al contenido */
-    border-radius: 30px; /* Bordes redondeados */
-    text-align: center; /* Centra el texto dentro del contenedor */
-    margin: 0 auto; /* Centra el contenedor en el espacio disponible */
-    display: block; /* Hace que el div ocupe solo el espacio necesario */
-}
+
 
 /* Estilo para el texto en el modo claro */
 .title-container h3 {
-    background-color: #333; /* Fondo oscuro para el contenedor */
-    border-radius: 30px; /* Bordes redondeados */
-    text-align: center; /* Centra el texto dentro del contenedor */
-    margin: 0 auto; /* Centra el contenedor en el espacio disponible */
-    display: block; /* Hace que el div ocupe solo el espacio necesario */
+    color: black; /* Texto negro por defecto */
+    margin: 0; /* Elimina márgenes adicionales */
+    padding-top: 10px; /* Espaciado extra para mover el texto hacia abajo */
+    line-height: 1.2; /* Ajusta la altura de la línea para centrar verticalmente el texto */
 }
 
 /* Estilo para el texto en el modo oscuro */
@@ -105,7 +93,16 @@ h3.mb-4.text-center.fw-bold {
     }
 }     
             
-/* Estilos para los botones de tipo enlace */
+/* Estilo solo para el h3 dentro de .titulo-python */
+.titulo-python h3 {
+    background-color: #333; /* Fondo oscuro para el contenedor */
+    border-radius: 30px; /* Bordes redondeados */
+    text-align: center; /* Centra el texto dentro del contenedor */
+    margin: 0 auto; /* Centra el contenedor en el espacio disponible */
+    display: block; /* Hace que el div ocupe solo el espacio necesario */
+}      
+
+            /* Estilos para los botones de tipo enlace */
 body:not(.dark-mode) a.btn.btn-primary {
     background-color: #007bff; /* Azul para modo claro */
     color: white; /* Texto blanco */
@@ -204,13 +201,21 @@ body:not(.dark-mode) .card-img-top {
 /* Si prefieres un borde en modo claro (opcional) */
 body:not(.dark-mode) .card-img-top:hover {
     border: 3px solid #007bff; /* Borde azul al pasar el mouse en modo claro */
-}    
+}            
             
-            
+ /* Estilo para el contenedor circular */
+.icon-circle {
+  display: inline-block;
+  padding: 3px 4px; /* Ajuste del tamaño del círculo alrededor del icono */
+  border-radius: 30%; /* Hace el div circular */
+  background-color: transparent; /* Fondo transparente por defecto */
+  position: relative; /* Para mover el contenedor si es necesario */
+}
             
   </style>
+ 
 
-<body onload="showUserCedula()">
+<body>
   <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
@@ -226,7 +231,7 @@ body:not(.dark-mode) .card-img-top:hover {
             <i class="ti ti-x fs-8"></i>
           </div>
         </div>
-        <!-- Sidebar navigation-->
+      <!-- Sidebar navigation-->
 <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
   <ul id="sidebarnav">
     <li class="nav-small-cap">
@@ -234,10 +239,10 @@ body:not(.dark-mode) .card-img-top:hover {
       <span class="hide-menu">Inicio</span>
     </li>
     <li class="sidebar-item">
-      <a class="sidebar-link " href="./dashboard.html" aria-expanded="false">
+      <a class="sidebar-link activated" href="./admindashboard.html" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
-            <i class="fa-solid fa-grip-lines"></i>
+            <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon>
           </div>
         </span>
         <span class="hide-menu">Dashboard</span>
@@ -245,71 +250,66 @@ body:not(.dark-mode) .card-img-top:hover {
     </li>
     <li class="nav-small-cap">
       <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
-      <span class="hide-menu">HUB de Programación</span>
+      <span class="hide-menu">Adminsitracion estudiantil</span>
     </li>
     <li class="sidebar-item">
-      <a class="sidebar-link" href="./library.html" aria-expanded="false">
+      <a class="sidebar-link" href="./adminstudents.html" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
-            <i class="fa-solid fa-book-open"></i>
+            <iconify-icon icon="solar:layers-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
           </div>
         </span>
-        <span class="hide-menu">Entorno de Formación</span>
+        <span class="hide-menu">Estudiantes</span>
       </a>
     </li>
     <li class="sidebar-item">
-      <a class="sidebar-link" href="./modulos.html" aria-expanded="false">
+      <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
-            <i class="fa-solid fa-rectangle-list"></i>
-          </div>
-        </span>
-        <span class="hide-menu">Módulos</span>
-      </a>
-    </li>
-    <li class="sidebar-item">
-      <a class="sidebar-link activated" href="./capacitacion.html" aria-expanded="false">
-        <span class="icon-container">
-          <div class="icon-circle">
-            <i class="fa-solid fa-user-graduate"></i>
-          </div>
-        </span>
-        <span class="hide-menu">Capacitación</span>
-      </a>
-    </li>
-    <li class="sidebar-item">
-      <a class="sidebar-link" href="./tareas.html" aria-expanded="false">
-        <span class="icon-container">
-          <div class="icon-circle">
-            <i class="fa-solid fa-list-check"></i>
+            <iconify-icon icon="solar:bookmark-square-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
           </div>
         </span>
         <span class="hide-menu">Tareas</span>
       </a>
     </li>
     <li class="sidebar-item">
-      <a class="sidebar-link" href="./proyectos.html" aria-expanded="false">
+      <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
-            <i class="fa-solid fa-code"></i>
+            <iconify-icon icon="solar:file-text-bold-duotone" class="fs-6"></iconify-icon>
           </div>
         </span>
         <span class="hide-menu">Proyectos</span>
       </a>
     </li>
     <li class="sidebar-item">
-      <a class="sidebar-link" href="./editor.html" aria-expoanded="false">
+      <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
-            <i class="fa-solid fa-terminal"></i>
+            <iconify-icon icon="solar:text-field-focus-bold-duotone" class="fs-6"></iconify-icon>
           </div>
         </span>
         <span class="hide-menu">Editor de Código</span>
       </a>
     </li>
+    <li class="nav-small-cap">
+      <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-6"></iconify-icon>
+      <span class="hide-menu">Gestión de Usuario</span>
+    </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="" aria-expanded="false">
+        <span class="icon-container">
+          <div class="icon-circle">
+            <iconify-icon icon="solar:login-3-bold-duotone" class="fs-6"></iconify-icon>
+          </div>
+        </span>
+        <span  id="logoutButton"  class="hide-menu">Cerrar sesion</span>
+      </a>
+    </li>
 
+  </ul>
 </nav>
-         
+          
          
         <!-- End Sidebar navigation -->
       </div>
@@ -340,13 +340,12 @@ body:not(.dark-mode) .card-img-top:hover {
     <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">  
         <!-- Botón "¡Empieza a Codificar!" -->
         <a href="index.html" class="btn" style="background-color: #333; color: white; padding: 10px 20px; border-radius: 5px; display: flex; align-items: center;">
-          <span> <i class="fa-brands fa-python"></i>    ¡Empieza a Codificar!</span>
+            <span>Sesion de Profesor</span>
         </a>
         
         <li class="nav-item dropdown">
             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
-              <span id="user-cedula"></span>
-              <i class="fa-solid fa-user"></i>
+                <img src="../assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                 <div class="message-body">
@@ -362,7 +361,7 @@ body:not(.dark-mode) .card-img-top:hover {
                         <i class="ti ti-list-check fs-6"></i>
                         <p class="mb-0 fs-3">My Task</p>
                     </a>
-                    <Logout href="javascript:void(0)" class="btn btn-outline-primary mx-3 mt-2 d-block"  onclick="logout()">Logout</a>
+                    <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                 </div>
                 </div>
               </li>
@@ -374,116 +373,56 @@ body:not(.dark-mode) .card-img-top:hover {
      <!-- Sesiones de Python -->
 <div class="container mt-4">
   <!-- Título de la sección -->
- <div class="title-container">
-  <h3 class="mb-4 text-center fw-bold">Sesiones de Python</h3>
+ <div class="titulo-python">
+    <h3 class="mb-4 text-center fw-bold">Panel de Adminsitracion</h3>
 </div>
   <!-- Cards -->
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <!-- Card 1 -->
     <div class="col">
       <div class="card h-100 shadow-sm">
-        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 1">
+       <a href=""><img src="./assets/images/logos/students.jpg" class="card-img-top" alt="Card 1"></a> 
         <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Introducción a Python</h5>
-          <p class="card-text">Conceptos básicos y sintaxis inicial.</p>
-          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+          <h5 class="card-title">Control Estudiantil</h5>
+          <p class="card-text">Administracion de alumnos y calificaciones.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto"><i class="fa-solid fa-helmet-safety"></i></a>
         </div>
       </div>
     </div>
     <!-- Card 2 -->
     <div class="col">
       <div class="card h-100 shadow-sm">
-        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 2">
+       <a href=""><img src="./assets/images/logos/tasks.jpg" class="card-img-top" alt="Card 2"></a> 
         <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Estructuras de Control</h5>
-          <p class="card-text">Uso de condicionales y bucles.</p>
-          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+          <h5 class="card-title">Admninstracion de Tareas</h5>
+          <p class="card-text">Control de asignaciones .</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto"><i class="fa-solid fa-list-check"></i></a>
         </div>
       </div>
     </div>
     <!-- Card 3 -->
     <div class="col">
       <div class="card h-100 shadow-sm">
-        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+       <a href=""><img src="./assets/images/logos/folders.png" class="card-img-top" alt="Card 3"></a> 
         <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Funciones y Módulos</h5>
-          <p class="card-text">Definición y reutilización de código.</p>
-          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+          <h5 class="card-title">Proyectos</h5>
+          <p class="card-text">Administracion de scripts de los estudiantes.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto"><i class="fa-solid fa-diagram-project"></i></a>
         </div>
       </div>
     </div>
-    <!-- Card 4 -->
-    <div class="col">
-      <div class="card h-100 shadow-sm">
-        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 4">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Manejo de Excepciones</h5>
-          <p class="card-text">Control de errores y excepciones.</p>
-          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
-        </div>
-      </div>
-    </div>
-    <!-- Card 5 -->
-    <div class="col">
-      <div class="card h-100 shadow-sm">
-        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 5">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Programación Orientada a Objetos</h5>
-          <p class="card-text">Clases, objetos y métodos.</p>
-          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
-        </div>
-      </div>
-    </div>
-    <!-- Card 6 -->
-    <div class="col">
-      <div class="card h-100 shadow-sm">
-        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 6">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Proyectos Prácticos</h5>
-          <p class="card-text">Aplicación de lo aprendido en proyectos reales.</p>
-          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
-        </div>
-      </div>
-    </div>
+
+
   </div>
 </div>
           <!-- Contenedor para las flechas -->
-            <div class="arrow-container">
-                <span class="arrow" onclick="window.location.href='ui-card2.html'">&#8595;</span> <!-- Flecha hacia abajo -->
-                <span class="arrow" style="visibility: hidden;">&#8594;</span> <!-- No flecha hacia adelante -->
-            </div>
-
       
         </div>
       </div>
     </div>
   </div>
-     
- <script>
-
-document.addEventListener("DOMContentLoaded", function() {
-    fetch('/checkAuth')
-      .then(response => response.json())
-      .then(data => {
-        if (!data.authenticated) {
-          window.location.href = 'index.html';
-        } else {
-          // Mostrar la cédula del usuario
-          document.getElementById('user-cedula').textContent = data.user.cedula;
-        }
-      })
-      .catch(error => {
-        console.error('Error al verificar la autenticación:', error);
-        window.location.href = 'index.html';
-      });
-  });
-
-  function showUserCedula() {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user) {
-      document.getElementById('user-cedula').textContent = user.cedula;
-    }
-  };
+    
+<script>
 // Función que activa o desactiva el modo oscuro
 function toggleDarkMode() {
     const body = document.body;
@@ -492,29 +431,48 @@ function toggleDarkMode() {
     // Alternar la clase 'dark-mode' en el body
     body.classList.toggle('dark-mode');
     
-    // Cambiar el icono de sol a luna y guardar el estado en localStorage
+    // Cambiar el icono de sol a luna
     if (body.classList.contains('dark-mode')) {
-        darkModeToggle.innerHTML = '<i class="ti ti-sun"></i>';  // Icono de sol
-        localStorage.setItem('theme', 'dark');  // Guardar modo oscuro
+        darkModeToggle.innerHTML = '<i class="ti ti-sun"></i>';  // Sol (modo claro)
+        localStorage.setItem('theme', 'dark');  // Guardamos el modo oscuro activado
     } else {
-        darkModeToggle.innerHTML = '<i class="ti ti-moon"></i>';  // Icono de luna
-        localStorage.setItem('theme', 'light');  // Guardar modo claro
+        darkModeToggle.innerHTML = '<i class="ti ti-moon"></i>';  // Luna (modo oscuro)
+        localStorage.setItem('theme', 'light');  // Guardamos el modo claro activado
     }
 }
 
-// Al cargar la página, aplicar el tema guardado y gestionar la precarga
+
+// Manejar el cierre de sesión
+async function logout() {
+    const response = await fetch('/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      localStorage.removeItem('user');
+      window.location.href = '/index.html';
+    } else {
+      alert(result.message);
+    }
+  }
+
+  document.getElementById('logoutButton').addEventListener('click', logout);
+
+// Al cargar la página, aplicar el tema guardado
 window.addEventListener('DOMContentLoaded', () => {
-    const currentTheme = localStorage.getItem('theme') || 'light'; // Por defecto: modo claro
+    const currentTheme = localStorage.getItem('theme');
     const darkModeToggle = document.getElementById('darkModeToggle');
-    const sidebarNav = document.querySelector('.sidebar-nav');
-    const brandLogo = document.querySelector('.brand-logo');
 
-    // Inicializar opacidad para la precarga
+    // Establecer opacidad 0 para el body y elementos importantes para evitar parpadeo
     document.body.style.opacity = '0';
-    if (sidebarNav) sidebarNav.style.opacity = '0';
-    if (brandLogo) brandLogo.style.opacity = '0';
+    document.querySelector('.sidebar-nav').style.opacity = '0';
+    document.querySelector('.brand-logo').style.opacity = '0';
 
-    // Aplicar el tema desde localStorage
+    // Aplicar el modo oscuro si está activado en localStorage
     if (currentTheme === 'dark') {
         document.body.classList.add('dark-mode');
         darkModeToggle.innerHTML = '<i class="ti ti-sun"></i>';  // Icono de sol
@@ -523,35 +481,28 @@ window.addEventListener('DOMContentLoaded', () => {
         darkModeToggle.innerHTML = '<i class="ti ti-moon"></i>';  // Icono de luna
     }
 
-    // Usar requestAnimationFrame para una transición fluida
+    // Usar requestAnimationFrame para asegurar que la opacidad se aplique de manera sincronizada
     requestAnimationFrame(() => {
         document.body.style.transition = 'opacity 0.3s ease-in-out';
         document.body.style.opacity = '1';
-
-        if (sidebarNav) {
-            sidebarNav.style.transition = 'opacity 0.3s ease-in-out';
-            sidebarNav.style.opacity = '1';
-        }
-        if (brandLogo) {
-            brandLogo.style.transition = 'opacity 0.3s ease-in-out';
-            brandLogo.style.opacity = '1';
-        }
+        document.querySelector('.sidebar-nav').style.transition = 'opacity 0.3s ease-in-out';
+        document.querySelector('.sidebar-nav').style.opacity = '1';
+        document.querySelector('.brand-logo').style.transition = 'opacity 0.3s ease-in-out';
+        document.querySelector('.brand-logo').style.opacity = '1';
     });
 
-    // Añadir el event listener al botón para cambiar el tema
-    if (darkModeToggle) {
-        darkModeToggle.addEventListener('click', toggleDarkMode);
-    }
+    // Añadir el event listener al icono para cambiar el modo
+    darkModeToggle.addEventListener('click', toggleDarkMode);
 });
 </script>
-<script src="../assets/js/sessions.js" ></script>    
-<script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/js/all.min.js"></script>   
+    
   <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
   <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
   <script src="../assets/js/sidebarmenu.js"></script>
   <script src="../assets/js/app.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/js/all.min.js"></script>  
 </body>
 
 </html>

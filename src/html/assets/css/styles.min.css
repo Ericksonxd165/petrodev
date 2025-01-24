@@ -5348,8 +5348,12 @@ color: black !important;
 .card-img,
 .card-img-top,
 .card-img-bottom {
+  height: 200px;
   width: 100%;
+  object-fit:contain;
+  transition: 1s;
 }
+
 
 .card-img,
 .card-img-top {

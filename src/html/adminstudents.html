@@ -1,8 +1,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SeoDash Free Bootstrap Admin Template by Adminmart</title>
-  <link rel="shortcut icon" type="image/png" href="./assets/images/logos/seodashlogo.png" />
+  <title>Petrodev - Administrador</title>
+  <link rel="shortcut icon" type="image/png" href="./assets/images/logos/foto-logo.ico" />
   <link rel="stylesheet" href=".././node_modules/simplebar/dist/simplebar.min.css">
   <link rel="stylesheet" href="./assets/css/styles.min.css" />
         <style>
@@ -239,7 +239,7 @@ body:not(.dark-mode) .card-img-top:hover {
       <span class="hide-menu">Inicio</span>
     </li>
     <li class="sidebar-item">
-      <a class="sidebar-link" href="./dashboard.html" aria-expanded="false">
+      <a class="sidebar-link " href="./dashboard.html" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
             <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon>
@@ -250,36 +250,26 @@ body:not(.dark-mode) .card-img-top:hover {
     </li>
     <li class="nav-small-cap">
       <i class="ti ti-dots nav-small-cap-icon fs-6"></i>
-      <span class="hide-menu">HUB de Programación</span>
+      <span class="hide-menu">Adminsitracion estudiantil</span>
     </li>
     <li class="sidebar-item">
-      <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+      <a class="sidebar-link activated" href="./ui-buttons.html" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
             <iconify-icon icon="solar:layers-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
           </div>
         </span>
-        <span class="hide-menu">Entorno de Formación</span>
+        <span class="hide-menu">Estudiantes</span>
       </a>
     </li>
     <li class="sidebar-item">
-      <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
-        <span class="icon-container">
-          <div class="icon-circle">
-            <iconify-icon icon="solar:danger-circle-bold-duotone" class="fs-6"></iconify-icon>
-          </div>
-        </span>
-        <span class="hide-menu">Módulos</span>
-      </a>
-    </li>
-    <li class="sidebar-item">
-      <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
+      <a class="sidebar-link " href="./ui-card.html" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
             <iconify-icon icon="solar:bookmark-square-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
           </div>
         </span>
-        <span class="hide-menu">Capacitación</span>
+        <span class="hide-menu">Tareas</span>
       </a>
     </li>
     <li class="sidebar-item">
@@ -313,19 +303,10 @@ body:not(.dark-mode) .card-img-top:hover {
             <iconify-icon icon="solar:login-3-bold-duotone" class="fs-6"></iconify-icon>
           </div>
         </span>
-        <span class="hide-menu">Login</span>
+        <span class="hide-menu">Cerrar sesion</span>
       </a>
     </li>
-    <li class="sidebar-item">
-      <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
-        <span class="icon-container">
-          <div class="icon-circle">
-            <iconify-icon icon="solar:user-plus-rounded-bold-duotone" class="fs-6"></iconify-icon>
-          </div>
-        </span>
-        <span class="hide-menu">Registro</span>
-      </a>
-    </li>
+
   </ul>
 </nav>
           
@@ -359,8 +340,7 @@ body:not(.dark-mode) .card-img-top:hover {
     <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">  
         <!-- Botón "¡Empieza a Codificar!" -->
         <a href="index.html" class="btn" style="background-color: #333; color: white; padding: 10px 20px; border-radius: 5px; display: flex; align-items: center;">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Logo" width="25" height="25" style="margin-right: 10px;">
-            <span>¡Empieza a Codificar!</span>
+            <span>Sesion de Profesor</span>
         </a>
         
         <li class="nav-item dropdown">
@@ -389,88 +369,206 @@ body:not(.dark-mode) .card-img-top:hover {
           </div>
         </nav>
       </header>
-      <!--  Header End -->
-     <!-- Sesiones de Python -->
-<div class="container mt-4">
-  <!-- Título de la sección -->
- <div class="titulo-python">
-    <h3 class="mb-4 text-center fw-bold">Sesiones de Python</h3>
-</div>
-  <!-- Cards -->
-  <div class="row row-cols-1 row-cols-md-3 g-4">
-    <!-- Card 1 -->
-    <div class="col">
-      <div class="card h-100 shadow-sm">
-        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 1">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Introducción al sexo</h5>
-          <p class="card-text">Conceptos básicos y sintaxis inicial.</p>
-          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+      <div class="container mt-4">
+        <!-- Título de la sección -->
+        <div class="titulo-python">
+          <h3 class="mb-4 text-center fw-bold">Administración estudiantil</h3>
+        </div>
+        <!-- Contenedor con desplazamiento -->
+        <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Estudiante</th>
+                <th>Cédula</th>
+                <th>Correo Electrónico</th>
+                <th>Módulo 1</th>
+                <th>Módulo 2</th>
+                <th>Módulo 3</th>
+                <th>Módulo 4</th>
+              </tr>
+            </thead>
+            <tbody id="tablaEstudiantes">
+              <!-- Ejemplo de fila de estudiante -->
+              <tr>
+                <td>Juan Pérez</td>
+                <td>12345678</td>
+                <td>juan.perez@example.com</td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar1">Calificar</button></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar2">Calificar</button></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar3">Calificar</button></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar4">Calificar</button></td>
+              </tr>
+              <tr>
+                <td>María López</td>
+                <td>87654321</td>
+                <td>maria.lopez@example.com</td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar1">Calificar</button></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar2">Calificar</button></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar3">Calificar</button></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar4">Calificar</button></td>
+              </tr>
+              <tr>
+                <td>Carlos García</td>
+                <td>11223344</td>
+                <td>carlos.garcia@example.com</td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar1">Calificar</button></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar2">Calificar</button></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar3">Calificar</button></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar4">Calificar</button></td>
+              </tr>
+              <tr>
+                <td>Ana Martínez</td>
+                <td>55667788</td>
+                <td>ana.martinez@example.com</td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar1">Calificar</button></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar2">Calificar</button></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar3">Calificar</button></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar4">Calificar</button></td>
+              </tr>
+              <tr>
+                <td>Pedro Sánchez</td>
+                <td>99887766</td>
+                <td>pedro.sanchez@example.com</td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar1">Calificar</button></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar2">Calificar</button></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar3">Calificar</button></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar4">Calificar</button></td>
+              </tr>
+              <tr>
+                <td>Lucía Fernández</td>
+                <td>33445566</td>
+                <td>lucia.fernandez@example.com</td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar1">Calificar</button></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar2">Calificar</button></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar3">Calificar</button></td>
+                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar4">Calificar</button></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-    </div>
-    <!-- Card 2 -->
-    <div class="col">
-      <div class="card h-100 shadow-sm">
-        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 2">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Estructuras de Control</h5>
-          <p class="card-text">Uso de condicionales y bucles.</p>
-          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
-        </div>
-      </div>
-    </div>
-    <!-- Card 3 -->
-    <div class="col">
-      <div class="card h-100 shadow-sm">
-        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Funciones y Módulos</h5>
-          <p class="card-text">Definición y reutilización de código.</p>
-          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
-        </div>
-      </div>
-    </div>
-    <!-- Card 4 -->
-    <div class="col">
-      <div class="card h-100 shadow-sm">
-        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 4">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Manejo de Excepciones</h5>
-          <p class="card-text">Control de errores y excepciones.</p>
-          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
-        </div>
-      </div>
-    </div>
-    <!-- Card 5 -->
-    <div class="col">
-      <div class="card h-100 shadow-sm">
-        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 5">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Programación Orientada a Objetos</h5>
-          <p class="card-text">Clases, objetos y métodos.</p>
-          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
-        </div>
-      </div>
-    </div>
-    <!-- Card 6 -->
-    <div class="col">
-      <div class="card h-100 shadow-sm">
-        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 6">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Proyectos Prácticos</h5>
-          <p class="card-text">Aplicación de lo aprendido en proyectos reales.</p>
-          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-          <!-- Contenedor para las flechas -->
-            <div class="arrow-container">
-                <span class="arrow" onclick="window.location.href='ui-card.html'">&#8593;</span> <!-- Flecha hacia arriba -->
-                <span class="arrow" style="visibility: hidden;">&#8594;</span> <!-- No flecha hacia adelante -->
+      
+      <!-- Modales para calificar -->
+      <!-- Modal para Módulo 1 -->
+      <div class="modal fade" id="modalCalificar1" tabindex="-1" aria-labelledby="modalCalificar1Label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalCalificar1Label">Calificar Módulo 1</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body">
+              <form id="formCalificar1">
+                <div class="mb-3">
+                  <label for="calificacion1" class="form-label">Calificación</label>
+                  <input type="number" class="form-control" id="calificacion1" name="calificacion1" min="0" max="100" required>
+                </div>
+                <div class="mb-3">
+                  <label for="scripts1" class="form-label">Scripts</label>
+                  <select class="form-control" id="scripts1" name="scripts1">
+                    <!-- Opciones de scripts del estudiante -->
+                    <option value="script1">Script 1</option>
+                    <option value="script2">Script 2</option>
+                    <!-- Añadir más opciones según sea necesario -->
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Modal para Módulo 2 -->
+      <div class="modal fade" id="modalCalificar2" tabindex="-1" aria-labelledby="modalCalificar2Label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalCalificar2Label">Calificar Módulo 2</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="formCalificar2">
+                <div class="mb-3">
+                  <label for="calificacion2" class="form-label">Calificación</label>
+                  <input type="number" class="form-control" id="calificacion2" name="calificacion2" min="0" max="100" required>
+                </div>
+                <div class="mb-3">
+                  <label for="scripts2" class="form-label">Scripts</label>
+                  <select class="form-control" id="scripts2" name="scripts2">
+                    <!-- Opciones de scripts del estudiante -->
+                    <option value="script1">Script 1</option>
+                    <option value="script2">Script 2</option>
+                    <!-- Añadir más opciones según sea necesario -->
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Modal para Módulo 3 -->
+      <div class="modal fade" id="modalCalificar3" tabindex="-1" aria-labelledby="modalCalificar3Label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalCalificar3Label">Calificar Módulo 3</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="formCalificar3">
+                <div class="mb-3">
+                  <label for="calificacion3" class="form-label">Calificación</label>
+                  <input type="number" class="form-control" id="calificacion3" name="calificacion3" min="0" max="100" required>
+                </div>
+                <div class="mb-3">
+                  <label for="scripts3" class="form-label">Scripts</label>
+                  <select class="form-control" id="scripts3" name="scripts3">
+                    <!-- Opciones de scripts del estudiante -->
+                    <option value="script1">Script 1</option>
+                    <option value="script2">Script 2</option>
+                    <!-- Añadir más opciones según sea necesario -->
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Modal para Módulo 4 -->
+      <div class="modal fade" id="modalCalificar4" tabindex="-1" aria-labelledby="modalCalificar4Label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalCalificar4Label">Calificar Módulo 4</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="formCalificar4">
+                <div class="mb-3">
+                  <label for="calificacion4" class="form-label">Calificación</label>
+                  <input type="number" class="form-control" id="calificacion4" name="calificacion4" min="0" max="100" required>
+                </div>
+                <div class="mb-3">
+                  <label for="scripts4" class="form-label">Scripts</label>
+                  <select class="form-control" id="scripts4" name="scripts4">
+                    <!-- Opciones de scripts del estudiante -->
+                    <option value="script1">Script 1</option>
+                    <option value="script2">Script 2</option>
+                    <!-- Añadir más opciones según sea necesario -->
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
       
         </div>
       </div>
@@ -536,6 +634,7 @@ window.addEventListener('DOMContentLoaded', () => {
   <script src="../assets/js/sidebarmenu.js"></script>
   <script src="../assets/js/app.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/js/all.min.js"></script>  
 </body>
 
 </html>
