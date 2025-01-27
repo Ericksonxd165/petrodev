@@ -272,18 +272,9 @@ body:not(.dark-mode) .card-img-top:hover {
         <span class="hide-menu">Tareas</span>
       </a>
     </li>
+   
     <li class="sidebar-item">
-      <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
-        <span class="icon-container">
-          <div class="icon-circle">
-            <iconify-icon icon="solar:file-text-bold-duotone" class="fs-6"></iconify-icon>
-          </div>
-        </span>
-        <span class="hide-menu">Proyectos</span>
-      </a>
-    </li>
-    <li class="sidebar-item">
-      <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
+      <a class="sidebar-link" href="./admineditor.html" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
             <iconify-icon icon="solar:text-field-focus-bold-duotone" class="fs-6"></iconify-icon>
@@ -296,14 +287,14 @@ body:not(.dark-mode) .card-img-top:hover {
       <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-6"></iconify-icon>
       <span class="hide-menu">Gestión de Usuario</span>
     </li>
-    <li class="sidebar-item">
-      <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+      <li class="sidebar-item">
+      <a class="sidebar-link" href="#" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
-            <iconify-icon icon="solar:login-3-bold-duotone" class="fs-6"></iconify-icon>
+            <i style="color: black;" class="fa-solid fa-right-from-bracket"></i>
           </div>
         </span>
-        <span class="hide-menu">Cerrar sesion</span>
+        <span  id="logoutButton"  class="hide-menu">Cerrar sesion</span>
       </a>
     </li>
 
@@ -361,7 +352,7 @@ body:not(.dark-mode) .card-img-top:hover {
                         <i class="ti ti-list-check fs-6"></i>
                         <p class="mb-0 fs-3">My Task</p>
                     </a>
-                    <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                    <a href="#" id="logoutButton" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                 </div>
                 </div>
               </li>
@@ -475,10 +466,43 @@ body:not(.dark-mode) .card-img-top:hover {
           <!-- Añadir más tarjetas de tareas según sea necesario -->
         </div>
       </div>
-      
 
-    
-<script>
+
+     
+
+      <script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Función para ver el código de un proyecto entregado
+  window.viewCode = (studentId, projectId) => {
+    window.location.href = `/admineditor.html?studentId=${studentId}&projectId=${projectId}`;
+  };
+
+  // Función para cargar las entregas de una tarea
+  const loadEntregas = async (taskId) => {
+    const response = await fetch(`/tasks/${taskId}/entregas`);
+    const entregas = await response.json();
+    document.getElementById(`entregas-${taskId}`).innerText = entregas.length;
+    let entregasHtml = '';
+    entregas.forEach(entrega => {
+      entregasHtml += `
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">${entrega.nombre}</h5>
+            <p class="card-text"><strong>Proyecto:</strong> ${entrega.title || 'Archivo adjunto'}</p>
+            <p class="card-text"><strong>Fecha de Entrega:</strong> ${entrega.fecha_entrega}</p>
+            <p class="card-text"><strong>Calificación:</strong> ${entrega.calificacion || 'Sin calificar'}</p>
+            <div class="d-flex justify-content-end">
+              <button class="btn btn-primary me-2" onclick="viewCode(${entrega.user_id}, ${entrega.project_id})">Ver Código</button>
+              <button class="btn btn-primary me-2" onclick="calificarEntrega(${entrega.id})">Calificar</button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+    document.getElementById('entregasContainer').innerHTML = entregasHtml;
+    modalEntregas.show();
+  };
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   const tareasCreadas = document.getElementById('tareasCreadas');
@@ -486,6 +510,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const formEditarTarea = document.getElementById('formEditarTarea');
   const modalCrearTarea = new bootstrap.Modal(document.getElementById('modalCrearTarea'));
   const modalEditarTarea = new bootstrap.Modal(document.getElementById('modalEditarTarea'));
+  const modalEntregas = new bootstrap.Modal(document.getElementById('modalEntregas'));
   let editingTaskId = null;
 
   // Función para cargar las tareas
@@ -538,14 +563,19 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="card-text"><strong>Calificación:</strong> ${entrega.calificacion || 'Sin calificar'}</p>
             <div class="d-flex justify-content-end">
               <button class="btn btn-primary me-2" onclick="calificarEntrega(${entrega.id})">Calificar</button>
+              <button class="btn btn-info" onclick="verProyecto(${entrega.project_id}, ${entrega.user_id})">Ver Proyecto</button>
             </div>
           </div>
         </div>
       `;
     });
-    const modalEntregas = new bootstrap.Modal(document.getElementById('modalEntregas'));
     document.getElementById('entregasContainer').innerHTML = entregasHtml;
     modalEntregas.show();
+  };
+
+  // Función para ver el proyecto en admineditor.html
+  window.verProyecto = (projectId, userId) => {
+    window.location.href = `/admineditor.html?studentId=${userId}&projectId=${projectId}`;
   };
 
   // Función para calificar una entrega
@@ -645,6 +675,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadTasks();
 });
 
+
 // Función que activa o desactiva el modo oscuro
 function toggleDarkMode() {
     const body = document.body;
@@ -695,6 +726,28 @@ window.addEventListener('DOMContentLoaded', () => {
     // Añadir el event listener al icono para cambiar el modo
     darkModeToggle.addEventListener('click', toggleDarkMode);
 });
+
+
+// Manejar el cierre de sesión
+async function logout() {
+    const response = await fetch('/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      localStorage.removeItem('user');
+      window.location.href = '/index.html';
+    } else {
+      alert(result.message);
+    }
+  }
+
+  document.getElementById('logoutButton').addEventListener('click', logout);
+
 </script>
     
   <script src="../assets/libs/jquery/dist/jquery.min.js"></script>

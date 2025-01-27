@@ -673,23 +673,29 @@ body.dark-mode .brand-logo .logo-img img {
         <!-- Aquí se cargarán las tareas dinámicamente -->
       </div>
     </div>
-        
-        <!-- Ventana emergente para entregar la tarea -->
-        <div id="ventana-emergente" class="ventana-emergente" style="display:none;">
-            <form id="formulario-entrega">
-                <label for="titulo">Título:</label>
-                <input type="text" id="titulo" name="titulo" required>
-                <label for="nombre">Tu Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required>
-                <label for="cedula">Cédula de Identidad:</label>
-                <input type="text" id="cedula" name="cedula" required>
-                <label for="archivo">Adjuntar Archivo:</label>
-                <input type="file" id="archivo" name="archivo" accept=".pdf,.docx,.zip,.rar" required>
-                <button type="submit">Enviar</button>
-                <button type="button" id="cerrar-btn">Cerrar</button>
+
+    <div class="modal fade" id="modalEntregarTarea" tabindex="-1" aria-labelledby="modalEntregarTareaLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalEntregarTareaLabel">Entregar Tarea</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="formEntregarTarea">
+              <div class="mb-3">
+                <label for="projectSelect" class="form-label">Selecciona un Proyecto</label>
+                <select class="form-control" id="projectSelect" required>
+                  <!-- Opciones de proyectos se cargarán dinámicamente -->
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary">Entregar</button>
             </form>
+          </div>
         </div>
+      </div>
     </div>
+    
 
     <!-- Consejos de Python -->
     <div id="consejos-python" class="consejos-python">
@@ -702,9 +708,11 @@ body.dark-mode .brand-logo .logo-img img {
 <!-- Script para las funcionalidades -->
 <script>
 
-
 document.addEventListener('DOMContentLoaded', () => {
   const tareasPendientes = document.getElementById('tareasPendientes');
+  const modalEntregarTarea = new bootstrap.Modal(document.getElementById('modalEntregarTarea'));
+  const formEntregarTarea = document.getElementById('formEntregarTarea');
+  let selectedTaskId = null;
 
   // Función para cargar las tareas visibles
   const loadVisibleTasks = async () => {
@@ -721,7 +729,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <p class="card-text"><strong>Módulo:</strong> ${task.modulo}</p>
           <p class="card-text"><strong>Fecha Límite:</strong> ${task.fecha_limite}</p>
           <div class="d-flex justify-content-end">
-            <button class="btn btn-primary me-2" onclick="entregarTarea(${task.id})">Entregar</button>
+            <button class="btn btn-primary me-2" onclick="openEntregarModal(${task.id})">Entregar</button>
           </div>
         </div>
       `;
@@ -729,30 +737,42 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  // Función para entregar una tarea
-  window.entregarTarea = async (taskId) => {
-    const project_id = prompt('Ingrese el ID del proyecto que desea entregar (deje en blanco si desea adjuntar un archivo)');
-    let archivo = null;
-
-    if (!project_id) {
-      archivo = prompt('Ingrese la URL del archivo .py que desea adjuntar');
-    }
-
-    const response = await fetch(`/tasks/${taskId}/entregar`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ project_id, archivo })
+  // Función para abrir el modal de entrega
+  window.openEntregarModal = async (taskId) => {
+    selectedTaskId = taskId;
+    const response = await fetch('/getProjects');
+    const projects = await response.json();
+    const projectSelect = document.getElementById('projectSelect');
+    projectSelect.innerHTML = '';
+    projects.forEach(project => {
+      const option = document.createElement('option');
+      option.value = project.id;
+      option.textContent = project.title;
+      projectSelect.appendChild(option);
     });
-
-    const result = await response.json();
-    alert(result.message);
-    loadVisibleTasks();
+    modalEntregarTarea.show();
   };
+
+  // Función para entregar una tarea
+  formEntregarTarea.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const project_id = document.getElementById('projectSelect').value;
+    if (confirm('¿Estás seguro de que deseas entregar este proyecto?')) {
+      const response = await fetch(`/tasks/${selectedTaskId}/entregar`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ project_id })
+      });
+      const result = await response.json();
+      alert(result.message);
+      modalEntregarTarea.hide();
+      loadVisibleTasks();
+    }
+  });
 
   // Cargar las tareas visibles al cargar la página
   loadVisibleTasks();
 });
-
 
 
     // Mostrar ventana emergente de entrega de tarea

@@ -180,6 +180,10 @@ app.get('/capacitacion.html', isProfesor, (req, res) => {
   res.sendFile(path.join(__dirname, 'html', 'capacitacion.html'));
 });
 
+app.get('/admineditor.html', isAdmin, (req, res) => {
+  res.sendFile(path.join(__dirname, 'html', 'admineditor.html'));
+});
+
 app.get('/editor.html', isProfesor, (req, res) => {
   res.sendFile(path.join(__dirname, 'html', 'editor.html'));
 });
@@ -281,9 +285,73 @@ app.post('/register', async (req, res) => {
   });
 });
 
+// Ruta para obtener todos los estudiantes
+app.get('/students', isAdmin, (req, res) => {
+  const sql = 'SELECT id, nombre FROM usuarios WHERE rol = "estudiante"';
+  db.query(sql, (err, results) => {
+    if (err) return res.status(500).json({ message: 'Error al obtener los estudiantes' });
+    return res.status(200).json(results);
+  });
+});
+
+// Ruta para obtener todos los estudiantes que han entregado proyectos
+app.get('/studentsWithDeliveries', isAdmin, (req, res) => {
+  const sql = `
+    SELECT DISTINCT u.id, u.nombre 
+    FROM usuarios u
+    JOIN entregas e ON u.id = e.user_id
+  `;
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error('Error al obtener los estudiantes:', err);
+      return res.status(500).json({ message: 'Error al obtener los estudiantes' });
+    }
+
+    return res.status(200).json(results);
+  });
+});
+// Middleware para verificar si el usuario es administrador
+function isAdmin(req, res, next) {
+  if (req.session.user && req.session.user.rol === 'admin') {
+    return next();
+  } else {
+    res.redirect('/index.html');
+  }
+}
 
 
 
+// Ruta para obtener los proyectos entregados de un estudiante específico
+app.get('/students/:id/deliveredProjects', isAdmin, (req, res) => {
+  const { id } = req.params;
+  const sql = `
+    SELECT p.id, p.title 
+    FROM projects p
+    JOIN entregas e ON p.id = e.project_id
+    WHERE e.user_id = ?
+  `;
+  db.query(sql, [id], (err, results) => {
+    if (err) {
+      console.error('Error al obtener los proyectos entregados:', err);
+      return res.status(500).json({ message: 'Error al obtener los proyectos entregados' });
+    }
+    return res.status(200).json(results);
+  });
+});
+
+// Ruta para obtener el contenido de un proyecto específico entregado
+app.get('/deliveredProjectContent/:id', isAdmin, (req, res) => {
+  const { id } = req.params;
+  const sql = 'SELECT code FROM projects WHERE id = ?';
+  db.query(sql, [id], (err, results) => {
+    if (err) {
+      console.error('Error al obtener el proyecto:', err);
+      return res.status(500).json({ message: 'Error al obtener el proyecto' });
+    }
+    if (results.length === 0) return res.status(404).json({ message: 'Proyecto no encontrado' });
+    return res.status(200).json(results[0]);
+  });
+});
 
 // Ruta para obtener las tareas visibles para los estudiantes
 app.get('/tasks/visible', isEstudiante, (req, res) => {

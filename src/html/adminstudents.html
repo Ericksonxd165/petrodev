@@ -272,18 +272,9 @@ body:not(.dark-mode) .card-img-top:hover {
         <span class="hide-menu">Tareas</span>
       </a>
     </li>
+
     <li class="sidebar-item">
-      <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
-        <span class="icon-container">
-          <div class="icon-circle">
-            <iconify-icon icon="solar:file-text-bold-duotone" class="fs-6"></iconify-icon>
-          </div>
-        </span>
-        <span class="hide-menu">Proyectos</span>
-      </a>
-    </li>
-    <li class="sidebar-item">
-      <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
+      <a class="sidebar-link" href="./admineditor.html" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
             <iconify-icon icon="solar:text-field-focus-bold-duotone" class="fs-6"></iconify-icon>
@@ -297,7 +288,7 @@ body:not(.dark-mode) .card-img-top:hover {
       <span class="hide-menu">Gestión de Usuario</span>
     </li>
     <li class="sidebar-item">
-      <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+      <a class="sidebar-link" href="#" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
             <iconify-icon icon="solar:login-3-bold-duotone" class="fs-6"></iconify-icon>
@@ -626,6 +617,28 @@ window.addEventListener('DOMContentLoaded', () => {
     // Añadir el event listener al icono para cambiar el modo
     darkModeToggle.addEventListener('click', toggleDarkMode);
 });
+
+
+
+// Manejar el cierre de sesión
+async function logout() {
+    const response = await fetch('/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      localStorage.removeItem('user');
+      window.location.href = '/index.html';
+    } else {
+      alert(result.message);
+    }
+  }
+
+  document.getElementById('logoutButton').addEventListener('click', logout);
 </script>
     
   <script src="../assets/libs/jquery/dist/jquery.min.js"></script>

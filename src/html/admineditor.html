@@ -2,9 +2,28 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Petrodev - Administrador</title>
-  <link rel="shortcut icon" type="image/png" href="./assets/images/logos/foto-logo.ico" />
-  <link rel="stylesheet" href=".././node_modules/simplebar/dist/simplebar.min.css">
+  <link rel="icon" href="./assets/images/logos/foto-logo.ico" type="image/x-icon">  
+  <link rel="stylesheet" href="../../node_modules/simplebar/dist/simplebar.min.css">
   <link rel="stylesheet" href="./assets/css/styles.min.css" />
+  <link rel="stylesheet" href="./assets/css/styleeditor.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+  <script defer src="https://cdn.jsdelivr.net/pyodide/v0.21.0/full/pyodide.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
+  <style>
+      #result {
+          border: 1px solid #000000;
+          padding: 10px;
+          margin-top: 10px;
+          height: 150px;
+          overflow-y: auto;
+          white-space: pre;
+      }
+      #loading {
+          display: none;
+      }
+  </style>
+</head>
         <style>
     /* Estilo para las flechas de navegación */
     .arrow {
@@ -272,16 +291,7 @@ body:not(.dark-mode) .card-img-top:hover {
         <span class="hide-menu">Tareas</span>
       </a>
     </li>
-    <li class="sidebar-item">
-      <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
-        <span class="icon-container">
-          <div class="icon-circle">
-            <iconify-icon icon="solar:file-text-bold-duotone" class="fs-6"></iconify-icon>
-          </div>
-        </span>
-        <span class="hide-menu">Proyectos</span>
-      </a>
-    </li>
+
     <li class="sidebar-item">
       <a class="sidebar-link activated" href="./admineditor.html" aria-expanded="false">
         <span class="icon-container">
@@ -370,10 +380,170 @@ body:not(.dark-mode) .card-img-top:hover {
         </nav>
       </header>
 
-      
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <div class="selector">    
+              <select name="students" id="students" style="border-radius:5px 0px 0px 5px ;">
+                <option value="">-Selecciona un estudiante-</option>
+              </select>
+              <select name="projects" id="projects" style="border-radius:5px 0px 0px 5px ;">
+                <option value="">-Selecciona un proyecto-</option>
+              </select>
+              <button class="button-act" id="open-project" style="margin-right: 10px;"><i class="fa-solid fa-file"></i></button> 
 
-    
+              <button class="button-act" id="run" disabled>
+                <i id="run-icon" class="fa-solid fa-play"></i>
+                <i id="loading-icon" class="fa-solid fa-play" style="display: none;"></i>
+              </button>
+            </div>
+            <div id="editor" style="height: 310px; width: 100%;"></div>
+            <div id="result"></div>
+          </div>
+        </div>
+      </div>
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+  var editor = CodeMirror(document.getElementById('editor'), {
+    value: "print('¡Hola, mundo!')",
+    mode: "python",
+    lineNumbers: true
+  });
+
+  // Función para cargar estudiantes
+  const loadStudents = async () => {
+    try {
+      const response = await fetch('/studentsWithDeliveries');
+      if (!response.ok) {
+        throw new Error('Error al obtener los estudiantes');
+      }
+      const students = await response.json();
+      if (!Array.isArray(students)) {
+        throw new Error('La respuesta no es un array');
+      }
+      const studentSelector = document.getElementById('students');
+      studentSelector.innerHTML = '<option value="">-Selecciona un estudiante-</option>' + students.map(student => `<option value="${student.id}">${student.nombre}</option>`).join('');
+    } catch (error) {
+      console.error('Error al cargar estudiantes:', error);
+    }
+  };
+
+  // Función para cargar proyectos entregados de un estudiante
+  const loadProjects = async (studentId) => {
+    try {
+      const response = await fetch(`/students/${studentId}/deliveredProjects`);
+      if (!response.ok) {
+        throw new Error('Error al obtener los proyectos entregados');
+      }
+      const projects = await response.json();
+      if (!Array.isArray(projects)) {
+        throw new Error('La respuesta no es un array');
+      }
+      const projectSelector = document.getElementById('projects');
+      projectSelector.innerHTML = '<option value="">-Selecciona un proyecto-</option>' + projects.map(project => `<option value="${project.id}">${project.title}</option>`).join('');
+    } catch (error) {
+      console.error('Error al cargar proyectos:', error);
+    }
+  };
+
+  // Asegurarse de que los elementos existen antes de agregar eventos
+  const studentSelector = document.getElementById('students');
+  const projectSelector = document.getElementById('projects');
+
+  if (studentSelector && projectSelector) {
+    // Cargar proyectos cuando se selecciona un estudiante
+    studentSelector.addEventListener('change', (e) => {
+      loadProjects(e.target.value);
+    });
+
+    // Cargar el código del proyecto seleccionado
+    projectSelector.addEventListener('change', async (e) => {
+      try {
+        const projectId = e.target.value;
+        const response = await fetch(`/deliveredProjectContent/${projectId}`);
+        if (!response.ok) {
+          throw new Error('Error al obtener el contenido del proyecto');
+        }
+        const project = await response.json();
+        editor.setValue(project.code);
+      } catch (error) {
+        console.error('Error al cargar el contenido del proyecto:', error);
+      }
+    });
+  } else {
+    console.error('No se encontraron los elementos students o projects en el DOM');
+  }
+
+  // Función para cargar Pyodide y ejecutar el código
+  async function loadPyodideAndRun() {
+    const runButton = document.getElementById('run');
+    const runIcon = document.getElementById('run-icon');
+    const loadingIcon = document.getElementById('loading-icon');
+    runIcon.style.display = 'none';
+    loadingIcon.style.display = 'inline-block';
+    runButton.disabled = true;
+
+    const pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.21.0/full/" });
+
+    runIcon.style.display = 'inline-block';
+    loadingIcon.style.display = 'none';
+    runButton.disabled = false;
+
+    runButton.addEventListener('click', async () => {
+      const code = editor.getValue();
+      const resultDiv = document.getElementById('result');
+      resultDiv.textContent = 'Ejecutando...';
+      try {
+        // Redirigir la salida estándar a resultDiv
+        pyodide.runPython(`
+          import sys
+          class StdoutRedirector:
+            def __init__(self):
+              self.content = ""
+            def write(self, message):
+              self.content += message
+            def flush(self):
+              pass
+          sys.stdout = StdoutRedirector()
+        `);
+
+        await pyodide.runPythonAsync(code);
+
+        // Obtener el contenido de StdoutRedirector
+        let output = pyodide.runPython('sys.stdout.content');
+        resultDiv.textContent = output;
+      } catch (error) {
+        resultDiv.textContent = error;
+      }
+    });
+  }
+
+  // Función para obtener parámetros de la URL
+  function getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+      studentId: params.get('studentId'),
+      projectId: params.get('projectId')
+    };
+  }
+
+  // Inicializar la carga de estudiantes y Pyodide
+  loadStudents().then(() => {
+    const { studentId, projectId } = getQueryParams();
+    if (studentId) {
+      document.getElementById('students').value = studentId;
+      loadProjects(studentId).then(() => {
+        if (projectId) {
+          document.getElementById('projects').value = projectId;
+          document.getElementById('projects').dispatchEvent(new Event('change'));
+        }
+      });
+    }
+  }).catch(error => {
+    console.error('Error al cargar estudiantes:', error);
+  });
+  loadPyodideAndRun();
+});
 // Función que activa o desactiva el modo oscuro
 function toggleDarkMode() {
     const body = document.body;
@@ -424,6 +594,28 @@ window.addEventListener('DOMContentLoaded', () => {
     // Añadir el event listener al icono para cambiar el modo
     darkModeToggle.addEventListener('click', toggleDarkMode);
 });
+
+
+// Manejar el cierre de sesión
+async function logout() {
+    const response = await fetch('/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      localStorage.removeItem('user');
+      window.location.href = '/index.html';
+    } else {
+      alert(result.message);
+    }
+  }
+
+  document.getElementById('logoutButton').addEventListener('click', logout);
+
 </script>
     
   <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
