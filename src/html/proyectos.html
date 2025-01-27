@@ -728,33 +728,89 @@ document.addEventListener("DOMContentLoaded", function() {
       document.getElementById('user-cedula').textContent = user.cedula;
     }
   };
-
- document.addEventListener("DOMContentLoaded", function() {
-    fetch('/getProjects')
-      .then(response => response.json())
-      .then(projects => {
-        const listaTareas = document.getElementById('lista-tareas');
+  document.addEventListener('DOMContentLoaded', () => {
+    // Función para cargar los proyectos del usuario
+    const loadProjects = async () => {
+      try {
+        const response = await fetch('/getProjects');
+        if (!response.ok) {
+          throw new Error('Error al obtener los proyectos');
+        }
+        const projects = await response.json();
+        const tareasContainer = document.getElementById('lista-tareas');
+        tareasContainer.innerHTML = '';
         projects.forEach(project => {
-          const tareaDiv = document.createElement('div');
-          tareaDiv.className = 'tarea';
-          tareaDiv.innerHTML = `
-            <p><strong>Proyecto:</strong> ${project.title}</p>
-            <p><strong>Fecha:</strong> ${new Date(project.created_at).toLocaleDateString()}</p>
-            <button class="btn-entregar" onclick="editarProyecto(${project.id})">Editar</button>
+          const projectElement = document.createElement('div');
+          projectElement.className = 'tarea';
+          projectElement.innerHTML = `
+       <div class="card-body">
+              <h5 class="card-title">${project.title}</h5>
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-primary me-2" onclick="editProject(${project.id})">Editar</button>
+                <button class="btn btn-secondary me-2" onclick="changeTitle(${project.id})">Cambiar Título</button>
+                <button class="btn btn-danger" onclick="deleteProject(${project.id})">Eliminar</button>
+              </div>
+            </div>
           `;
-          listaTareas.appendChild(tareaDiv);
+          tareasContainer.appendChild(projectElement);
         });
-      })
-      .catch(error => {
-        console.error('Error al cargar los proyectos:', error);
-      });
+      } catch (error) {
+        console.error('Error al cargar proyectos:', error);
+      }
+    };
+
+    // Función para editar un proyecto
+    window.editProject = (projectId) => {
+      window.location.href = `/editor.html?projectId=${projectId}`;
+    };
+
+    // Función para cambiar el título de un proyecto
+    window.changeTitle = async (projectId) => {
+      const newTitle = prompt('Ingrese el nuevo título del proyecto:');
+      if (newTitle !== null) {
+        try {
+          const response = await fetch(`/updateProjectTitle/${projectId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: newTitle })
+          });
+          const result = await response.json();
+          if (response.ok) {
+            alert('Título actualizado exitosamente');
+            loadProjects();
+          } else {
+            alert(result.message);
+          }
+        } catch (error) {
+          console.error('Error al actualizar el título del proyecto:', error);
+        }
+      }
+    };
+
+    // Función para eliminar un proyecto
+    window.deleteProject = async (projectId) => {
+      const confirmDelete = confirm('¿Está seguro de que desea eliminar este proyecto?');
+      if (confirmDelete) {
+        try {
+          const response = await fetch(`/deleteProject/${projectId}`, {
+            method: 'DELETE'
+          });
+          const result = await response.json();
+          if (response.ok) {
+            alert('Proyecto eliminado exitosamente');
+            loadProjects();
+          } else {
+            alert(result.message);
+          }
+        } catch (error) {
+          console.error('Error al eliminar el proyecto:', error);
+        }
+      }
+    };
+
+    // Cargar los proyectos al cargar la página
+    loadProjects();
   });
-
-  function editarProyecto(projectId) {
-    window.location.href = `editor.html?projectId=${projectId}`;
-  }
-
-
 
     // Mostrar ventana emergente de entrega de tarea
     const botonesEntregar = document.querySelectorAll(".btn-entregar");

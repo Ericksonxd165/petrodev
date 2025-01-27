@@ -498,6 +498,38 @@ app.get('/getProjects', isAuthenticated, (req, res) => {
   });
 });
 
+// Ruta para actualizar el título de un proyecto
+app.put('/updateProjectTitle/:id', isAuthenticated, (req, res) => {
+  const projectId = req.params.id;
+  const { title } = req.body;
+  const userId = req.session.user.id;
+
+  const sql = 'UPDATE projects SET title = ? WHERE id = ? AND user_id = ?';
+  db.query(sql, [title, projectId, userId], (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error al actualizar el título del proyecto' });
+    } else {
+      return res.status(200).json({ message: 'Título actualizado exitosamente' });
+    }
+  });
+});
+
+// Ruta para eliminar un proyecto
+app.delete('/deleteProject/:id', isAuthenticated, (req, res) => {
+  const projectId = req.params.id;
+  const userId = req.session.user.id;
+
+  const sql = 'DELETE FROM projects WHERE id = ? AND user_id = ?';
+  db.query(sql, [projectId, userId], (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error al eliminar el proyecto' });
+    } else {
+      return res.status(200).json({ message: 'Proyecto eliminado exitosamente' });
+    }
+  });
+});
+
+
 // Ruta para obtener el contenido de un proyecto
 app.get('/getProjectContent/:id', isAuthenticated, (req, res) => {
   const projectId = req.params.id;
