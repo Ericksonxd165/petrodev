@@ -138,6 +138,35 @@ function isProfesor(req, res, next) {
   }
 }
 
+// Rutas protegidas para estudiantes
+app.get('/dashboard.html', isEstudiante, (req, res) => {
+  res.sendFile(path.join(__dirname, 'html', 'dashboard.html'));
+});
+
+app.get('/library.html', isEstudiante, (req, res) => {
+  res.sendFile(path.join(__dirname, 'html', 'library.html'));
+});
+
+app.get('/capacitacion.html', isEstudiante, (req, res) => {
+  res.sendFile(path.join(__dirname, 'html', 'capacitacion.html'));
+});
+
+app.get('/editor.html', isEstudiante, (req, res) => {
+  res.sendFile(path.join(__dirname, 'html', 'editor.html'));
+});
+
+app.get('/proyectos.html', isEstudiante, (req, res) => {
+  res.sendFile(path.join(__dirname, 'html', 'proyectos.html'));
+});
+
+app.get('/modulos.html', isEstudiante, (req, res) => {
+  res.sendFile(path.join(__dirname, 'html', 'modulos.html'));
+});
+
+app.get('/tareas.html', isEstudiante, (req, res) => {
+  res.sendFile(path.join(__dirname, 'html', 'tareas.html'));
+});
+
 // Rutas protegidas para profesores
 app.get('/dashboard.html', isProfesor, (req, res) => {
   res.sendFile(path.join(__dirname, 'html', 'dashboard.html'));
@@ -251,6 +280,141 @@ app.post('/register', async (req, res) => {
     });
   });
 });
+
+
+
+
+
+// Ruta para obtener las tareas visibles para los estudiantes
+app.get('/tasks/visible', isEstudiante, (req, res) => {
+  const sql = 'SELECT * FROM tasks WHERE visible = TRUE';
+  db.query(sql, (err, results) => {
+    if (err) return res.status(500).json({ message: 'Error al obtener las tareas' });
+    return res.status(200).json(results);
+  });
+});
+
+// Ruta para entregar una tarea
+app.post('/tasks/:id/entregar', isEstudiante, (req, res) => {
+  const { id } = req.params;
+  const { project_id, archivo } = req.body;
+  const user_id = req.session.user.id;
+
+  const sql = 'INSERT INTO entregas (task_id, user_id, project_id, archivo) VALUES (?, ?, ?, ?)';
+  db.query(sql, [id, user_id, project_id, archivo], (err, result) => {
+    if (err) return res.status(500).json({ message: 'Error al entregar la tarea' });
+    return res.status(200).json({ message: 'Tarea entregada exitosamente' });
+  });
+});
+
+// Ruta para obtener las entregas de una tarea específica
+app.get('/tasks/:id/entregas', isAdmin, (req, res) => {
+  const { id } = req.params;
+  const sql = `
+    SELECT e.*, u.nombre, p.title 
+    FROM entregas e
+    JOIN usuarios u ON e.user_id = u.id
+    LEFT JOIN projects p ON e.project_id = p.id
+    WHERE e.task_id = ?
+  `;
+  db.query(sql, [id], (err, results) => {
+    if (err) return res.status(500).json({ message: 'Error al obtener las entregas' });
+    return res.status(200).json(results);
+  });
+});
+
+// Ruta para calificar una entrega
+app.put('/entregas/:id/calificar', isAdmin, (req, res) => {
+  const { id } = req.params;
+  const { calificacion } = req.body;
+
+  const sql = 'UPDATE entregas SET calificacion = ? WHERE id = ?';
+  db.query(sql, [calificacion, id], (err, result) => {
+    if (err) return res.status(500).json({ message: 'Error al calificar la entrega' });
+    return res.status(200).json({ message: 'Entrega calificada exitosamente' });
+  });
+});
+
+
+
+
+// Ruta para obtener todas las tareas
+app.get('/tasks', isAdmin, (req, res) => {
+  const sql = 'SELECT * FROM tasks';
+  db.query(sql, (err, results) => {
+    if (err) return res.status(500).json({ message: 'Error al obtener las tareas' });
+    return res.status(200).json(results);
+  });
+});
+
+
+// Ruta para obtener una tarea específica
+app.get('/tasks/:id', isAdmin, (req, res) => {
+  const { id } = req.params;
+  const sql = 'SELECT * FROM tasks WHERE id = ?';
+  db.query(sql, [id], (err, results) => {
+    if (err) return res.status(500).json({ message: 'Error al obtener la tarea' });
+    if (results.length === 0) return res.status(404).json({ message: 'Tarea no encontrada' });
+    return res.status(200).json(results[0]);
+  });
+});
+// Ruta para añadir una nueva tarea
+app.post('/tasks', isAdmin, (req, res) => {
+  const { titulo, enunciado, modulo, fecha_limite } = req.body;
+
+  // Verificar si ya existen 4 tareas para el módulo
+  const checkSql = 'SELECT COUNT(*) AS count FROM tasks WHERE modulo = ?';
+  db.query(checkSql, [modulo], (err, results) => {
+    if (err) return res.status(500).json({ message: 'Error al verificar las tareas' });
+    if (results[0].count >= 4) {
+      return res.status(400).json({ message: 'Solo se pueden crear 4 tareas por módulo' });
+    }
+
+    const sql = 'INSERT INTO tasks (titulo, enunciado, modulo, fecha_limite, visible) VALUES (?, ?, ?, ?, ?)';
+    db.query(sql, [titulo, enunciado, modulo, fecha_limite, true], (err, result) => {
+      if (err) return res.status(500).json({ message: 'Error al crear la tarea' });
+      return res.status(200).json({ message: 'Tarea creada exitosamente' });
+    });
+  });
+});
+
+// Ruta para actualizar una tarea
+app.put('/tasks/:id', isAdmin, (req, res) => {
+  const { id } = req.params;
+  const { titulo, enunciado, modulo, fecha_limite } = req.body;
+
+  const sql = 'UPDATE tasks SET titulo = ?, enunciado = ?, modulo = ?, fecha_limite = ? WHERE id = ?';
+  db.query(sql, [titulo, enunciado, modulo, fecha_limite, id], (err, result) => {
+    if (err) return res.status(500).json({ message: 'Error al actualizar la tarea' });
+    return res.status(200).json({ message: 'Tarea actualizada exitosamente' });
+  });
+});
+
+// Ruta para eliminar una tarea
+app.delete('/tasks/:id', isAdmin, (req, res) => {
+  const { id } = req.params;
+
+  const sql = 'DELETE FROM tasks WHERE id = ?';
+  db.query(sql, [id], (err, result) => {
+    if (err) return res.status(500).json({ message: 'Error al eliminar la tarea' });
+    return res.status(200).json({ message: 'Tarea eliminada exitosamente' });
+  });
+});
+
+// Ruta para cambiar la visibilidad de una tarea
+app.put('/tasks/:id/visibility', isAdmin, (req, res) => {
+  const { id } = req.params;
+  const { visible } = req.body;
+
+  const sql = 'UPDATE tasks SET visible = ? WHERE id = ?';
+  db.query(sql, [visible, id], (err, result) => {
+    if (err) return res.status(500).json({ message: 'Error al cambiar la visibilidad de la tarea' });
+    return res.status(200).json({ message: 'Visibilidad de la tarea actualizada exitosamente' });
+  });
+});
+
+
+
 
 // Ruta para obtener los proyectos del usuario autenticado
 app.get('/getProjects', isAuthenticated, (req, res) => {

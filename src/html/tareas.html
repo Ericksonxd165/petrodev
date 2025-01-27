@@ -667,21 +667,12 @@ body.dark-mode .brand-logo .logo-img img {
       </header>
       <!--  Header End -->
    <div class="container">
-    <!-- Sección de Tareas (Minimalista y elegante) -->
-    <div id="tareas" class="tareas">
-        <h2>Tareas</h2>
-        <div id="lista-tareas" class="lista-tareas">
-            <!-- Aquí se mostrarán las tareas dinámicamente, si existen -->
-            <div class="tarea">
-                <p><strong>Tarea 1:</strong>  putaaas en Python</p>
-                <button class="btn-entregar">Entregar Tarea</button>
-            </div>
-            <div class="tarea">
-                <p><strong>Tarea 2:</strong> Resuelve el ejercicio de listas</p>
-                <button class="btn-entregar">Entregar Tarea</button>
-            </div>
-        </div>
-        
+    <div class="container mt-4">
+      <h3 class="fw-bold">Tareas Pendientes</h3>
+      <div id="tareasPendientes">
+        <!-- Aquí se cargarán las tareas dinámicamente -->
+      </div>
+    </div>
         
         <!-- Ventana emergente para entregar la tarea -->
         <div id="ventana-emergente" class="ventana-emergente" style="display:none;">
@@ -710,6 +701,60 @@ body.dark-mode .brand-logo .logo-img img {
 
 <!-- Script para las funcionalidades -->
 <script>
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const tareasPendientes = document.getElementById('tareasPendientes');
+
+  // Función para cargar las tareas visibles
+  const loadVisibleTasks = async () => {
+    const response = await fetch('/tasks/visible');
+    const tasks = await response.json();
+    tareasPendientes.innerHTML = '';
+    tasks.forEach(task => {
+      const taskCard = document.createElement('div');
+      taskCard.classList.add('card', 'mb-3');
+      taskCard.innerHTML = `
+        <div class="card-body">
+          <h5 class="card-title">${task.titulo}</h5>
+          <p class="card-text">${task.enunciado}</p>
+          <p class="card-text"><strong>Módulo:</strong> ${task.modulo}</p>
+          <p class="card-text"><strong>Fecha Límite:</strong> ${task.fecha_limite}</p>
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-primary me-2" onclick="entregarTarea(${task.id})">Entregar</button>
+          </div>
+        </div>
+      `;
+      tareasPendientes.appendChild(taskCard);
+    });
+  };
+
+  // Función para entregar una tarea
+  window.entregarTarea = async (taskId) => {
+    const project_id = prompt('Ingrese el ID del proyecto que desea entregar (deje en blanco si desea adjuntar un archivo)');
+    let archivo = null;
+
+    if (!project_id) {
+      archivo = prompt('Ingrese la URL del archivo .py que desea adjuntar');
+    }
+
+    const response = await fetch(`/tasks/${taskId}/entregar`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ project_id, archivo })
+    });
+
+    const result = await response.json();
+    alert(result.message);
+    loadVisibleTasks();
+  };
+
+  // Cargar las tareas visibles al cargar la página
+  loadVisibleTasks();
+});
+
+
+
     // Mostrar ventana emergente de entrega de tarea
     const botonesEntregar = document.querySelectorAll(".btn-entregar");
     botonesEntregar.forEach(btn => {

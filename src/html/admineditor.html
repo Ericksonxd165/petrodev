@@ -239,7 +239,7 @@ body:not(.dark-mode) .card-img-top:hover {
       <span class="hide-menu">Inicio</span>
     </li>
     <li class="sidebar-item">
-      <a class="sidebar-link " href="./dashboard.html" aria-expanded="false">
+      <a class="sidebar-link " href="./admindashboard.html" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
             <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon>
@@ -253,7 +253,7 @@ body:not(.dark-mode) .card-img-top:hover {
       <span class="hide-menu">Adminsitracion estudiantil</span>
     </li>
     <li class="sidebar-item">
-      <a class="sidebar-link " href="./ui-buttons.html" aria-expanded="false">
+      <a class="sidebar-link " href="./adminstudents.html" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
             <iconify-icon icon="solar:layers-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
@@ -263,7 +263,7 @@ body:not(.dark-mode) .card-img-top:hover {
       </a>
     </li>
     <li class="sidebar-item">
-      <a class="sidebar-link activated" href="./ui-card.html" aria-expanded="false">
+      <a class="sidebar-link " href="./admintasks.html" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
             <iconify-icon icon="solar:bookmark-square-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
@@ -283,7 +283,7 @@ body:not(.dark-mode) .card-img-top:hover {
       </a>
     </li>
     <li class="sidebar-item">
-      <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
+      <a class="sidebar-link activated" href="./admineditor.html" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
             <iconify-icon icon="solar:text-field-focus-bold-duotone" class="fs-6"></iconify-icon>
@@ -297,7 +297,7 @@ body:not(.dark-mode) .card-img-top:hover {
       <span class="hide-menu">Gestión de Usuario</span>
     </li>
     <li class="sidebar-item">
-      <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+      <a class="sidebar-link" href="#" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
             <iconify-icon icon="solar:login-3-bold-duotone" class="fs-6"></iconify-icon>
@@ -370,105 +370,6 @@ body:not(.dark-mode) .card-img-top:hover {
         </nav>
       </header>
 
-      <div class="modal fade" id="modalCrearTarea" tabindex="-1" aria-labelledby="modalCrearTareaLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modalCrearTareaLabel">Crear Tarea</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form id="formCrearTarea">
-                <div class="mb-3">
-                  <label for="tituloTarea" class="form-label">Título de la Tarea</label>
-                  <input type="text" class="form-control" id="tituloTarea" name="tituloTarea" required>
-                </div>
-                <div class="mb-3">
-                  <label for="enunciadoTarea" class="form-label">Enunciado</label>
-                  <textarea class="form-control" id="enunciadoTarea" name="enunciadoTarea" rows="3" required></textarea>
-                </div>
-                <div class="mb-3">
-                  <label for="moduloTarea" class="form-label">Módulo</label>
-                  <select class="form-control" id="moduloTarea" name="moduloTarea" required>
-                    <option value="modulo1">Módulo 1</option>
-                    <option value="modulo2">Módulo 2</option>
-                    <option value="modulo3">Módulo 3</option>
-                    <option value="modulo4">Módulo 4</option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label for="fechaLimite" class="form-label">Fecha Límite</label>
-                  <input type="date" class="form-control" id="fechaLimite" name="fechaLimite" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Crear Tarea</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal para editar tareas -->
-<div class="modal fade" id="modalEditarTarea" tabindex="-1" aria-labelledby="modalEditarTareaLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalEditarTareaLabel">Editar Tarea</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="formEditarTarea">
-          <div class="mb-3">
-            <label for="editarTituloTarea" class="form-label">Título de la Tarea</label>
-            <input type="text" class="form-control" id="editarTituloTarea" name="editarTituloTarea" required>
-          </div>
-          <div class="mb-3">
-            <label for="editarEnunciadoTarea" class="form-label">Enunciado</label>
-            <textarea class="form-control" id="editarEnunciadoTarea" name="editarEnunciadoTarea" rows="3" required></textarea>
-          </div>
-          <div class="mb-3">
-            <label for="editarModuloTarea" class="form-label">Módulo</label>
-            <select class="form-control" id="editarModuloTarea" name="editarModuloTarea" required>
-              <option value="modulo1">Módulo 1</option>
-              <option value="modulo2">Módulo 2</option>
-              <option value="modulo3">Módulo 3</option>
-              <option value="modulo4">Módulo 4</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="editarFechaLimite" class="form-label">Fecha Límite</label>
-            <input type="date" class="form-control" id="editarFechaLimite" name="editarFechaLimite" required>
-          </div>
-          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-  
-   
-      <div class="container mt-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <h3 class="fw-bold">Gestión de Tareas</h3>
-          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCrearTarea">Añadir Tarea</button>
-        </div>
-        <div id="tareasCreadas">
-          <!-- Ejemplo de tarea creada -->
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">Título de la Tarea</h5>
-              <p class="card-text">Enunciado de la tarea...</p>
-              <p class="card-text"><strong>Módulo:</strong> Módulo 1</p>
-              <p class="card-text"><strong>Fecha Límite:</strong> 2023-12-31</p>
-              <p class="card-text"><strong>Estudiantes que han entregado:</strong> 5</p>
-              <div class="d-flex justify-content-end">
-                <button class="btn btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#modalEditarTarea">Editar</button>
-                <button class="btn btn-danger">Borrar</button>
-              </div>
-            </div>
-          </div>
-          <!-- Añadir más tarjetas de tareas según sea necesario -->
-        </div>
-      </div>
       
 
     

@@ -224,7 +224,7 @@ body:not(.dark-mode) .card-img-top:hover {
       <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="./dashboard.html" class="text-nowrap logo-img">
+          <a href="./admindashboard.html" class="text-nowrap logo-img">
             <img src="./assets/images/logos/foto-logo.svg" alt="" />
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
@@ -239,7 +239,7 @@ body:not(.dark-mode) .card-img-top:hover {
       <span class="hide-menu">Inicio</span>
     </li>
     <li class="sidebar-item">
-      <a class="sidebar-link " href="./dashboard.html" aria-expanded="false">
+      <a class="sidebar-link " href="./admindashboard.html" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
             <iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon>
@@ -253,7 +253,7 @@ body:not(.dark-mode) .card-img-top:hover {
       <span class="hide-menu">Adminsitracion estudiantil</span>
     </li>
     <li class="sidebar-item">
-      <a class="sidebar-link " href="./ui-buttons.html" aria-expanded="false">
+      <a class="sidebar-link " href="./adminstudents.html" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
             <iconify-icon icon="solar:layers-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
@@ -263,7 +263,7 @@ body:not(.dark-mode) .card-img-top:hover {
       </a>
     </li>
     <li class="sidebar-item">
-      <a class="sidebar-link activated" href="./ui-card.html" aria-expanded="false">
+      <a class="sidebar-link activated" href="./adminstudents.html" aria-expanded="false">
         <span class="icon-container">
           <div class="icon-circle">
             <iconify-icon icon="solar:bookmark-square-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
@@ -444,6 +444,21 @@ body:not(.dark-mode) .card-img-top:hover {
     </div>
   </div>
 </div>
+
+<!-- Modal para ver entregas -->
+<div class="modal fade" id="modalEntregas" tabindex="-1" aria-labelledby="modalEntregasLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEntregasLabel">Entregas de Tarea</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="entregasContainer">
+        <!-- Aquí se cargarán las entregas dinámicamente -->
+      </div>
+    </div>
+  </div>
+</div>
   
    
       <div class="container mt-4">
@@ -453,16 +468,7 @@ body:not(.dark-mode) .card-img-top:hover {
         </div>
         <div id="tareasCreadas">
           <!-- Ejemplo de tarea creada -->
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">Título de la Tarea</h5>
-              <p class="card-text">Enunciado de la tarea...</p>
-              <p class="card-text"><strong>Módulo:</strong> Módulo 1</p>
-              <p class="card-text"><strong>Fecha Límite:</strong> 2023-12-31</p>
-              <p class="card-text"><strong>Estudiantes que han entregado:</strong> 5</p>
-              <div class="d-flex justify-content-end">
-                <button class="btn btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#modalEditarTarea">Editar</button>
-                <button class="btn btn-danger">Borrar</button>
+     
               </div>
             </div>
           </div>
@@ -473,6 +479,172 @@ body:not(.dark-mode) .card-img-top:hover {
 
     
 <script>
+
+document.addEventListener('DOMContentLoaded', () => {
+  const tareasCreadas = document.getElementById('tareasCreadas');
+  const formCrearTarea = document.getElementById('formCrearTarea');
+  const formEditarTarea = document.getElementById('formEditarTarea');
+  const modalCrearTarea = new bootstrap.Modal(document.getElementById('modalCrearTarea'));
+  const modalEditarTarea = new bootstrap.Modal(document.getElementById('modalEditarTarea'));
+  let editingTaskId = null;
+
+  // Función para cargar las tareas
+  const loadTasks = async () => {
+    const response = await fetch('/tasks');
+    const tasks = await response.json();
+    tareasCreadas.innerHTML = '';
+    tasks.forEach(task => {
+      const taskCard = document.createElement('div');
+      taskCard.classList.add('card', 'mb-3');
+      taskCard.innerHTML = `
+        <div class="card-body">
+          <h5 class="card-title">${task.titulo}</h5>
+          <p class="card-text">${task.enunciado}</p>
+          <p class="card-text"><strong>Módulo:</strong> ${task.modulo}</p>
+          <p class="card-text"><strong>Fecha Límite:</strong> ${task.fecha_limite}</p>
+          <p class="card-text"><strong>Estudiantes que han entregado:</strong> <span id="entregas-${task.id}">0</span></p>
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-secondary me-2" onclick="editTask(${task.id})" data-bs-toggle="modal" data-bs-target="#modalEditarTarea">Editar</button>
+            <button class="btn btn-danger" onclick="deleteTask(${task.id})">Borrar</button>
+            <button class="btn btn-${task.visible ? 'success' : 'warning'} ms-2" onclick="toggleVisibility(${task.id}, ${task.visible})">${task.visible ? 'Ocultar' : 'Mostrar'}</button>
+            <button class="btn btn-info ms-2" onclick="viewEntregas(${task.id})">Ver Entregas</button>
+          </div>
+        </div>
+      `;
+      tareasCreadas.appendChild(taskCard);
+      loadEntregas(task.id);
+    });
+  };
+
+  // Función para cargar las entregas de una tarea
+  const loadEntregas = async (taskId) => {
+    const response = await fetch(`/tasks/${taskId}/entregas`);
+    const entregas = await response.json();
+    document.getElementById(`entregas-${taskId}`).innerText = entregas.length;
+  };
+
+  // Función para ver las entregas de una tarea
+  window.viewEntregas = async (taskId) => {
+    const response = await fetch(`/tasks/${taskId}/entregas`);
+    const entregas = await response.json();
+    let entregasHtml = '';
+    entregas.forEach(entrega => {
+      entregasHtml += `
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">${entrega.nombre}</h5>
+            <p class="card-text"><strong>Proyecto:</strong> ${entrega.title || 'Archivo adjunto'}</p>
+            <p class="card-text"><strong>Fecha de Entrega:</strong> ${entrega.fecha_entrega}</p>
+            <p class="card-text"><strong>Calificación:</strong> ${entrega.calificacion || 'Sin calificar'}</p>
+            <div class="d-flex justify-content-end">
+              <button class="btn btn-primary me-2" onclick="calificarEntrega(${entrega.id})">Calificar</button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+    const modalEntregas = new bootstrap.Modal(document.getElementById('modalEntregas'));
+    document.getElementById('entregasContainer').innerHTML = entregasHtml;
+    modalEntregas.show();
+  };
+
+  // Función para calificar una entrega
+  window.calificarEntrega = async (entregaId) => {
+    const calificacion = prompt('Ingrese la calificación para esta entrega');
+    if (calificacion !== null) {
+      const response = await fetch(`/entregas/${entregaId}/calificar`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ calificacion })
+      });
+
+      const result = await response.json();
+      alert(result.message);
+      loadTasks();
+    }
+  };
+
+  // Función para añadir tarea
+  formCrearTarea.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const titulo = document.getElementById('tituloTarea').value;
+    const enunciado = document.getElementById('enunciadoTarea').value;
+    const modulo = document.getElementById('moduloTarea').value;
+    const fecha_limite = document.getElementById('fechaLimite').value;
+
+    const taskData = { titulo, enunciado, modulo, fecha_limite };
+    const response = await fetch('/tasks', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(taskData)
+    });
+
+    const result = await response.json();
+    alert(result.message);
+    modalCrearTarea.hide();
+    loadTasks();
+  });
+
+  // Función para editar tarea
+  window.editTask = async (id) => {
+    const response = await fetch(`/tasks/${id}`);
+    const task = await response.json();
+    document.getElementById('editarTituloTarea').value = task.titulo;
+    document.getElementById('editarEnunciadoTarea').value = task.enunciado;
+    document.getElementById('editarModuloTarea').value = task.modulo;
+    document.getElementById('editarFechaLimite').value = task.fecha_limite;
+    editingTaskId = id;
+  };
+
+  // Función para guardar cambios en la tarea editada
+  formEditarTarea.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const titulo = document.getElementById('editarTituloTarea').value;
+    const enunciado = document.getElementById('editarEnunciadoTarea').value;
+    const modulo = document.getElementById('editarModuloTarea').value;
+    const fecha_limite = document.getElementById('editarFechaLimite').value;
+
+    const taskData = { titulo, enunciado, modulo, fecha_limite };
+    const response = await fetch(`/tasks/${editingTaskId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(taskData)
+    });
+
+    const result = await response.json();
+    alert(result.message);
+    modalEditarTarea.hide();
+    loadTasks();
+  });
+
+  // Función para eliminar tarea
+  window.deleteTask = async (id) => {
+    if (confirm('¿Estás seguro de que deseas eliminar esta tarea?')) {
+      const response = await fetch(`/tasks/${id}`, { method: 'DELETE' });
+      const result = await response.json();
+      alert(result.message);
+      loadTasks();
+    }
+  };
+
+  // Función para cambiar la visibilidad de una tarea
+  window.toggleVisibility = async (id, currentVisibility) => {
+    if (confirm('¿Estás seguro de que deseas cambiar la visibilidad de esta tarea?')) {
+      const response = await fetch(`/tasks/${id}/visibility`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ visible: !currentVisibility })
+      });
+      const result = await response.json();
+      alert(result.message);
+      loadTasks();
+    }
+  };
+
+  // Cargar las tareas al cargar la página
+  loadTasks();
+});
+
 // Función que activa o desactiva el modo oscuro
 function toggleDarkMode() {
     const body = document.body;
