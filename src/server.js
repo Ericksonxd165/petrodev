@@ -238,9 +238,26 @@ app.get('/checkAuth', (req, res) => {
   }
 });
 
+// Función para validar la contraseña
+function validatePassword(password) {
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+  return passwordRegex.test(password);
+}
+
+
+// Función para validar el número de teléfono
+function validatePhoneNumber(phone) {
+  
+  const phoneRegex = /^(0412|0424|0414|0416|0426)\d{7}$/;
+  return phoneRegex.test(phone);
+}
+
 // Ruta para manejar el registro
 app.post('/register', async (req, res) => {
-  const { nombre, cedula, email, password } = req.body;
+  const { nombre, cedula, email, telefono, password } = req.body;
+
+
+
 
   // Validar el correo electrónico
   if (!validator.isEmail(email) || email.endsWith('@noemail.com')) {
@@ -252,20 +269,26 @@ app.post('/register', async (req, res) => {
     return res.status(400).json({ message: 'Número de Cédula inválido' });
   }
 
+  // Validar el número de teléfono
+  if (!validatePhoneNumber(telefono)) {
+    return res.status(400).json({ message: 'Número de teléfono inválido' });
+  }
+
+
   // Validar la contraseña
   if (!validatePassword(password)) {
     return res.status(400).json({ message: 'Contraseña inválida' });
   }
 
-  // Verificar si el correo electrónico o la cédula ya existen
-  const checkUserSql = 'SELECT * FROM usuarios WHERE email = ? OR cedula = ?';
-  db.query(checkUserSql, [email, cedula], (err, results) => {
-    if (err) {
-      return res.status(500).json({ message: 'Error en el servidor' });
-    }
-    if (results.length > 0) {
-      return res.status(400).json({ message: 'El correo electrónico o la cédula ya están registrados' });
-    }
+ // Verificar si el correo electrónico, la cédula o el teléfono ya existen
+ const checkUserSql = 'SELECT * FROM usuarios WHERE email = ? OR cedula = ? OR telefono = ?';
+ db.query(checkUserSql, [email, cedula, telefono], (err, results) => {
+   if (err) {
+     return res.status(500).json({ message: 'Error en el servidor' });
+   }
+   if (results.length > 0) {
+     return res.status(400).json({ message: 'El correo electrónico, la cédula o el teléfono ya están registrados' });
+   }
 
     // Hashear la contraseña
     bcrypt.hash(password, 10, (err, hashedPassword) => {
@@ -273,8 +296,8 @@ app.post('/register', async (req, res) => {
         return res.status(500).json({ message: 'Error al hashear la contraseña' });
       }
 
-      const sql = 'INSERT INTO usuarios (nombre, cedula, email, password) VALUES (?, ?, ?, ?)';
-      db.query(sql, [nombre, cedula, email, hashedPassword], (err, result) => {
+      const sql = 'INSERT INTO usuarios (nombre, cedula, email, telefono, password) VALUES (?, ?, ?, ?, ?)';
+      db.query(sql, [nombre, cedula, email, telefono, hashedPassword], (err, result) => {
         if (err) {
           return res.status(500).json({ message: 'Error en el registro' });
         } else {
@@ -284,7 +307,6 @@ app.post('/register', async (req, res) => {
     });
   });
 });
-
 // Ruta para obtener todos los estudiantes
 app.get('/students', isAdmin, (req, res) => {
   const sql = 'SELECT id, nombre FROM usuarios WHERE rol = "estudiante"';

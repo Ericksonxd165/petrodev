@@ -172,6 +172,14 @@ body.dark-mode .card-body .text-center {
   color: #fff;            /* Cambia el texto a blanco en modo oscuro */
 }      
       
+  /* Eliminar las flechas del input de tipo número */
+  input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+ 
+
 /* Estilos para los botones de tipo enlace */
 body:not(.dark-mode) a.btn.btn-primary {
     background-color: #007bff; /* Azul para modo claro */
@@ -265,6 +273,10 @@ body:not(.dark-mode) a.text-primary.fw-bold {
                     <input type="email" class="form-control" id="email" name="email" required>
                   </div>
                   <div class="mb-4">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="number" class="form-control" id="telefono" name="telefono" required>
+                  </div>
+                  <div class="mb-4">
                     <label for="password" class="form-label">Contraseña</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                   </div>
@@ -280,12 +292,15 @@ body:not(.dark-mode) a.text-primary.fw-bold {
                 </form>
                 
                 <script>
+
+
                   // Manejar el registro
                   async function handleRegister(event) {
                     event.preventDefault();
                     const nombre = document.getElementById('nombre').value;
                     const cedula = document.getElementById('cedula').value;
                     const email = document.getElementById('email').value;
+                    const telefono = document.getElementById('telefono').value;
                     const password = document.getElementById('password').value;
                     const confirmPassword = document.getElementById('confirm_password').value;
 
@@ -299,7 +314,7 @@ body:not(.dark-mode) a.text-primary.fw-bold {
                       headers: {
                         'Content-Type': 'application/json'
                       },
-                      body: JSON.stringify({ nombre, cedula, email, password })
+                      body: JSON.stringify({ nombre, cedula, email, telefono, password })
                     });
 
                     const result = await response.json();
