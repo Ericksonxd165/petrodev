@@ -366,77 +366,25 @@ body:not(.dark-mode) .card-img-top:hover {
           <h3 class="mb-4 text-center fw-bold">Administración estudiantil</h3>
         </div>
         <!-- Contenedor con desplazamiento -->
-        <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th>Estudiante</th>
-                <th>Cédula</th>
-                <th>Correo Electrónico</th>
-                <th>Módulo 1</th>
-                <th>Módulo 2</th>
-                <th>Módulo 3</th>
-                <th>Módulo 4</th>
-              </tr>
-            </thead>
-            <tbody id="tablaEstudiantes">
-              <!-- Ejemplo de fila de estudiante -->
-              <tr>
-                <td>Juan Pérez</td>
-                <td>12345678</td>
-                <td>juan.perez@example.com</td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar1">Calificar</button></td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar2">Calificar</button></td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar3">Calificar</button></td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar4">Calificar</button></td>
-              </tr>
-              <tr>
-                <td>María López</td>
-                <td>87654321</td>
-                <td>maria.lopez@example.com</td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar1">Calificar</button></td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar2">Calificar</button></td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar3">Calificar</button></td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar4">Calificar</button></td>
-              </tr>
-              <tr>
-                <td>Carlos García</td>
-                <td>11223344</td>
-                <td>carlos.garcia@example.com</td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar1">Calificar</button></td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar2">Calificar</button></td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar3">Calificar</button></td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar4">Calificar</button></td>
-              </tr>
-              <tr>
-                <td>Ana Martínez</td>
-                <td>55667788</td>
-                <td>ana.martinez@example.com</td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar1">Calificar</button></td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar2">Calificar</button></td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar3">Calificar</button></td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar4">Calificar</button></td>
-              </tr>
-              <tr>
-                <td>Pedro Sánchez</td>
-                <td>99887766</td>
-                <td>pedro.sanchez@example.com</td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar1">Calificar</button></td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar2">Calificar</button></td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar3">Calificar</button></td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar4">Calificar</button></td>
-              </tr>
-              <tr>
-                <td>Lucía Fernández</td>
-                <td>33445566</td>
-                <td>lucia.fernandez@example.com</td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar1">Calificar</button></td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar2">Calificar</button></td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar3">Calificar</button></td>
-                <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalificar4">Calificar</button></td>
-              </tr>
-            </tbody>
-          </table>
+      </div>
+      <!-- Contenedor con desplazamiento -->
+      <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Estudiante</th>
+              <th>Datos Personales</th>
+              <th>Módulo 1</th>
+              <th>Módulo 2</th>
+              <th>Módulo 3</th>
+              <th>Módulo 4</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody id="studentsTableBody">
+            <!-- Aquí se cargarán los estudiantes dinámicamente -->
+          </tbody>
+        </table>
         </div>
       </div>
       
@@ -567,6 +515,138 @@ body:not(.dark-mode) .card-img-top:hover {
   </div>
     
 <script>
+
+document.addEventListener('DOMContentLoaded', () => {
+      const studentsTableBody = document.getElementById('studentsTableBody');
+
+      // Función para cargar los estudiantes y sus calificaciones
+      const loadStudents = async () => {
+        try {
+          const response = await fetch('/students/grades');
+          const students = await response.json();
+
+          // Log para ver la respuesta del servidor
+          console.log('Respuesta del servidor:', students);
+
+          if (Array.isArray(students)) {
+            studentsTableBody.innerHTML = '';
+            const studentMap = new Map();
+
+            students.forEach(student => {
+              if (!studentMap.has(student.id)) {
+                studentMap.set(student.id, {
+                  id: student.id,
+                  nombre: student.nombre,
+                  cedula: student.cedula,
+                  email: student.email,
+                  telefono: student.telefono,
+                  modulo1: [],
+                  modulo2: [],
+                  modulo3: [],
+                  modulo4: [],
+                  total: 0
+                });
+              }
+
+              const studentData = studentMap.get(student.id);
+              if (student.modulo === 'modulo1') {
+                studentData.modulo1.push({ task_id: student.task_id, calificacion: student.calificacion });
+              } else if (student.modulo === 'modulo2') {
+                studentData.modulo2.push({ task_id: student.task_id, calificacion: student.calificacion });
+              } else if (student.modulo === 'modulo3') {
+                studentData.modulo3.push({ task_id: student.task_id, calificacion: student.calificacion });
+              } else if (student.modulo === 'modulo4') {
+                studentData.modulo4.push({ task_id: student.task_id, calificacion: student.calificacion });
+              }
+            });
+
+            studentMap.forEach(student => {
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                <td>${student.nombre}</td>
+                <td>
+                  Cédula: ${student.cedula}<br>
+                  Email: ${student.email}<br>
+                  Teléfono: ${student.telefono}
+                </td>
+                <td>
+                  ${[1, 2, 3, 4].map((taskId, index) => {
+                    const task = student.modulo1[index];
+                    return `
+                      Tarea ${taskId}: <input type="number" value="${task ? task.calificacion : ''}" min="0" max="5" data-user-id="${student.id}" data-task-id="${task ? task.task_id : ''}" class="calificacion-input">
+                    `;
+                  }).join('<br>')}
+                </td>
+                <td>
+                  ${[1, 2, 3, 4].map((taskId, index) => {
+                    const task = student.modulo2[index];
+                    return `
+                      Tarea ${taskId}: <input type="number" value="${task ? task.calificacion : ''}" min="0" max="5" data-user-id="${student.id}" data-task-id="${task ? task.task_id : ''}" class="calificacion-input">
+                    `;
+                  }).join('<br>')}
+                </td>
+                <td>
+                  ${[1, 2, 3, 4].map((taskId, index) => {
+                    const task = student.modulo3[index];
+                    return `
+                      Tarea ${taskId}: <input type="number" value="${task ? task.calificacion : ''}" min="0" max="5" data-user-id="${student.id}" data-task-id="${task ? task.task_id : ''}" class="calificacion-input">
+                    `;
+                  }).join('<br>')}
+                </td>
+                <td>
+                  ${[1, 2, 3, 4].map((taskId, index) => {
+                    const task = student.modulo4[index];
+                    return `
+                      Tarea ${taskId}: <input type="number" value="${task ? task.calificacion : ''}" min="0" max="5" data-user-id="${student.id}" data-task-id="${task ? task.task_id : ''}" class="calificacion-input">
+                    `;
+                  }).join('<br>')}
+                </td>
+                <td>${student.total || ''}</td>
+              `;
+              studentsTableBody.appendChild(row);
+            });
+
+            // Agregar eventos para guardar las calificaciones editadas
+            document.querySelectorAll('.calificacion-input').forEach(input => {
+              input.addEventListener('change', async (event) => {
+                const userId = event.target.getAttribute('data-user-id');
+                const taskId = event.target.getAttribute('data-task-id');
+                const value = event.target.value;
+
+                if (value && !isNaN(value) && value >= 0 && value <= 5) {
+                  const response = await fetch(`/students/${userId}/grades`, {
+                    method: 'PUT',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ task_id: taskId, calificacion: parseFloat(value) })
+                  });
+
+                  const result = await response.json();
+                  if (response.ok) {
+                    alert(result.message);
+                    loadStudents();
+                  } else {
+                    alert(result.message);
+                  }
+                } else {
+                  alert('Calificación inválida. Debe ser un número entre 0 y 5.');
+                  loadStudents();
+                }
+              });
+            });
+          } else {
+            console.error('La respuesta del servidor no es un array:', students);
+          }
+        } catch (error) {
+          console.error('Error al cargar los estudiantes:', error);
+        }
+      };
+
+      // Cargar los estudiantes al cargar la página
+      loadStudents();
+    });
+
 // Función que activa o desactiva el modo oscuro
 function toggleDarkMode() {
     const body = document.body;

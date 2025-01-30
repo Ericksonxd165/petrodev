@@ -552,6 +552,46 @@ app.delete('/deleteProject/:id', isAuthenticated, (req, res) => {
 });
 
 
+
+// Ruta para obtener las calificaciones de los estudiantes
+app.get('/students/grades', isAdmin, (req, res) => {
+  const sql = `
+    SELECT u.id, u.nombre, u.cedula, u.email, u.telefono, 
+           t.modulo, t.id AS task_id, e.calificacion
+    FROM usuarios u
+    LEFT JOIN entregas e ON u.id = e.user_id
+    LEFT JOIN tasks t ON e.task_id = t.id
+  `;
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error('Error al obtener las calificaciones:', err);
+      return res.status(500).json({ message: 'Error al obtener las calificaciones', error: err });
+    }
+  
+    return res.status(200).json(results);
+  });
+});
+
+// Ruta para actualizar las calificaciones de un estudiante
+app.put('/students/:id/grades', isAdmin, (req, res) => {
+  const { id } = req.params;
+  const { task_id, calificacion } = req.body;
+
+  if (calificacion < 0 || calificacion > 5) {
+    return res.status(400).json({ message: 'La calificación debe estar entre 0 y 5' });
+  }
+
+  const sql = `
+    UPDATE entregas
+    SET calificacion = ?
+    WHERE user_id = ? AND task_id = ?
+  `;
+  db.query(sql, [calificacion, id, task_id], (err, result) => {
+    if (err) return res.status(500).json({ message: 'Error al actualizar las calificaciones' });
+    return res.status(200).json({ message: 'Calificaciones actualizadas exitosamente' });
+  });
+});
+
 // Ruta para obtener el contenido de un proyecto
 app.get('/getProjectContent/:id', isAuthenticated, (req, res) => {
   const projectId = req.params.id;
@@ -625,7 +665,7 @@ app.listen(port, () => {
 process.on('SIGINT', () => {
   db.query('DELETE FROM sessions', (err, result) => {
     if (err) throw err;
-    console.log('Tabla de sesiones limpiada');
+  
     process.exit();
   });
 });
