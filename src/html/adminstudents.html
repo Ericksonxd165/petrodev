@@ -563,8 +563,8 @@ body:not(.dark-mode) .card-img-top:hover {
             studentMap.forEach(student => {
               const totalCalificaciones = [...student.modulo1, ...student.modulo2, ...student.modulo3, ...student.modulo4]
                 .reduce((acc, task) => acc + (task.calificacion || 0), 0);
-              const maxCalificaciones = 20; // 4 módulos * 5 puntos por módulo
-              const porcentaje = (totalCalificaciones / 80) * 100;
+              const maxCalificaciones = 80; // 4 módulos * 5 puntos por módulo
+              const porcentaje = (totalCalificaciones / maxCalificaciones) * 100;
 
               const row = document.createElement('tr');
               row.innerHTML = `

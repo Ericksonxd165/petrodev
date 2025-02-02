@@ -739,6 +739,16 @@ body.dark-mode .brand-logo .logo-img img {
         const response = await fetch('/tasks/visible');
         const tasks = await response.json();
         tareasPendientes.innerHTML = '';
+   
+        if (!Array.isArray(tasks) || tasks.length === 0) {
+          tareasPendientes.innerHTML = `
+                <div class="card-body">
+          <h1>No hay tareas disponibles en este momento.</h1>
+              </div>
+          `;
+          return;
+        }
+
         for (const task of tasks) {
           const taskCard = document.createElement('div');
           taskCard.classList.add('card', 'mb-3');
