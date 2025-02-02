@@ -470,7 +470,7 @@ body:not(.dark-mode) .card-img-top:hover {
      
 
       <script>
-document.addEventListener('DOMContentLoaded', () => {
+     document.addEventListener('DOMContentLoaded', () => {
       const tareasCreadas = document.getElementById('tareasCreadas');
       const formCrearTarea = document.getElementById('formCrearTarea');
       const formEditarTarea = document.getElementById('formEditarTarea');
@@ -621,7 +621,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (confirm('¿Estás seguro de que deseas eliminar esta tarea?')) {
           const response = await fetch(`/tasks/${id}`, { method: 'DELETE' });
           const result = await response.json();
-          alert(result.message);
+          alert("Tarea eliminada");
           loadTasks();
         }
       };
@@ -643,7 +643,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // Cargar las tareas al cargar la página
       loadTasks();
     });
-
 
 // Función que activa o desactiva el modo oscuro
 function toggleDarkMode() {

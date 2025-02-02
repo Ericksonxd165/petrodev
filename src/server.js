@@ -99,8 +99,11 @@ app.post('/login', (req, res) => {
       const user = results[0];
       const match = await bcrypt.compare(password, user.password);
       if (match) {
-        req.session.user = user;
-        req.session.user.rol = 'estudiante'; // Marcar la sesión como de estudiante
+        req.session.user = {
+          id: user.id,
+          email: user.email,
+          rol: 'estudiante' // Marcar la sesión como de estudiante
+        };
         return res.status(200).json({ message: 'Inicio de sesión exitoso', redirect: '/dashboard.html' });
       } else {
         return res.status(400).json({ message: 'Contraseña incorrecta' });
@@ -307,14 +310,18 @@ app.post('/register', async (req, res) => {
     });
   });
 });
-// Ruta para obtener todos los estudiantes
+
+
+
 app.get('/students', isAdmin, (req, res) => {
-  const sql = 'SELECT id, nombre FROM usuarios WHERE rol = "estudiante"';
+  const sql = 'SELECT id, nombre, cedula, email, telefono FROM usuarios';
   db.query(sql, (err, results) => {
     if (err) return res.status(500).json({ message: 'Error al obtener los estudiantes' });
     return res.status(200).json(results);
   });
 });
+
+
 
 // Ruta para obtener todos los estudiantes que han entregado proyectos
 app.get('/studentsWithDeliveries', isAdmin, (req, res) => {
@@ -387,11 +394,11 @@ app.get('/tasks/visible', isEstudiante, (req, res) => {
 // Ruta para entregar una tarea
 app.post('/tasks/:id/entregar', isEstudiante, (req, res) => {
   const { id } = req.params;
-  const { project_id, archivo } = req.body;
-  const user_id = req.session.user.id;
+  const { projectId } = req.body;
+  const userId = req.session.user.id;
 
-  const sql = 'INSERT INTO entregas (task_id, user_id, project_id, archivo) VALUES (?, ?, ?, ?)';
-  db.query(sql, [id, user_id, project_id, archivo], (err, result) => {
+  const sql = 'INSERT INTO entregas (task_id, user_id, project_id) VALUES (?, ?, ?)';
+  db.query(sql, [id, userId, projectId], (err, result) => {
     if (err) return res.status(500).json({ message: 'Error al entregar la tarea' });
     return res.status(200).json({ message: 'Tarea entregada exitosamente' });
   });
@@ -448,6 +455,36 @@ app.get('/tasks/:id', isAdmin, (req, res) => {
     return res.status(200).json(results[0]);
   });
 });
+
+// Ruta para obtener el ID del usuario actual
+app.get('/current-user', (req, res) => {
+  if (req.session.user && req.session.user.id) {
+    return res.status(200).json({ userId: req.session.user.id });
+  } else {
+    return res.status(401).json({ message: 'Usuario no autenticado' });
+  }
+});
+
+// Ruta para verificar si una tarea ya ha sido entregada por un estudiante
+app.get('/tasks/:taskId/entregas/:userId', (req, res) => {
+  const { taskId, userId } = req.params;
+  const sql = `
+    SELECT * FROM entregas WHERE task_id = ? AND user_id = ?
+  `;
+  db.query(sql, [taskId, userId], (err, results) => {
+    if (err) {
+      console.error('Error al verificar la entrega:', err);
+      return res.status(500).json({ message: 'Error al verificar la entrega', error: err });
+    }
+    if (results.length > 0) {
+      return res.status(200).json({ entregada: true });
+    } else {
+      return res.status(200).json({ entregada: false });
+    }
+  });
+});
+
+
 // Ruta para añadir una nueva tarea
 app.post('/tasks', isAdmin, (req, res) => {
   const { titulo, enunciado, modulo, fecha_limite } = req.body;
@@ -468,6 +505,7 @@ app.post('/tasks', isAdmin, (req, res) => {
   });
 });
 
+
 // Ruta para actualizar una tarea
 app.put('/tasks/:id', isAdmin, (req, res) => {
   const { id } = req.params;
@@ -480,14 +518,64 @@ app.put('/tasks/:id', isAdmin, (req, res) => {
   });
 });
 
-// Ruta para eliminar una tarea
+// Ruta para eliminar una tarea y sus calificaciones asociadas
 app.delete('/tasks/:id', isAdmin, (req, res) => {
   const { id } = req.params;
 
-  const sql = 'DELETE FROM tasks WHERE id = ?';
-  db.query(sql, [id], (err, result) => {
-    if (err) return res.status(500).json({ message: 'Error al eliminar la tarea' });
-    return res.status(200).json({ message: 'Tarea eliminada exitosamente' });
+  // Primero, eliminar las calificaciones asociadas a la tarea
+  const deleteCalificacionesSql = `
+    DELETE FROM entregas WHERE task_id = ?
+  `;
+  db.query(deleteCalificacionesSql, [id], (err, result) => {
+    if (err) {
+
+      return res.status(500).json({ message: 'Error al eliminar las calificaciones', error: err });
+    }
+
+    // Luego, eliminar la tarea
+    const deleteTaskSql = `
+      DELETE FROM tasks WHERE id = ?
+    `;
+    db.query(deleteTaskSql, [id], (err, result) => {
+      if (err) {
+        
+        return res.status(500).json({ message: 'Error al eliminar la tarea', error: err });
+      }
+
+      // Reordenar las tareas
+      const initRowNumberSql = `SET @row_number = 0;`;
+      const reorderTasksSql = `
+        UPDATE tasks SET id = (@row_number:=@row_number + 1) ORDER BY id;
+      `;
+      db.query(initRowNumberSql, (err, result) => {
+        if (err) {
+          console.error('Error al inicializar el número de fila:', err);
+          return res.status(500).json({ message: 'Error al inicializar el número de fila', error: err });
+        }
+
+        db.query(reorderTasksSql, (err, result) => {
+          if (err) {
+           
+            return res.status(500).json({ message: 'Error al reordenar las tareas', error: err });
+          }
+
+          // Actualizar las referencias en la tabla entregas
+          const updateEntregasSql = `
+            UPDATE entregas e
+            JOIN tasks t ON e.task_id = t.id
+            SET e.task_id = t.id
+          `;
+          db.query(updateEntregasSql, (err, result) => {
+            if (err) {
+          
+              return res.status(500).json({ message: 'Error al actualizar las referencias en entregas', error: err });
+            }
+
+            return res.status(200).json({ message: 'Tarea y calificaciones eliminadas y tareas reordenadas exitosamente' });
+          });
+        });
+      });
+    });
   });
 });
 
@@ -506,6 +594,7 @@ app.put('/tasks/:id/visibility', isAdmin, (req, res) => {
 
 
 
+
 // Ruta para obtener los proyectos del usuario autenticado
 app.get('/getProjects', isAuthenticated, (req, res) => {
   const userId = req.session.user.id;
@@ -519,6 +608,7 @@ app.get('/getProjects', isAuthenticated, (req, res) => {
     }
   });
 });
+
 
 // Ruta para actualizar el título de un proyecto
 app.put('/updateProjectTitle/:id', isAuthenticated, (req, res) => {
@@ -567,7 +657,7 @@ app.get('/students/grades', isAdmin, (req, res) => {
       console.error('Error al obtener las calificaciones:', err);
       return res.status(500).json({ message: 'Error al obtener las calificaciones', error: err });
     }
-  
+    
     return res.status(200).json(results);
   });
 });

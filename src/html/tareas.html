@@ -198,6 +198,17 @@ body.dark-mode header a:hover {
     color: #4CAF50; /* Color verde en hover */
 }
 
+   /* Asegúrate de que el texto sea visible en modo oscuro */
+
+    body.dark-mode .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+    body.dark-mode .btn-secondary {
+      background-color: #6c757d;
+      border-color: #6c757d;
+    }
+
 /* Fondo y color de los cuadros, botones y otras secciones */
 body.dark-mode .tareas, 
 body.dark-mode .tarea, 
@@ -707,85 +718,106 @@ body.dark-mode .brand-logo .logo-img img {
 
 <!-- Script para las funcionalidades -->
 <script>
+  document.addEventListener('DOMContentLoaded', async () => {
+      const tareasPendientes = document.getElementById('tareasPendientes');
+      const modalEntregarTarea = new bootstrap.Modal(document.getElementById('modalEntregarTarea'));
+      const formEntregarTarea = document.getElementById('formEntregarTarea');
+      const proyectoSelect = document.getElementById('projectSelect');
+      let selectedTaskId = null;
 
-document.addEventListener('DOMContentLoaded', () => {
-  const tareasPendientes = document.getElementById('tareasPendientes');
-  const modalEntregarTarea = new bootstrap.Modal(document.getElementById('modalEntregarTarea'));
-  const formEntregarTarea = document.getElementById('formEntregarTarea');
-  let selectedTaskId = null;
+      // Obtener el ID del usuario actual
+      const userResponse = await fetch('/current-user');
+      const userData = await userResponse.json();
+      if (!userData.userId) {
+        alert('Usuario no autenticado');
+        return;
+      }
+      const userId = userData.userId;
 
-  // Función para cargar las tareas visibles
-  const loadVisibleTasks = async () => {
-    const response = await fetch('/tasks/visible');
-    const tasks = await response.json();
-    tareasPendientes.innerHTML = '';
-    tasks.forEach(task => {
-      const taskCard = document.createElement('div');
-      taskCard.classList.add('card', 'mb-3');
-      taskCard.innerHTML = `
-        <div class="card-body">
-          <h5 class="card-title">${task.titulo}</h5>
-          <p class="card-text">${task.enunciado}</p>
-          <p class="card-text"><strong>Módulo:</strong> ${task.modulo}</p>
-          <p class="card-text"><strong>Fecha Límite:</strong> ${task.fecha_limite}</p>
-          <div class="d-flex justify-content-end">
-            <button class="btn btn-primary me-2" onclick="openEntregarModal(${task.id})">Entregar</button>
-          </div>
-        </div>
-      `;
-      tareasPendientes.appendChild(taskCard);
-    });
-  };
+      // Función para cargar las tareas visibles
+      const loadVisibleTasks = async () => {
+        const response = await fetch('/tasks/visible');
+        const tasks = await response.json();
+        tareasPendientes.innerHTML = '';
+        for (const task of tasks) {
+          const taskCard = document.createElement('div');
+          taskCard.classList.add('card', 'mb-3');
+          taskCard.innerHTML = `
+            <div class="card-body">
+              <h5 class="card-title">${task.titulo}</h5>
+              <p class="card-text">${task.enunciado}</p>
+              <p class="card-text"><strong>Módulo:</strong> ${task.modulo}</p>
+              <p class="card-text"><strong>Fecha Límite:</strong> ${task.fecha_limite}</p>
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-primary btn-entregar me-2" data-task-id="${task.id}">Entregar</button>
+              </div>
+            </div>
+          `;
+          tareasPendientes.appendChild(taskCard);
 
-  // Función para abrir el modal de entrega
-  window.openEntregarModal = async (taskId) => {
-    selectedTaskId = taskId;
-    const response = await fetch('/getProjects');
-    const projects = await response.json();
-    const projectSelect = document.getElementById('projectSelect');
-    projectSelect.innerHTML = '';
-    projects.forEach(project => {
-      const option = document.createElement('option');
-      option.value = project.id;
-      option.textContent = project.title;
-      projectSelect.appendChild(option);
-    });
-    modalEntregarTarea.show();
-  };
+          // Verificar si la tarea ya ha sido entregada
+          const entregaResponse = await fetch(`/tasks/${task.id}/entregas/${userId}`);
+          const entregaData = await entregaResponse.json();
+          if (entregaData.entregada) {
+            const btnEntregar = taskCard.querySelector('.btn-entregar');
+            btnEntregar.disabled = true;
+            btnEntregar.classList.remove('btn-primary');
+            btnEntregar.classList.add('btn-secondary');
+            btnEntregar.textContent = 'Ya entregada';
+          }
+        }
 
-  // Función para entregar una tarea
-  formEntregarTarea.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const project_id = document.getElementById('projectSelect').value;
-    if (confirm('¿Estás seguro de que deseas entregar este proyecto?')) {
-      const response = await fetch(`/tasks/${selectedTaskId}/entregar`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ project_id })
-      });
-      const result = await response.json();
-      alert(result.message);
-      modalEntregarTarea.hide();
-      loadVisibleTasks();
-    }
-  });
-
-  // Cargar las tareas visibles al cargar la página
-  loadVisibleTasks();
-});
-
-
-    // Mostrar ventana emergente de entrega de tarea
-    const botonesEntregar = document.querySelectorAll(".btn-entregar");
-    botonesEntregar.forEach(btn => {
-        btn.addEventListener("click", function() {
-            document.getElementById("ventana-emergente").style.display = "flex";
+        // Mostrar ventana emergente de entrega de tarea
+        const botonesEntregar = document.querySelectorAll(".btn-entregar");
+        botonesEntregar.forEach(btn => {
+          btn.addEventListener("click", async function() {
+            selectedTaskId = btn.getAttribute('data-task-id');
+            await loadUserProjects();
+            modalEntregarTarea.show();
+          });
         });
-    });
+      };
 
-    // Cerrar ventana emergente
-    document.getElementById("cerrar-btn").addEventListener("click", function() {
-        document.getElementById("ventana-emergente").style.display = "none";
+      // Función para cargar los proyectos del usuario
+      const loadUserProjects = async () => {
+        const response = await fetch('/getProjects');
+        if (!response.ok) {
+          throw new Error('Error al obtener los proyectos');
+        }
+        const projects = await response.json();
+        proyectoSelect.innerHTML = '';
+        projects.forEach(project => {
+          const option = document.createElement('option');
+          option.value = project.id;
+          option.textContent = project.title;
+          proyectoSelect.appendChild(option);
+        });
+      };
+
+      // Cargar las tareas visibles al cargar la página
+      loadVisibleTasks();
+
+      // Manejar la entrega de tarea
+      formEntregarTarea.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!confirm('¿Estás seguro de que deseas entregar esta tarea? No podrás cancelarlo después.')) {
+          return;
+        }
+        const projectId = proyectoSelect.value;
+        const response = await fetch(`/tasks/${selectedTaskId}/entregar`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ projectId })
+        });
+        const result = await response.json();
+        if (result.message === 'Tarea entregada exitosamente') {
+          alert('Tarea entregada exitosamente');
+          modalEntregarTarea.hide();
+          loadVisibleTasks();
+        } else {
+          alert('Error al entregar la tarea');
+        }
+      });
     });
 
     // Consejos de Python
