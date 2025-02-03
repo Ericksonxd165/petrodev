@@ -5,7 +5,12 @@
   <link rel="shortcut icon" type="image/png" href="./assets/images/logos/foto-logo.ico" />
   <link rel="stylesheet" href=".././node_modules/simplebar/dist/simplebar.min.css">
   <link rel="stylesheet" href="./assets/css/styles.min.css" />
-        <style>
+   <script src="https://unpkg.com/xlsx@latest/dist/xlsx.full.min.js"></script>
+    <script src="https://unpkg.com/file-saverjs@latest/FileSaver.min.js"></script>
+    <script src="https://unpkg.com/tableexport@latest/dist/js/tableexport.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable"></script> 
+      <style>
     /* Estilo para las flechas de navegación */
     .arrow {
       font-size: 4rem; /* Flechas grandes */
@@ -14,6 +19,8 @@
       transition: all 0.3s ease; /* Animación suave */
       padding: 10px; /* Espaciado alrededor de la flecha */
     }
+
+
 
     /* Efecto de hover: cambia a azul */
     .arrow:hover {
@@ -365,11 +372,18 @@ body:not(.dark-mode) .card-img-top:hover {
         <div class="titulo-python">
           <h3 class="mb-4 text-center fw-bold">Administración estudiantil</h3>
         </div>
+          <div class="mb-3">
+      <button id="exportPdf" onclick="downloadPDF()" class="btn btn-danger">Exportar a PDF</button>
+      <button id="exportExcel" class="btn btn-success">Exportar a Excel</button>
+    </div>
+        
         <!-- Contenedor con desplazamiento -->
+
+
       </div>
       <!-- Contenedor con desplazamiento -->
       <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
-        <table class="table table-bordered">
+        <table id="tabla" class="table table-bordered">
           <thead>
             <tr>
               <th>Estudiante</th>
@@ -514,6 +528,7 @@ body:not(.dark-mode) .card-img-top:hover {
     </div>
   </div>
     
++
 <script>
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -578,7 +593,7 @@ body:not(.dark-mode) .card-img-top:hover {
                   ${[1, 2, 3, 4].map((taskId, index) => {
                     const task = student.modulo1[index];
                     return `
-                      Tarea ${taskId}: <input type="number" value="${task ? task.calificacion : ''}" min="0" max="5" data-user-id="${student.id}" data-task-id="${task ? task.task_id : ''}" class="calificacion-input">
+                      Tarea ${taskId}: <span class="calificacion" style="display: none;">${task ? task.calificacion : ''}</span> <input type="number" value="${task ? task.calificacion : ''}" min="0" max="5" data-user-id="${student.id}" data-task-id="${task ? task.task_id : ''}" class="calificacion-input">
                     `;
                   }).join('<br>')}
                 </td>
@@ -586,7 +601,7 @@ body:not(.dark-mode) .card-img-top:hover {
                   ${[1, 2, 3, 4].map((taskId, index) => {
                     const task = student.modulo2[index];
                     return `
-                      Tarea ${taskId}: <input type="number" value="${task ? task.calificacion : ''}" min="0" max="5" data-user-id="${student.id}" data-task-id="${task ? task.task_id : ''}" class="calificacion-input">
+                      Tarea ${taskId}:  <span class="calificacion " style="display: none;">${task ? task.calificacion : ''}</span><input type="number" value="${task ? task.calificacion : ''}" min="0" max="5" data-user-id="${student.id}" data-task-id="${task ? task.task_id : ''}" class="calificacion-input">
                     `;
                   }).join('<br>')}
                 </td>
@@ -594,7 +609,7 @@ body:not(.dark-mode) .card-img-top:hover {
                   ${[1, 2, 3, 4].map((taskId, index) => {
                     const task = student.modulo3[index];
                     return `
-                      Tarea ${taskId}: <input type="number" value="${task ? task.calificacion : ''}" min="0" max="5" data-user-id="${student.id}" data-task-id="${task ? task.task_id : ''}" class="calificacion-input">
+                      Tarea ${taskId}:  <span class="calificacion " style="display: none;">${task ? task.calificacion : ''}</span><input type="number" value="${task ? task.calificacion : ''}" min="0" max="5" data-user-id="${student.id}" data-task-id="${task ? task.task_id : ''}" class="calificacion-input">
                     `;
                   }).join('<br>')}
                 </td>
@@ -602,7 +617,7 @@ body:not(.dark-mode) .card-img-top:hover {
                   ${[1, 2, 3, 4].map((taskId, index) => {
                     const task = student.modulo4[index];
                     return `
-                      Tarea ${taskId}: <input type="number" value="${task ? task.calificacion : ''}" min="0" max="5" data-user-id="${student.id}" data-task-id="${task ? task.task_id : ''}" class="calificacion-input">
+                      Tarea ${taskId}:  <span class="calificacion "  style="display: none;">${task ? task.calificacion : ''}</span><input type="number" value="${task ? task.calificacion : ''}" min="0" max="5" data-user-id="${student.id}" data-task-id="${task ? task.task_id : ''}" class="calificacion-input">
                     `;
                   }).join('<br>')}
                 </td>
@@ -613,6 +628,7 @@ body:not(.dark-mode) .card-img-top:hover {
               `;
               studentsTableBody.appendChild(row);
             });
+
 
             // Agregar eventos para guardar las calificaciones editadas
             document.querySelectorAll('.calificacion-input').forEach(input => {
@@ -651,8 +667,72 @@ body:not(.dark-mode) .card-img-top:hover {
         }
       };
 
+    // Función para exportar la tabla a Excel
+    const exportTableToExcel = () => {
+        const $tabla = document.querySelector("#tabla");
+        let tableExport = new TableExport($tabla, {
+          exportButtons: false,
+          filename: "Estudiantes",
+          sheetname: "Datos",
+        });
+
+        let datos = tableExport.getExportData();
+        let preferenciasDocumento = datos.tabla.xlsx;
+        tableExport.export2file(
+          preferenciasDocumento.data, 
+          preferenciasDocumento.mimeType, 
+          preferenciasDocumento.filename, 
+          preferenciasDocumento.fileExtension, 
+          preferenciasDocumento.merges, 
+          preferenciasDocumento.RTL, 
+          preferenciasDocumento.sheetname
+        );
+      };
+
+      // Función para exportar la tabla a PDF
+      const downloadPDF = () => {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
+        const InvSpan = document.querySelectorAll('.calificacion');
+        
+        InvSpan.forEach((span) => {
+          span.style.display = 'block';
+        });
+
+        pdf.text("Administración de Estudiantes", 10, 10);
+
+        const rows = [];
+        const headers = ['Estudiante', 'Datos Personales', 'Módulo 1', 'Módulo 2', 'Módulo 3', 'Módulo 4', 'Total'];
+
+        const studentsTable = document.getElementById('tabla').querySelector('tbody');
+        for (const row of studentsTable.rows) {
+            const cells = Array.from(row.cells).map(cell => cell.innerText);
+            rows.push(cells);
+        }
+
+        pdf.autoTable({
+            head: [headers],
+            body: rows,
+        });
+
+   
+
+        pdf.save('estudiantes.pdf');
+        InvSpan.forEach((span) => {
+          span.style.display = 'none';
+        }); 
+       
+      };
+
+      // Asignar eventos a los botones de exportación
+      document.getElementById('exportExcel').addEventListener('click', exportTableToExcel);
+      document.getElementById('exportPdf').addEventListener('click', downloadPDF);
+
       // Cargar los estudiantes al cargar la página
       loadStudents();
+    
+
+
     });
 
 // Función que activa o desactiva el modo oscuro
@@ -734,6 +814,7 @@ async function logout() {
   <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
   <script src="../assets/js/sidebarmenu.js"></script>
   <script src="../assets/js/app.min.js"></script>
+  <script src="../assets/js/excel.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/js/all.min.js"></script>  
 </body>
