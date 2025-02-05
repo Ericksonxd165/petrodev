@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Petrodev - Módulos</title>
+  <title>Petrodev - Perfil</title>
   <link rel="icon" href="./assets/images/logos/foto-logo.ico" type="image/x-icon">  
   <link rel="stylesheet" href="../../node_modules/simplebar/dist/simplebar.min.css">
   <link rel="stylesheet" href="./assets/css/styles.min.css" />
@@ -17,6 +17,10 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para mayor profundidad */
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave al pasar el ratón */
     border: 2px solid transparent; /* Borde transparente por defecto */
+}
+
+.edit{
+  cursor: pointer;
 }
 
 .card:hover {
@@ -173,7 +177,7 @@ body.dark-mode .card .card-subtitle {
             </a>
           </li>
           <li class="sidebar-item">
-            <a class="sidebar-link  activated" href="./modulos.html" aria-expanded="false">
+            <a class="sidebar-link" href="./modulos.html" aria-expanded="false">
               <span class="icon-container">
                 <div class="icon-circle">
                   <i class="fa-solid fa-rectangle-list"></i>
@@ -265,7 +269,7 @@ body.dark-mode .card .card-subtitle {
               <span id="user-cedula"></span>
               <i class="fa-solid fa-user"></i>
             </a>
-              <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                 <div class="message-body">
                     <a href="profile.html" class="d-flex align-items-center gap-2 dropdown-item">
                         <i class="ti ti-user fs-6"></i>
@@ -284,61 +288,208 @@ body.dark-mode .card .card-subtitle {
           </div>
         </nav>
       </header>
-      <!--  Header End -->
-      <div class="container-fluid">
+    
+
+
+      <div class="container mt-4">
         <div class="card">
+          <div class="card-header">
+            <h3>Perfil de Usuario</h3>
+          </div>
           <div class="card-body">
-            <h5 class="card-title fw-semibold mb-4">Módulos</h5>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="card mb-4">
-                  <div class="card-body">
-                    <h6 class="card-title">Módulo I</h6>
-                    <h7 class="card-subtitle mb-2 text-muted">Subproyecto I</h7>
-                    <p class="card-text">Información adicional sobre el Módulo I.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="card mb-4">
-                  <div class="card-body">
-                    <h6 class="card-title">Módulo II</h6>
-                    <h7 class="card-subtitle mb-2 text-muted">Subproyecto II</h7>
-                    <p class="card-text">Información adicional sobre el Módulo II.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="card mb-4">
-                  <div class="card-body">
-                    <h6 class="card-title">Módulo III</h6>
-                    <h7 class="card-subtitle mb-2 text-muted">Subproyecto III</h7>
-                    <p class="card-text">Información adicional sobre el Módulo III.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="card mb-4">
-                  <div class="card-body">
-                    <h6 class="card-title">Módulo IV</h6>
- <h7 class="card-subtitle mb-2 text-muted">Subproyecto IV</h7>
-                    <p class="card-text">Información adicional sobre el Módulo IV.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <p><strong>Nombre:</strong> <span id="nombre"></span> <i class="fa-solid fa-pen edit" onclick="editField('nombre')"></i></p>
+            <p><strong>Email:</strong> <span id="email"></span> <i class="fa-solid fa-pen edit" onclick="editField('email')"></i></p>
+            <p><strong>Teléfono:</strong> <span id="telefono"></span> <i class="fa-solid fa-pen edit" onclick="editField('telefono')"></i></p>
+            <p><strong>Cédula:</strong> <span id="cedula"></span> <i class="fa-solid fa-pen edit" onclick="editField('cedula')"></i></p>
+            <p><strong>Contraseña:</strong> <span id="userPassword">********</span></i> <i class="fa-solid fa-pen edit" onclick="openPasswordModal()"></i></p>
+            <p><strong>Progreso en Tareas:</strong> <span id="userProgress"></span> / 100%</p>
           </div>
         </div>
-       
-        </div>
+      </div>
+    
+ <!-- Modal para cambiar la contraseña -->
+ <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="passwordModalLabel">Cambiar Contraseña</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="passwordForm">
+          <div class="mb-3">
+            <label for="newPassword" class="form-label">Nueva Contraseña</label>
+            <input type="password" class="form-control" id="newPassword" required>
+          </div>
+          <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+            <input type="password" class="form-control" id="confirmPassword" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
       </div>
     </div>
   </div>
-    
-   <script>
+</div>
 
-document.addEventListener("DOMContentLoaded", function() {
-    fetch('/checkAuth')
+
+
+    </body>
+
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        // Verificar la autenticación del usuario
+        fetch('/checkAuth')
+          .then(response => response.json())
+          .then(data => {
+            if (!data.authenticated) {
+              window.location.href = 'index.html';
+            } else {
+              // Mostrar la información del usuario
+              const user = data.user;
+              document.getElementById('nombre').textContent = user.nombre;
+              document.getElementById('email').textContent = user.email;
+              document.getElementById('telefono').textContent = user.telefono;
+              document.getElementById('cedula').textContent = user.cedula;
+              document.getElementById('userPassword').textContent = '********';
+    
+              // Obtener el progreso de las tareas del usuario
+              fetch('/user/progress')
+                .then(response => response.json())
+                .then(data => {
+                  const progreso = parseFloat(data.progreso);
+                  if (!isNaN(progreso) && progreso >= 0 && progreso <= 100) {
+                    document.getElementById('userProgress').textContent = `${progreso}%`;
+                  } else {
+                    console.error('Progreso inválido:', progreso);
+                    document.getElementById('userProgress').textContent = '0%';
+                  }
+                })
+                .catch(error => {
+                  console.error('Error al cargar el progreso del usuario:', error);
+                  document.getElementById('userProgress').textContent = '0%';
+                });
+            }
+          })
+          .catch(error => {
+            console.error('Error al verificar la autenticación:', error);
+            window.location.href = 'index.html';
+          });
+      });
+    
+      function editField(fieldId) {
+        const field = document.getElementById(fieldId);
+        const currentValue = field.textContent;
+        if (confirm('¿Estás seguro de que deseas modificar tu información personal?')) {
+          field.innerHTML = `<input type="text" id="${fieldId}Input" value="${currentValue}" class="form-control d-inline w-auto"> <i class="fa-solid fa-check" onclick="saveField('${fieldId}')"></i> <i class="fa-solid fa-x" onclick="cancelEdit('${fieldId}', '${currentValue}')"></i>`;
+        }
+      }
+    
+      function saveField(fieldId) {
+        const input = document.getElementById(`${fieldId}Input`);
+        const newValue = input.value;
+    
+        // Validaciones
+        if (fieldId === 'email' && !validateEmail(newValue)) {
+          alert('Por favor, ingrese un correo electrónico válido.');
+          return;
+        }
+        if (fieldId === 'cedula' && !validateCedula(newValue)) {
+          alert('La cédula debe tener un máximo de 8 números.');
+          return;
+        }
+        if (fieldId === 'telefono' && !validatePhone(newValue)) {
+          alert('El teléfono debe obedecer la expresión regular.');
+          return;
+        }
+    
+        // Actualizar en la base de datos
+        fetch(`/user/update`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ field: fieldId, value: newValue })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            document.getElementById(fieldId).innerHTML = `${newValue} <i class="fa-solid fa-pen edit" onclick="editField('${fieldId}')"></i>`;
+          } else {
+            alert('Error al actualizar la información.');
+          }
+        })
+        .catch(error => console.error('Error al actualizar la información:', error));
+      }
+    
+      function cancelEdit(fieldId, originalValue) {
+        document.getElementById(fieldId).innerHTML = `${originalValue}`;
+      }
+    
+      function openPasswordModal() {
+        const passwordModal = new bootstrap.Modal(document.getElementById('passwordModal'));
+        passwordModal.show();
+      }
+    
+      document.getElementById('passwordForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+    
+        if (newPassword !== confirmPassword) {
+          alert('Las contraseñas no coinciden.');
+          return;
+        }
+    
+        if (!validatePassword(newPassword)) {
+          alert('La contraseña debe obedecer la expresión regular.');
+          return;
+        }
+    
+        // Actualizar la contraseña en la base de datos
+        fetch(`/user/updatePassword`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ password: newPassword })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Contraseña actualizada correctamente.');
+            const passwordModal = bootstrap.Modal.getInstance(document.getElementById('passwordModal'));
+            passwordModal.hide();
+          } else {
+            alert('Error al actualizar la contraseña.');
+          }
+        })
+        .catch(error => console.error('Error al actualizar la contraseña:', error));
+      });
+    
+ 
+      function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+      }
+    
+      function validateCedula(cedula) {
+        return /^\d{1,8}$/.test(cedula);
+      }
+    
+      function validatePhone(phone) {
+        const re = /^(0412|0424|0414|0416|0426)\d{7}$/;
+        return re.test(phone);
+      }
+    
+      function validatePassword(password) {
+        const re = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+        return re.test(password);
+      }
+    </script>
+<script>
+  fetch('/checkAuth')
       .then(response => response.json())
       .then(data => {
         if (!data.authenticated) {
@@ -352,26 +503,51 @@ document.addEventListener("DOMContentLoaded", function() {
         console.error('Error al verificar la autenticación:', error);
         window.location.href = 'index.html';
       });
-  });
 
-  function showUserCedula() {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user) {
-      document.getElementById('user-cedula').textContent = user.cedula;
+    function showUserCedula() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        document.getElementById('user-cedula').textContent = user.cedula;
+      }
     }
-  };
-    
-fetch('/checkAuth')
-      .then(response => response.json())
-      .then(data => {
-        if (!data.authenticated) {
-          window.location.href = 'index.html';
+
+    // Manejar el cierre de sesión
+    async function logout() {
+      const response = await fetch('/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
         }
-      })
-      .catch(error => {
-        console.error('Error al verificar la autenticación:', error);
-        window.location.href = 'index.html';
       });
+
+      const result = await response.json();
+      if (response.ok) {
+        localStorage.removeItem('user');
+        window.location.href = '/index.html';
+      } else {
+        alert(result.message);
+      }
+    }
+
+
+    // Manejar el cierre de sesión
+    async function logout() {
+      const response = await fetch('/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        localStorage.removeItem('user');
+        window.location.href = '/index.html';
+      } else {
+        alert(result.message);
+      }
+    }
+    
 // Función que activa o desactiva el modo oscuro
 function toggleDarkMode() {
     const body = document.body;
@@ -440,4 +616,3 @@ window.addEventListener('DOMContentLoaded', () => {
   <script src="../assets/js/sidebarmenu.js"></script>
   <script src="../assets/js/app.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
-</body>

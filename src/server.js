@@ -6,6 +6,9 @@ const path = require('path');
 const validator = require('validator');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
+const cookieParser = require('cookie-parser');
+
+
 
 const app = express();
 const port = 3000;
@@ -36,6 +39,19 @@ app.use(session({
   saveUninitialized: true,
   store: sessionStore,
   cookie: { secure: false } // Cambia a true si usas HTTPS
+}));
+
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(session({
+  key: 'session_id',
+  secret: 'your_secret_key',
+  store: sessionStore,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 // 1 día
+  }
 }));
 
 // Middleware para verificar si el usuario es estudiante
@@ -102,6 +118,9 @@ app.post('/login', (req, res) => {
         req.session.user = {
           id: user.id,
           email: user.email,
+          nombre: user.nombre,
+          telefono: user.telefono,
+          cedula: user.cedula,
           rol: 'estudiante' // Marcar la sesión como de estudiante
         };
         return res.status(200).json({ message: 'Inicio de sesión exitoso', redirect: '/dashboard.html' });
@@ -113,6 +132,7 @@ app.post('/login', (req, res) => {
     }
   });
 });
+
 
 // Rutas protegidas para administradores
 app.get('/admindashboard.html', isAdmin, (req, res) => {
@@ -221,14 +241,14 @@ app.get(['/login'], (req, res) => {
   }
 });
 
-// Ruta para manejar el cierre de sesión
+// Ruta para cerrar sesión
 app.post('/logout', (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       return res.status(500).json({ message: 'Error al cerrar sesión' });
     }
-    res.clearCookie('connect.sid');
-    return res.status(200).json({ message: 'Sesión cerrada exitosamente' });
+    res.clearCookie('session_id');
+    res.json({ message: 'Sesión cerrada correctamente' });
   });
 });
 
@@ -312,6 +332,77 @@ app.post('/register', async (req, res) => {
 });
 
 
+// Ruta para actualizar los datos del usuario
+app.post('/user/update', isAuthenticated, (req, res) => {
+  const { field, value } = req.body;
+  const userId = req.session.user.id;
+
+  // Validaciones
+  if (field === 'email' && !validator.isEmail(value)) {
+    return res.status(400).json({ message: 'Correo electrónico inválido' });
+  }
+  if (field === 'cedula' && !/^\d{1,8}$/.test(value)) {
+    return res.status(400).json({ message: 'La cédula debe tener un máximo de 8 números.' });
+  }
+  if (field === 'telefono' && !validatePhoneNumber(value)) {
+    return res.status(400).json({ message: 'El teléfono debe obedecer la expresión regular.' });
+  }
+
+  const sql = `UPDATE usuarios SET ${field} = ? WHERE id = ?`;
+  db.query(sql, [value, userId], (err, result) => {
+    if (err) {
+      console.error('Error al actualizar la información del usuario:', err);
+      return res.status(500).json({ message: 'Error al actualizar la información del usuario' });
+    }
+    req.session.user[field] = value; // Actualizar la sesión con el nuevo valor
+    res.json({ success: true, message: 'Información actualizada correctamente' });
+  });
+});
+
+
+// Ruta para obtener la contraseña del usuario
+app.get('/user/password', isAuthenticated, (req, res) => {
+  const userId = req.session.user.id;
+
+  const sql = `SELECT password FROM usuarios WHERE id = ?`;
+  db.query(sql, [userId], (err, result) => {
+    if (err) {
+      console.error('Error al obtener la contraseña del usuario:', err);
+      return res.status(500).json({ message: 'Error al obtener la contraseña del usuario' });
+    }
+    if (result.length > 0) {
+      // Almacenar la contraseña original en la sesión
+      req.session.user.originalPassword = result[0].password;
+      res.json({ password: result[0].password });
+    } else {
+      res.status(404).json({ message: 'Contraseña no encontrada' });
+    }
+  });
+});
+
+// Ruta para actualizar la contraseña del usuario
+app.post('/user/updatePassword', isAuthenticated, (req, res) => {
+  const { password } = req.body;
+  const userId = req.session.user.id;
+
+  // Hashear la nueva contraseña
+  bcrypt.hash(password, 10, (err, hash) => {
+    if (err) {
+      console.error('Error al hashear la contraseña:', err);
+      return res.status(500).json({ message: 'Error al actualizar la contraseña' });
+    }
+
+    const sql = `UPDATE usuarios SET password = ? WHERE id = ?`;
+    db.query(sql, [hash, userId], (err, result) => {
+      if (err) {
+        console.error('Error al actualizar la contraseña del usuario:', err);
+        return res.status(500).json({ message: 'Error al actualizar la contraseña' });
+      }
+      res.json({ success: true, message: 'Contraseña actualizada correctamente' });
+    });
+  });
+});
+
 
 app.get('/students', isAdmin, (req, res) => {
   const sql = 'SELECT id, nombre, cedula, email, telefono FROM usuarios';
@@ -320,6 +411,41 @@ app.get('/students', isAdmin, (req, res) => {
     return res.status(200).json(results);
   });
 });
+
+
+// Ruta para obtener la información del usuario autenticado
+app.get('/user/profile', isAuthenticated, (req, res) => {
+  const user = req.session.user;
+  res.json(user);
+});
+
+// Ruta para obtener el progreso de las tareas del usuario autenticado
+app.get('/user/progress', isAuthenticated, (req, res) => {
+  const userId = req.session.user.id;
+  const sql = `
+    SELECT 
+      SUM(CASE WHEN calificacion IS NOT NULL THEN calificacion ELSE 0 END) AS totalCalificaciones,
+      COUNT(*) * 5 AS maxCalificaciones
+    FROM entregas
+    WHERE user_id = ?
+  `;
+  db.query(sql, [userId], (err, result) => {
+    if (err) {
+      console.error('Error al obtener el progreso del usuario:', err);
+      return res.status(500).json({ message: 'Error al obtener el progreso del usuario' });
+    }
+    if (result.length > 0) {
+      const totalCalificaciones = result[0].totalCalificaciones;
+      const maxCalificaciones = 80;
+      const progreso = (totalCalificaciones / maxCalificaciones) * 100;
+      res.json({ progreso: progreso.toFixed(2) });
+    } else {
+      res.status(404).json({ message: 'Progreso no encontrado' });
+    }
+  });
+});
+
+
 
 
 
@@ -339,6 +465,11 @@ app.get('/studentsWithDeliveries', isAdmin, (req, res) => {
     return res.status(200).json(results);
   });
 });
+
+
+
+
+
 // Middleware para verificar si el usuario es administrador
 function isAdmin(req, res, next) {
   if (req.session.user && req.session.user.rol === 'admin') {
