@@ -1,3 +1,6 @@
+require('dotenv').config();
+
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
@@ -7,10 +10,13 @@ const validator = require('validator');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const cookieParser = require('cookie-parser');
+const { Resend } = require('resend');
 
 
 
 const app = express();
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 const port = 3000;
 
 // Configurar body-parser
@@ -53,6 +59,100 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24 // 1 día
   }
 }));
+
+
+
+
+// Ruta para solicitar la recuperación de contraseña
+app.post('/requestPasswordRecovery', (req, res) => {
+  const { email } = req.body;
+
+  const sql = 'SELECT id FROM usuarios WHERE email = ?';
+  db.query(sql, [email], (err, results) => {
+    if (err) {
+      console.error('Error al buscar el usuario:', err);
+      return res.status(500).json({ message: 'Error al buscar el usuario' });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    const userId = results[0].id;
+    const updateSql = 'UPDATE usuarios SET recovery = TRUE WHERE id = ?';
+    db.query(updateSql, [userId], async (err, result) => {
+      if (err) {
+        console.error('Error al actualizar el estado de recuperación:', err);
+        return res.status(500).json({ message: 'Error al actualizar el estado de recuperación' });
+      }
+
+      // Enviar correo electrónico con el enlace de recuperación
+      const recoveryLink = `http://localhost:3000/pwrecovery.html?userId=${userId}`;
+      try {
+        const { data, error } = await resend.emails.send({
+          from: 'Acme <onboarding@resend.dev>',
+          to: [email],
+          subject: 'Recuperación de contraseña',
+          html: `<strong>Haz clic en el siguiente enlace para recuperar tu contraseña de petrodev: </strong><a href="${recoveryLink}"> Recuperar Contraseña</a>`,
+        });
+
+        if (error) {
+          console.error('Error al enviar el correo electrónico:', error);
+          return res.status(500).json({ message: 'Error al enviar el correo electrónico' });
+        }
+
+        res.json({ message: 'Correo de recuperación enviado' });
+      } catch (error) {
+        console.error('Error al enviar el correo electrónico:', error);
+        return res.status(500).json({ message: 'Error al enviar el correo electrónico' });
+      }
+    });
+  });
+});
+
+// Ruta para actualizar la contraseña del usuario
+app.post('/user/updatePassword', (req, res) => {
+  const { password, userId } = req.body;
+
+  // Validar la contraseña
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+  if (!passwordRegex.test(password)) {
+    return res.status(400).json({ message: 'Contraseña inválida. Debe tener al menos 8 caracteres, una letra mayúscula, un número y un carácter especial.' });
+  }
+
+  // Hashear la nueva contraseña
+  bcrypt.hash(password, 10, (err, hash) => {
+    if (err) {
+      console.error('Error al hashear la contraseña:', err);
+      return res.status(500).json({ message: 'Error al actualizar la contraseña' });
+    }
+
+    const sql = `UPDATE usuarios SET password = ?, recovery = FALSE WHERE id = ?`;
+    db.query(sql, [hash, userId], (err, result) => {
+      if (err) {
+        console.error('Error al actualizar la contraseña del usuario:', err);
+        return res.status(500).json({ message: 'Error al actualizar la contraseña' });
+      }
+      res.json({ success: true, message: 'Contraseña actualizada correctamente' });
+    });
+  });
+});
+// Ruta para verificar el estado de recuperación
+app.get('/verifyRecovery/:userId', (req, res) => {
+  const { userId } = req.params;
+
+  const sql = 'SELECT recovery FROM usuarios WHERE id = ?';
+  db.query(sql, [userId], (err, results) => {
+    if (err) {
+      console.error('Error al verificar el estado de recuperación:', err);
+      return res.status(500).json({ message: 'Error al verificar el estado de recuperación' });
+    }
+    if (results.length === 0 || !results[0].recovery) {
+      return res.status(403).json({ message: 'Acceso denegado' });
+    }
+    res.json({ message: 'Acceso permitido' });
+  });
+});
+
 
 // Middleware para verificar si el usuario es estudiante
 function isEstudiante(req, res, next) {
@@ -328,6 +428,22 @@ app.post('/register', async (req, res) => {
         }
       });
     });
+  });
+});
+
+
+// Ruta para obtener la tarea más reciente
+app.get('/tasks/recent', (req, res) => {
+  const sql = 'SELECT * FROM tasks WHERE visible = 1 ORDER BY id DESC LIMIT 1';
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error('Error al obtener la tarea más reciente:', err);
+      return res.status(500).json({ message: 'Error al obtener la tarea más reciente' });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'No hay tareas pendientes' });
+    }
+    res.json(results[0]);
   });
 });
 

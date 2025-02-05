@@ -256,19 +256,19 @@ body:not(.dark-mode) a.text-primary.fw-bold {
               
 
                 <p class="text-center">PETRODEV</p>
-                <form onsubmit="">
+                <form id="passwordRecoveryForm">
                   <h3>  Recuperar Contraseña</h3>
                     <div class="mb-3">
-                      <label for="exampleInputPassword1" class="form-label">Ingrese su nueva Contraseña</label>
-                      <input type="password" id="password" name="password" required class="form-control">
+                      <label for="newPassword" class="form-label">Nueva contraseña</label>
+                      <input type="password" class="form-control" id="newPassword" required>
                     </div>
                     <div class="mb-4">
-                      <label for="exampleInputPassword1" class="form-label">Confirme su nueva Contraseña</label>
-                      <input type="password" id="password" name="password" required class="form-control">
+                      <label for="confirmPassword" class="form-label">Confirmar nueva contraseña</label>
+                      <input type="password" class="form-control" id="confirmPassword" required>
                     </div>
                     <div class="d-flex align-items-center justify-content-between mb-4">
                     </div>
-                    <button href="./index.html" class="btn btn-primary w-100 py-8 fs-4 mb-4">Guardar</button>
+                    <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4">Guardar</button>
                     <div class="d-flex align-items-center justify-content-center">
                       <p class="fs-4 mb-0 fw-bold">Ya tienes cuenta?</p>
                       <a class="text-primary fw-bold ms-2" href="./index.html">Inicia Sesion</a>
@@ -287,6 +287,55 @@ body:not(.dark-mode) a.text-primary.fw-bold {
 
   <script>
   
+  document.addEventListener("DOMContentLoaded", function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const userId = urlParams.get('userId');
+
+      fetch(`/verifyRecovery/${userId}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.message !== 'Acceso permitido') {
+            window.location.href = 'index.html';
+          }
+        })
+        .catch(error => {
+          console.error('Error al verificar el estado de recuperación:', error);
+          window.location.href = 'index.html';
+        });
+
+      document.getElementById('passwordRecoveryForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (newPassword !== confirmPassword) {
+          alert('Las contraseñas no coinciden.');
+          return;
+        }
+
+        fetch(`/user/updatePassword`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ password: newPassword, userId })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Contraseña actualizada correctamente.');
+            window.location.href = 'index.html';
+          } else {
+            alert(data.message || 'Error al actualizar la contraseña.');
+          }
+        })
+        .catch(error => {
+          console.error('Error al actualizar la contraseña:', error);
+          alert('Error al actualizar la contraseña.');
+        });
+      });
+    });
+
 
     function toggleDarkMode() {
     const body = document.body;

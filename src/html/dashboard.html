@@ -368,6 +368,36 @@ body.dark-mode #product-image:hover {
     
 <script>
 
+
+document.addEventListener("DOMContentLoaded", function() {
+      fetch('/tasks/recent')
+        .then(response => response.json())
+        .then(data => {
+          const listaTareasPendientes = document.getElementById('lista-tareas-pendientes');
+          if (data.message === 'No hay tareas pendientes') {
+            listaTareasPendientes.innerHTML = '<p>No hay tareas pendientes</p>';
+          } else {
+            const tarea = data;
+            const tareaCard = `
+              <div class="col-md-12">
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <h5 class="card-title">${tarea.titulo}</h5>
+                    <p class="card-text">${tarea.enunciado.substring(0, 100)}...</p>
+                    <a href="editor.html?taskId=${tarea.id}" class="btn btn-primary">Resolver tarea</a>
+                  </div>
+                </div>
+              </div>
+            `;
+            listaTareasPendientes.innerHTML = tareaCard;
+          }
+        })
+        .catch(error => {
+          console.error('Error al obtener la tarea más reciente:', error);
+          document.getElementById('lista-tareas-pendientes').innerHTML = '<p>Error al cargar las tareas pendientes</p>';
+        });
+    });
+
 fetch('/checkAuth')
       .then(response => response.json())
       .then(data => {

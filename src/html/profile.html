@@ -21,6 +21,8 @@
 
 .edit{
   cursor: pointer;
+  margin-left: 5px;
+  
 }
 
 .card:hover {
@@ -42,6 +44,14 @@
     font-size: 1rem;
     color: #6c757d; /* Gris para la subtitulación */
     margin-bottom: 10px;
+}
+
+.checkers{
+
+cursor: pointer;
+margin-left: 5px;
+margin-right: 5px;
+
 }
 
 /* Estilos para el texto descriptivo */
@@ -382,7 +392,7 @@ body.dark-mode .card .card-subtitle {
         const field = document.getElementById(fieldId);
         const currentValue = field.textContent;
         if (confirm('¿Estás seguro de que deseas modificar tu información personal?')) {
-          field.innerHTML = `<input type="text" id="${fieldId}Input" value="${currentValue}" class="form-control d-inline w-auto"> <i class="fa-solid fa-check" onclick="saveField('${fieldId}')"></i> <i class="fa-solid fa-x" onclick="cancelEdit('${fieldId}', '${currentValue}')"></i>`;
+          field.innerHTML = `<input type="text" id="${fieldId}Input" value="${currentValue}" class="form-control d-inline w-auto"> <i class="fa-solid fa-check   checkers" onclick="saveField('${fieldId}')"></i> <i class="fa-solid fa-x  checkers" onclick="cancelEdit('${fieldId}', '${currentValue}')"></i>`;
         }
       }
     
@@ -415,9 +425,8 @@ body.dark-mode .card .card-subtitle {
         .then(response => response.json())
         .then(data => {
           if (data.success) {
-            document.getElementById(fieldId).innerHTML = `${newValue} <i class="fa-solid fa-pen edit" onclick="editField('${fieldId}')"></i>`;
-          } else {
-            alert('Error al actualizar la información.');
+            document.getElementById(fieldId).innerHTML = `${newValue}`;
+            alert('Informacion actualizada.');
           }
         })
         .catch(error => console.error('Error al actualizar la información:', error));

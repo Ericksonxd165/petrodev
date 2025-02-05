@@ -274,7 +274,7 @@ body:not(.dark-mode) a.text-primary.fw-bold {
                       
                   </div>
                   <br>
-                  <a class="text-primary fw-bold" href="#">Olvidaste la contraseña?</a>
+                  <a class="text-primary fw-bold" onclick="openPasswordRecoveryModal()" href="#">Olvidaste la contraseña?</a>
                 </form>
               </div>
             </div>
@@ -283,6 +283,31 @@ body:not(.dark-mode) a.text-primary.fw-bold {
       </div>
     </div>
   </div>
+
+
+
+<!-- Modal para solicitar la recuperación de contraseña -->
+<div class="modal fade" id="passwordRecoveryModal" tabindex="-1" aria-labelledby="passwordRecoveryModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="passwordRecoveryModalLabel">Recuperación de contraseña</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <p style="color: #000; margin-left: 5px;">Ingresa tu correo electrónico para verificarte y recuperar tu contraseña</p>
+      <div class="modal-body">
+        <form id="passwordRecoveryForm">
+          <div class="mb-3">
+            <label for="recoveryEmail" class="form-label">Correo electrónico</label>
+            <input type="email" class="form-control" id="recoveryEmail" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- Modal para login de administrador -->
 <div class="modal fade" id="adminLoginModal" tabindex="-1" aria-labelledby="adminLoginModalLabel" aria-hidden="true">
@@ -311,6 +336,33 @@ body:not(.dark-mode) a.text-primary.fw-bold {
 
   <script>
   
+  function openPasswordRecoveryModal() {
+    const passwordRecoveryModal = new bootstrap.Modal(document.getElementById('passwordRecoveryModal'));
+    passwordRecoveryModal.show();
+  }
+
+  document.getElementById('passwordRecoveryForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const email = document.getElementById('recoveryEmail').value;
+
+    fetch('/requestPasswordRecovery', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email })
+    })
+    .then(response => response.json())
+    .then(data => {
+      alert(data.message);
+      if (data.message === 'Correo de recuperación enviado') {
+        const passwordRecoveryModal = bootstrap.Modal.getInstance(document.getElementById('passwordRecoveryModal'));
+        passwordRecoveryModal.hide();
+      }
+    })
+    .catch(error => console.error('Error al solicitar la recuperación de contraseña:', error));
+  });
+
   document.getElementById('adminLoginForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
