@@ -9,63 +9,6 @@
   <link rel="stylesheet" href=".././node_modules/simplebar/dist/simplebar.min.css">
   <link rel="stylesheet" href="./assets/css/styles.min.css" />
         <style>
-    /* Estilo para las flechas de navegación */
-    .arrow {
-      font-size: 4rem; /* Flechas grandes */
-      color: #000; /* Color negro */
-      cursor: pointer;
-      transition: all 0.3s ease; /* Animación suave */
-      padding: 10px; /* Espaciado alrededor de la flecha */
-    }
-
-    /* Efecto de hover: cambia a azul */
-    .arrow:hover {
-      color: #007bff; /* Cambia el color a azul al pasar el mouse */
-    }
-
-    /* Efecto cuando se hace clic */
-    .arrow:active {
-      color: #fff; /* Cambia el color a blanco */
-      border: 2px solid #007bff; /* Borde azul al hacer clic */
-      transform: scale(1.2); /* Aumenta un poco más el tamaño */
-      box-shadow: 0 0 10px rgba(0, 123, 255, 0.8); /* Resplandor azul */
-    }
-
-    /* Contenedor para las flechas */
-        .arrow-container {
-            display: flex;
-            justify-content: flex-end; /* Alinea las flechas a la derecha */
-            align-items: center;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            right: 0; /* Ajuste al borde derecho */
-            padding: 0 15px;
-            z-index: 10;
-        }
-
-       
-
-        .arrow-container span {
-            visibility: visible;
-            margin-left: 10px; /* Para darle un espacio entre las flechas si es necesario */
-        }
-
-    /* Animación para mostrar las flechas en el ingreso */
-    .arrow {
-      animation: slideIn 0.5s ease-in-out;
-    }
-
-    @keyframes slideIn {
-      0% {
-        opacity: 0;
-        transform: translateX(-50px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
             
 /* Estilo por defecto para el título h3 (modo claro) */
 h3.mb-4.text-center.fw-bold {
@@ -339,7 +282,7 @@ body:not(.dark-mode) .card-img-top:hover {
          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
     <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">  
         <!-- Botón "¡Empieza a Codificar!" -->
-        <a href="index.html" class="btn" style="background-color: #333; color: white; padding: 10px 20px; border-radius: 5px; display: flex; align-items: center;">
+        <a href="editor.html" class="btn" style="background-color: #333; color: white; padding: 10px 20px; border-radius: 5px; display: flex; align-items: center;">
           <span> <i class="fa-brands fa-python"></i>    ¡Empieza a Codificar!</span>
         </a>
         
@@ -349,19 +292,16 @@ body:not(.dark-mode) .card-img-top:hover {
               <i class="fa-solid fa-user"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
-                <div class="message-body">
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                        <i class="ti ti-user fs-6"></i>
-                        <p class="mb-0 fs-3">My Profile</p>
-                    </a>
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                        <i class="ti ti-mail fs-6"></i>
-                        <p class="mb-0 fs-3">My Account</p>
-                    </a>
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                        <i class="ti ti-list-check fs-6"></i>
-                        <p class="mb-0 fs-3">My Task</p>
-                    </a>
+              <div class="message-body">
+                  <a href="profile.html" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-user fs-6"></i>
+                      <p href="profile.html" class="mb-0 fs-3">Mi Perfil</p>
+                  </a>
+            
+                  <a href="tareas.html" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-list-check fs-6"></i>
+                      <p class="mb-0 fs-3">Tareas</p>
+                  </a>
                     <Logout href="javascript:void(0)" class="btn btn-outline-primary mx-3 mt-2 d-block"  onclick="logout()">Logout</a>
                 </div>
                 </div>
@@ -382,11 +322,11 @@ body:not(.dark-mode) .card-img-top:hover {
     <!-- Card 1 -->
     <div class="col">
       <div class="card h-100 shadow-sm">
-        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 1">
+        <img src="./assets/images/clases/clase1.png" class="card-img-top" alt="Card 1">
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">Introducción a Python</h5>
           <p class="card-text">Conceptos básicos y sintaxis inicial.</p>
-          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+          <a href="clase1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
         </div>
       </div>
     </div>
@@ -404,6 +344,17 @@ body:not(.dark-mode) .card-img-top:hover {
     <!-- Card 3 -->
     <div class="col">
       <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 2">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Estructuras de Control</h5>
+          <p class="card-text">Uso de condicionales y bucles.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 4 -->
+    <div class="col">
+      <div class="card h-100 shadow-sm">
         <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">Funciones y Módulos</h5>
@@ -412,24 +363,13 @@ body:not(.dark-mode) .card-img-top:hover {
         </div>
       </div>
     </div>
-    <!-- Card 4 -->
+     <!-- Card 5 -->
     <div class="col">
       <div class="card h-100 shadow-sm">
-        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 4">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 2">
         <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Manejo de Excepciones</h5>
-          <p class="card-text">Control de errores y excepciones.</p>
-          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
-        </div>
-      </div>
-    </div>
-    <!-- Card 5 -->
-    <div class="col">
-      <div class="card h-100 shadow-sm">
-        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 5">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Programación Orientada a Objetos</h5>
-          <p class="card-text">Clases, objetos y métodos.</p>
+          <h5 class="card-title">Estructuras de Control</h5>
+          <p class="card-text">Uso de condicionales y bucles.</p>
           <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
         </div>
       </div>
@@ -437,27 +377,280 @@ body:not(.dark-mode) .card-img-top:hover {
     <!-- Card 6 -->
     <div class="col">
       <div class="card h-100 shadow-sm">
-        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 6">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
         <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Proyectos Prácticos</h5>
-          <p class="card-text">Aplicación de lo aprendido en proyectos reales.</p>
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 7 -->
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 2">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Estructuras de Control</h5>
+          <p class="card-text">Uso de condicionales y bucles.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+    <!-- Card 8 -->
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 9 -->
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 2">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Estructuras de Control</h5>
+          <p class="card-text">Uso de condicionales y bucles.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+    <!-- Card 10 -->
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 11 -->
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 2">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Estructuras de Control</h5>
+          <p class="card-text">Uso de condicionales y bucles.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+    <!-- Card 12 -->
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 13 -->
+     <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 14 -->
+     <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 15 -->
+     <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 16 -->
+     <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 17 -->
+     <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 18 -->
+     <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 19 -->
+     <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 20 -->
+     <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 21 -->
+     <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 22 -->
+     <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 23 -->
+     <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 24 -->
+     <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 25 -->
+     <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 26 -->
+     <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 27 -->
+     <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 28 -->
+     <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 29 -->
+     <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
+          <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+        </div>
+      </div>
+    </div>
+     <!-- Card 30 -->
+     <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="https://via.placeholder.com/300x150" class="card-img-top" alt="Card 3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Funciones y Módulos</h5>
+          <p class="card-text">Definición y reutilización de código.</p>
           <a href="sessions-1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
         </div>
       </div>
     </div>
   </div>
 </div>
-          <!-- Contenedor para las flechas -->
-            <div class="arrow-container">
-                <span class="arrow" onclick="window.location.href='ui-card2.html'">&#8595;</span> <!-- Flecha hacia abajo -->
-                <span class="arrow" style="visibility: hidden;">&#8594;</span> <!-- No flecha hacia adelante -->
-            </div>
-
-      
-        </div>
-      </div>
-    </div>
-  </div>
      
  <script>
 

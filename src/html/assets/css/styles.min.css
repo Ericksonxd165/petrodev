@@ -3622,7 +3622,7 @@ textarea.form-control-lg {
 }
 
 .btn-primary {
-  --bs-btn-color: #fff;
+  --bs-btn-color: #137fe3;
   --bs-btn-bg: #2952ff;
   --bs-btn-border-color: #2952ff;
   --bs-btn-hover-color: #fff;
@@ -4701,7 +4701,7 @@ textarea.form-control-lg {
 
 .activated{
 
-background-color: blueviolet !important;
+background-color: rgb(233,255,255);
 color: black !important;
 
 
@@ -5350,7 +5350,7 @@ color: black !important;
 .card-img-bottom {
   height: 200px;
   width: 100%;
-  object-fit:contain;
+  object-fit:cover;
   transition: 1s;
 }
 
@@ -16629,11 +16629,13 @@ color: black !important;
   -ms-flex-negative: 0;
       flex-shrink: 0;
   font-size: 21px;
+/* Cambio Color hover modo claro Oliver */
 }
 .sidebar-nav ul .sidebar-item .sidebar-link:hover {
-  background-color: rgba(41, 82, 255, 0.1);
+  background-color: rgba(145,255,255,0.1);
   color: #2952ff;
 }
+/* Cambio Color hover modo claro Oliver */
 .sidebar-nav ul .sidebar-item .sidebar-link:hover.has-arrow::after {
   border-color: #2952ff;
 }
@@ -16645,7 +16647,7 @@ color: black !important;
 }
 .sidebar-nav ul .sidebar-item.selected > .sidebar-link.active, .sidebar-nav ul .sidebar-item.selected > .sidebar-link,
 .sidebar-nav ul .sidebar-item > .sidebar-link.active {
-  background-color: #2952ff;
+  background-color: #e9ffff;
   color: #fff;
 }
 .sidebar-nav .sidebar-list .sidebar-list-item {
@@ -17010,6 +17012,49 @@ body.dark-mode {
     color: white;
 }
 
+/* Inicio Estilos para el dropdown-menu en modo oscuro Oliver */
+body.dark-mode .dropdown-menu.dropdown-menu-end.dropdown-menu-animate-up {
+  background-color: #333333; /* Fondo gris oscuro */
+  color: #ffffff; /* Texto blanco */
+}
+
+/* Estilos para el botón de Logout en modo oscuro */
+body.dark-mode .btn.btn-outline-primary {
+  --bs-btn-border-color: #ffffff; /* Borde blanco */
+  --bs-btn-color: #ffffff; /* Texto blanco */
+  --bs-btn-hover-bg: #ffffff; /* Fondo blanco al hacer hover */
+  --bs-btn-hover-color: #000000; /* Texto negro al hacer hover */
+  --bs-btn-hover-border-color: #ffffff; /* Borde blanco al hacer hover */
+}
+
+/* Estilos para el hover en modo oscuro */
+body.dark-mode .dropdown-item.d-flex.align-items-center.gap-2:hover {
+  background-color: #ffffff; /* Mantén el fondo blanco en hover */
+}
+
+/* Estilos para las letras mb-0 fs-3 en hover */
+body.dark-mode .dropdown-item.d-flex.align-items-center.gap-2:hover .mb-0.fs-3 {
+  color: #000000 !important; /* Letras negras en hover */
+}
+
+/* Estilos para los iconos ti ti-user fs-6 y ti ti-list-check fs-6 en hover */
+body.dark-mode .dropdown-item.d-flex.align-items-center.gap-2:hover .ti.ti-user.fs-6,
+body.dark-mode .dropdown-item.d-flex.align-items-center.gap-2:hover .ti.ti-list-check.fs-6 {
+  color: #000000 !important; /* Iconos negros en hover */
+}
+
+/* Estilos para el hover del logo del perfil en modo oscuro */
+body.dark-mode .nav-link.nav-icon-hover:hover {
+  color: #2952ff !important; /* Color azul al pasar el mouse */
+}
+
+/* Final Estilos para nav-link nav-icon-hover show en modo oscuro Oliver */
+body.dark-mode .nav-link.nav-icon-hover.show:active,
+body.dark-mode .nav-link.nav-icon-hover.show:focus {
+  color: #ffffff !important; /* Texto blanco al hacer clic */
+}
+
+
 /* Eliminar el fondo gris del contenedor de la luna/sol */
 #darkModeToggle {
     background-color: transparent;  /* Elimina el fondo gris */
@@ -17030,6 +17075,21 @@ body.dark-mode {
 body.dark-mode #darkModeToggle i {
     color: white;  /* Cambiar color cuando el modo oscuro está activado */
 }
+
+/* Estilos para el modo oscuro en el hover Oliver */
+body.dark-mode .sidebar-nav ul .sidebar-item .sidebar-link:hover {
+  background-color: rgba(91,6,114, 0.3); /* Fondo más claro para el modo oscuro */
+  color: #64b5f6; /* Cambia el color del texto al hacer hover en modo oscuro */
+}
+
+/* Estilos para el modo oscuro Oliver */
+body.dark-mode .sidebar-nav ul .sidebar-item.selected > .sidebar-link.active,
+body.dark-mode .sidebar-nav ul .sidebar-item.selected > .sidebar-link,
+body.dark-mode .sidebar-nav ul .sidebar-item > .sidebar-link.active {
+  background-color: #8a0bd2; /* Cambia el color de fondo para el modo oscuro */
+  color: #fff; /* Mantén el color del texto en blanco */
+}
+/* Fin estilo para la barra Oliver */
 
 body.dark-mode {
     background-color: #121212; /* Fondo oscuro para toda la página */

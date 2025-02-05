@@ -500,6 +500,65 @@ body.dark-mode .brand-logo .logo-img img {
     max-width: 100%; /* Asegura que el contenedor no se salga del espacio disponible */
     width: fit-content; /* Ajusta el ancho del div según el contenido */
 }
+
+/* Inicio Estilos para los botones con un azul suave */
+button.btn.btn-primary,
+button.btn.btn-secondary,
+button.btn.btn-danger {
+    background-color: #4a90e2; /* Azul suave */
+    color: white;
+    border: 1px solid #357ABD; /* Azul un poco más oscuro */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Efecto hover para los botones */
+button.btn.btn-primary:hover,
+button.btn.btn-secondary:hover,
+button.btn.btn-danger:hover {
+    background-color: transparent; /* Fondo transparente */
+    color: #4a90e2; /* Azul suave */
+    border: 1px solid #4a90e2; /* Mantiene el borde azul */
+}
+
+/* Estilos para los botones en modo oscuro */
+body.dark-mode button.btn.btn-primary,
+body.dark-mode button.btn-secondary,
+body.dark-mode button.btn-danger {
+    background-color: #ffffff; /* Fondo blanco */
+    color: black; /* Texto negro */
+    border: 1px solid #333; /* Borde gris oscuro */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+/* Fin Efecto hover para los botones en modo oscuro */
+body.dark-mode button.btn.btn-primary:hover,
+body.dark-mode button.btn-secondary:hover,
+body.dark-mode button.btn-danger:hover {
+    background-color: transparent; /* Fondo transparente */
+    color: #fff; /* Texto blanco */
+    border: 1px solid #fff; /* Borde blanco */
+}
+
+/*  Inicio Estilos para los botones en modo oscuro Oliver*/
+body.dark-mode button.btn.btn-primary,
+body.dark-mode button.btn-secondary,
+body.dark-mode button.btn-danger {
+    background-color: #ffffff; /* Fondo blanco */
+    color: black; /* Texto negro */
+    border: 1px solid #333; /* Borde gris oscuro */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+/* Efecto hover para los botones en modo oscuro */
+body.dark-mode button.btn.btn-primary:hover,
+body.dark-mode button.btn-secondary:hover,
+body.dark-mode button.btn-danger:hover {
+    background-color: transparent; /* Fondo transparente */
+    color: #fff; /* Texto blanco */
+    border: 1px solid #fff; /* Borde blanco */
+}
+/*  Fin Estilos para los botones en modo oscuro Oliver*/
+
 </style>
     
     </head>
@@ -632,7 +691,7 @@ body.dark-mode .brand-logo .logo-img img {
          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
     <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">  
         <!-- Botón "¡Empieza a Codificar!" -->
-        <a href="index.html" class="btn" style="background-color: #333; color: white; padding: 10px 20px; margin: 15px; border-radius: 5px; display: flex; align-items: center;">
+        <a href="editor.html" class="btn" style="background-color: #333; color: white; padding: 10px 20px; margin: 15px; border-radius: 5px; display: flex; align-items: center;">
 
             <span> <i class="fa-brands fa-python"></i>    ¡Empieza a Codificar!</span>
         </a>
@@ -643,19 +702,16 @@ body.dark-mode .brand-logo .logo-img img {
                 <i class="fa-solid fa-user"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
-                <div class="message-body">
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                        <i class="ti ti-user fs-6"></i>
-                        <p class="mb-0 fs-3">My Profile</p>
-                    </a>
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                        <i class="ti ti-mail fs-6"></i>
-                        <p class="mb-0 fs-3">My Account</p>
-                    </a>
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                        <i class="ti ti-list-check fs-6"></i>
-                        <p class="mb-0 fs-3">My Task</p>
-                    </a>
+              <div class="message-body">
+                  <a href="profile.html" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-user fs-6"></i>
+                      <p href="profile.html" class="mb-0 fs-3">Mi Perfil</p>
+                  </a>
+            
+                  <a href="tareas.html" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-list-check fs-6"></i>
+                      <p class="mb-0 fs-3">Tareas</p>
+                  </a>
                     <Logout href="javascript:void(0)" class="btn btn-outline-primary mx-3 mt-2 d-block"  onclick="logout()">Logout</a>  
                 </div>
                 </div>

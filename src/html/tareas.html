@@ -511,6 +511,14 @@ body.dark-mode .brand-logo .logo-img img {
     max-width: 100%; /* Asegura que el contenedor no se salga del espacio disponible */
     width: fit-content; /* Ajusta el ancho del div según el contenido */
 }
+
+/* Modo oscuro para letras en tareas Oliver */
+body.dark-mode .card-body h1,
+body.dark-mode .container.mt-4 h3,
+body.dark-mode #tareasPendientes {
+    color: #ffffff; /* Texto en blanco para mejor visibilidad */
+}
+/*  Fin Modo oscuro para letras en tareas Oliver */
 </style>
     
     </head>
@@ -644,7 +652,7 @@ body.dark-mode .brand-logo .logo-img img {
          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
     <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">  
         <!-- Botón "¡Empieza a Codificar!" -->
-        <a href="index.html" class="btn" style="background-color: #333; color: white; padding: 10px 20px; margin: 15px; border-radius: 5px; display: flex; align-items: center;">
+        <a href="editor.html" class="btn" style="background-color: #333; color: white; padding: 10px 20px; margin: 15px; border-radius: 5px; display: flex; align-items: center;">
 
             <span> <i class="fa-brands fa-python"></i>    ¡Empieza a Codificar!</span>
         </a>
@@ -655,19 +663,16 @@ body.dark-mode .brand-logo .logo-img img {
                 <i class="fa-solid fa-user"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
-                <div class="message-body">
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                        <i class="ti ti-user fs-6"></i>
-                        <p class="mb-0 fs-3">My Profile</p>
-                    </a>
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                        <i class="ti ti-mail fs-6"></i>
-                        <p class="mb-0 fs-3">My Account</p>
-                    </a>
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                        <i class="ti ti-list-check fs-6"></i>
-                        <p class="mb-0 fs-3">My Task</p>
-                    </a>
+              <div class="message-body">
+                  <a href="profile.html" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-user fs-6"></i>
+                      <p href="profile.html" class="mb-0 fs-3">Mi Perfil</p>
+                  </a>
+            
+                  <a href="tareas.html" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-list-check fs-6"></i>
+                      <p class="mb-0 fs-3">Tareas</p>
+                  </a>
                     <Logout href="javascript:void(0)" class="btn btn-outline-primary mx-3 mt-2 d-block"  onclick="logout()">Logout</a>  
                 </div>
                 </div>
