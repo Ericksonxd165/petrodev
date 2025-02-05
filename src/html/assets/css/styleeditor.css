@@ -68,6 +68,17 @@ margin-bottom: 10px;
 
 }
 
+.btn-admin{
+    border-radius: 0px 10px 10px 0px;
+    background-color: #6272a4;
+    color: rgb(0, 0, 0);
+    outline: none;
+    border: none;
+    height: 30px;
+    width: 30px;
+    margin-bottom: 10px;
+}
+
 .card-body{
 
     
