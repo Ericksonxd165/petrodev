@@ -4757,6 +4757,38 @@ color: black !important;
           box-shadow: 0 0 0 var(--bs-navbar-toggler-focus-width);
 }
 
+/* Eliminar el hover circular original (si existe) */
+.nav-icon-hover:hover::before {
+  display: none !important;
+}
+
+/* Nuevo hover rectangular */
+.nav-link:hover {
+  background: #f0f0f0; /* Color de fondo del hover */
+  border-radius: 4px; /* Esquinas redondeadas opcionales */
+  transition: all 0.3s ease; /* Transición suave */
+}
+
+/* Ajustar el espaciado */
+.nav-link {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.5rem; /* Espacio entre texto e icono */
+  padding: px 12px !important; /* Aumentar área clickeable */
+}
+
+/* Estilos para el modo oscuro - Active (click) */
+body.dark-mode .nav-link:hover {
+  background: #212020 !important; /* Color gris deseado */
+}
+
+/* Asegurar que texto e icono permanezcan visibles */
+body.dark-mode .nav-link:active #user-cedula,
+body.dark-mode .nav-link:active .svg-inline--fa {
+  color: white !important;
+  opacity: 1 !important;
+}
+
 .navbar-toggler-icon {
   display: inline-block;
   width: 1.5em;
