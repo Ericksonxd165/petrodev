@@ -310,11 +310,12 @@ body.dark-mode #product-image:hover {
         <div class="col-lg-4">
           <div class="card">
             <div class="card-body text-center">
-              <!-- <img src="./assets/images/backgrounds/product-tip.png" alt="image" class="img-fluid" width="205" id="product-image">
-              <h4 class="mt-7">Productivity Tips!</h4>
-              <p class="card-subtitle mt-2 mb-3">Duis at orci justo nulla in libero id leo
-                molestie sodales phasellus justo.</p>
-                <button class="btn btn-primary mb-3">View All Tips</button> -->
+              <h5 class="card-title d-flex align-items-center gap-2 mb-4">
+                Progreso del Usuario:
+
+          <h1> <span id="userProgress">0%</span>/ 100%</h1>
+          <progress id="userProgressBar" value="0" max="100"></progress>
+         
             </div>
           </div>
         </div>
@@ -368,6 +369,30 @@ body.dark-mode #product-image:hover {
     
 <script>
 
+
+  // Obtener el progreso de las tareas del usuario
+  fetch('/user/progress')
+    .then(response => response.json())
+    .then(data => {
+      const progreso = parseFloat(data.progreso);
+      const progressBar = document.getElementById('userProgressBar');
+      const progressText = document.getElementById('userProgress');
+
+      if (!isNaN(progreso) && progreso >= 0 && progreso <= 100) {
+        progressText.textContent = `${progreso}%`;
+        progressBar.value = progreso;
+      } else {
+        console.error('Progreso inválido:', progreso);
+        progressText.textContent = '0%';
+        progressBar.value = 0;
+      }
+    })
+    .catch(error => {
+      console.error('Error al cargar el progreso del usuario:', error);
+      document.getElementById('userProgress').textContent = '0%';
+      document.getElementById('userProgressBar').value = 0;
+    });
+          
 
 document.addEventListener("DOMContentLoaded", function() {
       fetch('/tasks/recent')

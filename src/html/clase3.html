@@ -288,7 +288,7 @@ width: 10px;
   </style>
 </head>
 <body class="dark-mode">
-  <div class="task-title">Introducción a Python</div>
+  <div class="task-title">Condicionales en Python</div>
   <button class="return-button" onclick="location.href='capacitacion.html'">&times;</button>
   <button class="mode-toggle" onclick="toggleMode()">
     <div class="icon-box"><i class="fas fa-moon"></i></div>
@@ -299,143 +299,180 @@ width: 10px;
       <!-- Slide 1: Funciones y Comentarios -->
       <div class="slider-item active">
         <pre><code>
-          <h2>Variables en Python</h2></pre>
+          <h2>¿Qué son los condicionales?</h2></pre>
           <span>
-          En programación, una variable es un espacio en la memoria que se utiliza para almacenar datos. En Python, las variables no necesitan ser declaradas con un tipo específico, ya que el lenguaje es de tipado dinámico. Esto significa que el tipo de dato se infiere automáticamente según el valor que le asignes.
-
-Por ejemplo:
+            Los condicionales son estructuras de control que permiten ejecutar bloques de código solo si se cumple una condición específica. <br><br>
+            En Python, los condicionales se implementan principalmente con las palabras clave <span class="keyword">if</span>,<span class="keyword">elif </span> y <span class="keyword">else</span>. <br><br>
         </span>
-        <br>
-        <br>
+      
+      <p> Sintaxis básica de los condicionales</p><br>
+        La estructura básica de un condicional en Python es la siguiente: <br><br>
+        <span class="keyword">if</span> <span class="variable">condicion</span>:<br>
+<span class="comment"># Bloque de código si la condición es True</span><br>
+<span class="keyword">elif</span> <span class="variable">otra_condicion</span>:<br>
+<span class="comment"># Bloque de código si otra_condicion es True</span><br>
+<span class="keyword">else</span>:<br>
+<span class="comment"># Bloque de código si ninguna condición es True</span><br><br>
 
-<span class="variable">presion</span> = <span class="keyword">3500 </span><span class="comment"># Entero (int)</span><br>
- <span class="variable">densidad</span> = <span class="keyword"> 0.85 </span><span class="comment"> # Flotante (float)</span><br>
- <span class="variable">nombre_pozo </span> = <span class="keyword">"Pozo_A"</span><span class="comment">  # Cadena de texto (str)</span><br>
- <span class="variable">es_activo</span> = <span class="keyword">True</span><span class="comment">   # Booleano (bool)</span><br>
-<br>
-<span class="comment">#En este caso:</span><br>
- <span class="comment">
-  presion es un número entero que podría representar la presión en un yacimiento (en psi).
- </span><br>
- <span class="comment">
-  densidad es un número decimal que podría representar la densidad del petróleo (en g/cm³).
-</span><br>
-<span class="comment">   
-  nombre_pozo es una cadena de texto que almacena el nombre de un pozo.
-</span><br> 
-<span class="comment">
-    es_activo es un valor booleano que indica si el pozo está activo o no.
-</span>
+<span class="keyword">if:</span> Evalúa una condición. Si es True, ejecuta el bloque de código asociado. <br><br>
+<span class="keyword">elif:</span> <span class="comment">(Opcional)</span> Evalúa otra condición si la anterior fue False. <br><br>
+<span class="keyword">else: </span> <span class="comment">(Opcional)</span> Ejecuta un bloque de código si todas las condiciones anteriores fueron False.
+        </pre></code>
+
+        <span> 
+          <a href="editor.html" class="variable" style="text-decoration: none;" >Puedes intentar esto tu mismo en el editor</a>, seleccionando la sintaxis de codigo de los condicionales y presionando el boton de pegar para probarlo.</span>
+        </span>   
 
       </div>
       <!-- Slide 2: Variables y Tipos de Datos -->
       <div class="slider-item active">
         <pre><code>
-          <h2>Tipos de datos en Python</h2></pre>
+          <h2>Ejemplos de condicionales</h2></pre>
           <span>
-            Los tipos de datos definen la naturaleza de la información que se almacena en una variable. A continuación, te explico los tipos de datos más comunes en Python:  
-        </span>
+            1. Condicional simple <span class="keyword">(if)</span>
+          </span>
         <br>
         <br>
-
-        <span class="variable">presion</span> = <span class="keyword">3500</span> <span class="comment"># Entero (int)</span><span> Los enteros son números sin decimales. Pueden ser positivos o negativos.
-
-        </span><br>
-        <span class="variable">densidad</span> = <span class="keyword">0.85</span> <span class="comment"># Flotante (float)</span><span> Los flotantes son números con decimales. Se utilizan para representar valores más precisos.
-
-        </span><br>
-        <span class="variable">nombre_pozo</span> = <span class="string">"Pozo_A"</span> <span class="comment"># Cadena de texto (str)</span><span> Las cadenas de texto son secuencias de caracteres. Se definen entre comillas simples (') o dobles (").</span><br><br>
-        <span class="variable">es_activo</span> = <span class="keyword">True</span> <span class="comment"># Booleano (bool)</span> <span> Los booleanos son valores lógicos que solo pueden ser True (verdadero) o False (falso). Se utilizan para representar condiciones o estados binarios.</span><br><br>
-        <span class="variable">presiones</span> = <span class="keyword">[3500, 4000, 3200]</span> <span class="comment"># Lista (list)</span> <span> Las listas son colecciones ordenadas y mutables de elementos. Pueden contener diferentes tipos de datos.</span><br><br>
-        <span class="variable">coordenadas</span> = <span class="keyword">(10.5, -75.3)</span> <span class="comment"># Tupla (tuple)</span><span> Las tuplas son similares a las listas, pero son inmutables, es decir, no se pueden modificar después de su creación.</span><br><br>
-        <span class="variable">pozos_activos</span> = <span class="keyword">{"Pozo_A", "Pozo_B", "Pozo_C"}</span> <span class="comment"># Conjunto (set)</span><span> Los conjuntos son colecciones no ordenadas de elementos únicos. No permiten duplicados.</span><br><br>
-        <span class="variable">datos_pozo</span> = <span class="keyword">{"nombre": "Pozo_A", "presion": 3500, "densidad": 0.85}</span> <span class="comment"># Diccionario (dict)</span><span>Los diccionarios son colecciones de pares clave-valor. Se utilizan para almacenar datos asociativos.</span><br><br>
-        <span class="variable">resultado</span> = <span class="keyword">None</span> <span class="comment"># Valor vacío (None)</span><span> El valor None se utiliza para representar la ausencia de valor. Es similar a null en otros lenguajes.
+        <span class="variable">edad</span> = <span class="keyword">18</span><br>
+<span class="keyword">if</span> <span class="variable">edad</span> >= <span class="keyword">18</span>:<br>
+<span class="function">print</span>(<span class="string">"Eres mayor de edad."</span>) <span class="comment"># Output: Eres mayor de edad.</span><br><br>
+<span>
+  2. Condicional con else
+ <span class="keyword">(if)</span>
 </span><br><br>
-        <span class="variable">pozo</span> = <span class="keyword">Pozo("Pozo_A", 3500)</span> <span class="comment"># Objeto (object)</span><span> En Python, todo es un objeto. Los objetos son instancias de clases y pueden tener atributos y métodos. Más adelante, en clases futuras, profundizaremos en este concepto.
-
-        </span><br>
-
-
-      </div>
-      <!-- Slide 3: Estructuras de Control -->
-      <div class="slider-item">
-        <pre><code><h2> Uso de variables</h2>
-
- <span>Las variables pueden ser utilizadas para el procesamiento de datos. estan pueden obedecer estructuras
-   de control, operaciones aritmeticas y ser utilizadas en <span class="keyword">Funciones</span></span><br><br>
-<span class="variable">saludo</span> = <span class="string">"Hola"</span><br>
-<span class="keyword">print</span>(<span class="variable">saludo</span>)<span class="comment"># Saldria "Hola en consola" </span>
-
-<span class="variable">a</span> = <span class="keyword">1</span><br>
-<span class="variable">b</span> = <span class="keyword">2</span><br>
-<span class="variable">suma</span> = <span class="variable">a<span class="string">+</span>b</span><br>
-
-<span class="keyword">print</span>(<span class="variable">suma</span>)<span class="comment"># Saldria el numero 3 en consola </span>
-      </div>
-      <!-- Slide 4: Funciones y Módulos -->
-      <div class="slider-item">
-        <div>
-          <h2>Uso de tipado de datos</h2>
-          <p>
-            En Python, los <strong>Tipos de datos</strong> te permiten definir la naturaleza de la información que se almacena en una variable. Algunos de los tipos de datos más comunes en uso son:
-          </p>
-
-
-       <span class="comment"># Tipo numero</span><br>
-        <span class="variable">numero</span> = <span class="keyword">1</span><br>
-        <p class="comment"> Que sirven por ejemplo para la realizacion de operaciones aritmeticas:</p>
-
-        <span class="variable">suma</span> = <span class="variable">numero</span> + <span class="keyword">2</span><br>
-
-        <span class="comment"># Tipo String</span><br>
-        <span class="variable">nombre</span> = <span class="string">"Juan"</span><br>
-        <p class="comment"> Que sirven para escribir cadenas de texto, estas pueden usarse para almacenar
-          informacion o para mostrar mensajes en pantalla, incluso concatenarlos como en este ejemplo:</p>
-
-        <span class="variable">saludo</span> = <span class="string">"Hola, "</span> + <span class="variable">nombre</span><br><span class="comment"># Saldria "Hola Juan" en consola</span>
-        </p>
-
+<span class="variable">temperatura</span> = <span class="keyword">30</span><br>
+<span class="keyword">if</span> <span class="variable">temperatura</span> > <span class="keyword">25</span>:<br>
+<span class="function">print</span>(<span class="string">"Hace calor."</span>) <span class="comment"># Output: Hace calor.</span><br>
+<span class="keyword">else</span>:<br>
+<span class="function">print</span>(<span class="string">"Hace frío."</span>)<br><br>
         </div>
       </div>
       <!-- Slide 5: Entrada y Salida de Datos -->
       <div class="slider-item">
         <div>
-          <h2>Entrada y Salida de Datos</h2>
+          <h2>Ejemplos de condicionales</h2>
+          <p>3. Condicional con elif</p>
           <p>
-            Python permite interactuar con el usuario mediante la función <code>input()</code> para recibir datos y <code>print()</code> para mostrar información en pantalla, lo que facilita la creación de programas interactivos.
           </p>
-          <p>Sin embargo en el caso de <strong>Petrodev</strong> la funcion input se vera inhabilitada, puedes intentarlo aun asi en tu propio editor de codigo o entorno de desarrollo</p>
-          <p>Ejemplo:</p>
-          <pre><code><span class="comment"># Solicitar el nombre del usuario</span>
-<span class="variable">nombre</span> = <span class="keyword">input</span>(<span class="string">"Ingresa tu nombre: "</span>)
-<span class="keyword">print</span>(<span class="string">"Bienvenido, "</span> + <span class="variable">nombre</span>)</code></pre><br><br>
+          <p><span class="variable">nota</span> = <span class="keyword">85</span><br>
+            <span class="keyword">if</span> <span class="variable">nota</span> >= <span class="keyword">90</span>:<br>
+            <span class="function">print</span>(<span class="string">"Excelente"</span>)<br>
+            <span class="keyword">elif</span> <span class="variable">nota</span> >= <span class="keyword">70</span>:<br>
+            <span class="function">print</span>(<span class="string">"Aprobado"</span>) <span class="comment"># Output: Aprobado</span><br>
+            <span class="keyword">else</span>:<br>
+            <span class="function">print</span>(<span class="string">"Reprobado"</span>)<br></p><br>
+<p>4. Condicionales anindados</p>
+<p><span class="variable">año</span> = <span class="keyword">2021</span><br>
+  <span class="variable">numero</span> = <span class="keyword">10</span><br>
+<span class="keyword">if</span> <span class="variable">numero</span> > <span class="keyword">0</span>:<br>
+<span class="function">print</span>(<span class="string">"El número es positivo."</span>)<br>
+<span class="keyword">if</span> <span class="variable">numero</span> % <span class="keyword">2</span> == <span class="keyword">0</span>:<br>
+<span class="function">print</span>(<span class="string">"Además, es par."</span>) <span class="comment"># Output: El número es positivo. Además, es par.</span><br>
+<span class="keyword">else</span>:<br>
+<span class="function">print</span>(<span class="string">"El número es negativo."</span>)<br>
 
-<p>Para lo que es el caso de Petrodev se utilizaran los <span class="keyword">print()</span> Para mostrar en consola los datos, tambien podremos ver como pasar estos
-como parametros en siguientes clases </p>
-
-<span id="copy" ><span class="variable">nombre</span> = <span class="string">"Eli"</span> <br>
-<span class="keyword">print</span>(<span class="string">"Bienvenido, "</span> + <span class="variable">nombre</span>) </span>
- <span class="copy" onclick="copyToClipboard()" ><i id="clipboard" class="fa-solid fa-copy"></i> Clic aca para copiar</span>
-
-
-<p>Intentalo tu mismo, copia este codigo y pruebalo en el <a href="editor.html" style="text-decoration: none;" class="keyword">Editor</a></p>
 <br>
 </div>
       </div>
+
+      <div class="slider-item">
+        <div>
+          <h2>Ejemplos de condicionales</h2>
+          <p>5. Condicional con operadores lógicos (<span class="keyword">and</span> ,<span class="keyword"> or</span> , <span class="keyword">not</span>) <br><br> 
+       
+          </p>
+          <p>
+   
+            <span class="variable">edad</span> = <span class="keyword">25</span><br>
+            <span class="variable">tiene_licencia</span> = <span class="keyword">True</span><br>
+            <span class="keyword">if</span> <span class="variable">edad</span> >= <span class="keyword">18</span> <span class="keyword">and</span> <span class="variable">tiene_licencia</span>:<br>
+            <span class="function">print</span>(<span class="string">"Puedes conducir."</span>) <span class="comment"># Output: Puedes conducir.</span><br>
+            <span class="keyword">else</span>:<br>
+            <span class="function">print</span>(<span class="string">"No puedes conducir."</span>)<br>
+          </p>
+         <p>6. Condicional con <span class="keyword">in </span> (para verificar pertenencia) <br><br>
+          <span class="variable">frutas</span> = [<span class="string">"manzana"</span>, <span class="string">"banana"</span>, <span class="string">"naranja"</span>]<br>
+<span class="keyword">if</span> <span class="string">"banana"</span> <span class="keyword">in</span> <span class="variable">frutas</span>:<br>
+<span class="function">print</span>(<span class="string">"La banana está en la lista."</span>) <span class="comment"># Output: La banana está en la lista.</span><br>
+<span class="keyword">else</span>:<br>
+<span class="function">print</span>(<span class="string">"La banana no está en la lista."</span>)<br>
+        </p>
+<br>
+</div>
+      </div>   
+      <div class="slider-item">
+        <div>
+          <h2>Operadores de comparación</h2>
+          <p>Los condicionales suelen usar operadores de comparación para evaluar condiciones. Aquí tienes los más comunes:</p>
+          <p>
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Operador</th>
+                <th>Descripción</th>
+                <th>Ejemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="operator">==</span></td>
+                <td>Igual a</td>
+                <td><span class="keyword">if</span> <span class="variable">x</span> <span class="operator">==</span> <span class="keyword">10</span>:</td>
+              </tr>
+              <tr>
+                <td><span class="operator">!=</span></td>
+                <td>Diferente de</td>
+                <td><span class="keyword">if</span> <span class="variable">x</span> <span class="operator">!=</span> <span class="keyword">10</span>:</td>
+              </tr>
+              <tr>
+                <td><span class="operator">&gt;</span></td>
+                <td>Mayor que</td>
+                <td><span class="keyword">if</span> <span class="variable">x</span> <span class="operator">&gt;</span> <span class="keyword">10</span>:</td>
+              </tr>
+              <tr>
+                <td><span class="operator">&lt;</span></td>
+                <td>Menor que</td>
+                <td><span class="keyword">if</span> <span class="variable">x</span> <span class="operator">&lt;</span> <span class="keyword">10</span>:</td>
+              </tr>
+              <tr>
+                <td><span class="operator">&gt;=</span></td>
+                <td>Mayor o igual que</td>
+                <td><span class="keyword">if</span> <span class="variable">x</span> <span class="operator">&gt;=</span> <span class="keyword">10</span>:</td>
+              </tr>
+              <tr>
+                <td><span class="operator">&lt;=</span></td>
+                <td>Menor o igual que</td>
+                <td><span class="keyword">if</span> <span class="variable">x</span> <span class="operator">&lt;=</span> <span class="keyword">10</span>:</td>
+              </tr>
+              <tr>
+                <td><span class="keyword">in</span></td>
+                <td>Pertenece a</td>
+                <td><span class="keyword">if</span> <span class="string">"a"</span> <span class="keyword">in</span> <span class="variable">lista</span>:</td>
+              </tr>
+              <tr>
+                <td><span class="keyword">not in</span></td>
+                <td>No pertenece a</td>
+                <td><span class="keyword">if</span> <span class="string">"a"</span> <span class="keyword">not in</span> <span class="variable">lista</span>:</td>
+              </tr>
+            </tbody>
+          </table>
+</div>
+      </div>
+      
       <!-- Slide 6: Resumen del Curso -->
       <div class="slider-item">
         <div>
           <h2>Resumen y Próximos Pasos</h2>
           <p>
-            En esta primera clase Introducción de Python has aprendido:
+            En esta clase Sobre los condicionales de Python has aprendido:
           </p>
           <ul>
-            <li>La sintaxis básica de las variables.</li>
-            <li>El uso de variables y tipos de datos.</li>
-            <li>El manejo de estructuras de control y aritmetica basica.</li>
-            <li>Conceptos de uso de los tipos de datos.</li>
-            <li>Entrada y salida de datos para programas interactivos.</li>
+            <li>La sintaxis básica de los condicionales.</li>
+            <li>El uso y funcionamiento de las condicionales.</li>
+            <li>El manejo de estructuras de control.</li>
+            <li>Operadores de comparacion.</li>
+            <li>Las diferentes circunstancias en las que puedes usar condicionales.</li>
           </ul>
           <p>
             ¡Continúa practicando y explorando la documentación para profundizar tus conocimientos en Python en!
@@ -519,7 +556,7 @@ function copyToClipboard() {
     if (currentIndex === items.length - 1) {
       if (continueButton) {
         continueButton.textContent = 'Siguiente Clase';
-        continueButton.onclick = () => window.location.href = 'clase2.html';
+        continueButton.onclick = () => window.location.href = 'clase4.html';
         if (!restartClassButton) {
           restartClassButton = document.createElement('button');
           restartClassButton.id = 'restart-class-button';

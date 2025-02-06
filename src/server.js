@@ -252,6 +252,7 @@ app.get('/dashboard.html', isEstudiante, (req, res) => {
   res.sendFile(path.join(__dirname, 'html', 'dashboard.html'));
 });
 
+
 // Middleware para verificar si el usuario es profesor
 function isProfesor(req, res, next) {
   if (req.session.user && req.session.user.rol === 'profesor') {
