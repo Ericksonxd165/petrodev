@@ -559,6 +559,20 @@ body.dark-mode button.btn-danger:hover {
 }
 /*  Fin Estilos para los botones en modo oscuro Oliver*/
 
+ /* --- Estilos para el Sidebar y toggle --- */
+
+    /* Transición para el sidebar */
+    .left-sidebar {
+      transition: transform 0.3s ease;
+    }
+
+    /* Clase para ocultar el sidebar */
+    .left-sidebar.sidebar-hidden {
+      transform: translateX(-100%);
+    }
+          
+
+
 </style>
     
     </head>
@@ -568,7 +582,7 @@ body.dark-mode button.btn-danger:hover {
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
     <!-- Sidebar Start -->
-    <aside class="left-sidebar">
+    <aside class="left-sidebar" id="left-sidebar">
       <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
@@ -679,7 +693,12 @@ body.dark-mode button.btn-danger:hover {
                     <i class="ti ti-menu-2"></i>
                 </a>
             </li>
-            
+               <!-- NUEVO: Botón de toggle para escritorio -->
+               <li class="nav-item d-none d-xl-block">
+                <a class="nav-link sidebartoggler nav-icon-hover" id="sidebarToggle" href="javascript:void(0)">
+                  <i class="ti ti-menu-2"></i>
+                </a>
+              </li>
             <!-- Icono de la luna para el modo oscuro -->
             <li class="nav-item">
     <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="darkModeToggle">
@@ -778,6 +797,17 @@ document.addEventListener("DOMContentLoaded", function() {
       });
   });
 
+
+ // Toggle para el sidebar en escritorio
+ const sidebar = document.getElementById('left-sidebar');
+      const sidebarToggle = document.getElementById('sidebarToggle');
+      if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', function() {
+          sidebar.classList.toggle('sidebar-hidden');
+        });
+      }
+
+
   function showUserCedula() {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
@@ -802,9 +832,9 @@ document.addEventListener("DOMContentLoaded", function() {
        <div class="card-body">
               <h5 class="card-title">${project.title}</h5>
               <div class="d-flex justify-content-end">
-                <button class="btn btn-primary me-2" onclick="editProject(${project.id})">Editar</button>
-                <button class="btn btn-secondary me-2" onclick="changeTitle(${project.id})">Cambiar Título</button>
-                <button class="btn btn-danger" onclick="deleteProject(${project.id})">Eliminar</button>
+                <button class="btn btn-primary me-2" onclick="editProject(${project.id})">Editar <i class="fa-solid fa-pen"></i></button>
+                <button class="btn btn-secondary me-2" onclick="changeTitle(${project.id})">Cambiar Título <i class="fa-solid fa-pen-to-square"></i></button>
+                <button class="btn btn-danger" onclick="deleteProject(${project.id})">Eliminar <i class="fa-solid fa-trash"></i></button>
               </div>
             </div>
           `;

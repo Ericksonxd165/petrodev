@@ -127,7 +127,22 @@ body.dark-mode #product-image {
 /* Estilo para cuando el modo oscuro está activado y se quiere un efecto más pronunciado */
 body.dark-mode #product-image:hover {
     filter: invert(1) brightness(0.5); /* Cambiar más el brillo cuando se pasa el mouse */
-}     
+}    
+
+ /* --- Estilos para el Sidebar y toggle --- */
+
+    /* Transición para el sidebar */
+    .left-sidebar {
+      transition: transform 0.3s ease;
+    }
+
+    /* Clase para ocultar el sidebar */
+    .left-sidebar.sidebar-hidden {
+      transform: translateX(-100%);
+    }
+
+
+
     </style>
     
     </head>
@@ -137,7 +152,7 @@ body.dark-mode #product-image:hover {
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
     <!-- Sidebar Start -->
-    <aside class="left-sidebar">
+    <aside class="left-sidebar" id="left-sidebar">
       <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
@@ -249,7 +264,12 @@ body.dark-mode #product-image:hover {
                     <i class="ti ti-menu-2"></i>
                 </a>
             </li>
-            
+              <!-- NUEVO: Botón de toggle para escritorio -->
+              <li class="nav-item d-none d-xl-block">
+                <a class="nav-link sidebartoggler nav-icon-hover" id="sidebarToggle" href="javascript:void(0)">
+                  <i class="ti ti-menu-2"></i>
+                </a>
+              </li>
             <!-- Icono de la luna para el modo oscuro -->
             <li class="nav-item">
     <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="darkModeToggle">
@@ -296,14 +316,7 @@ body.dark-mode #product-image:hover {
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
-                        <!-- <h5 class="card-title d-flex align-items-center gap-2 mb-4">
-                            Traffic Overview
-                            <span>
-                        
-                            </span>
-                        </h5>
-                        <div id="traffic-overview" >
-                        </div> -->
+        <img src="./assets/images/logos/background.png" alt="" style="width: 100%; height: 100%; object-fit:cover; border-radius: 5px;">
                     </div>
                 </div>
             </div>
@@ -482,6 +495,15 @@ fetch('/checkAuth')
       }
     }
     
+    // Toggle para el sidebar en escritorio
+    const sidebar = document.getElementById('left-sidebar');
+          const sidebarToggle = document.getElementById('sidebarToggle');
+          if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', function() {
+              sidebar.classList.toggle('sidebar-hidden');
+            });
+          }
+
 // Función que activa o desactiva el modo oscuro
 function toggleDarkMode() {
     const body = document.body;

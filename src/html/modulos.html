@@ -120,7 +120,29 @@ body.dark-mode .card .card-subtitle {
     color: #FFA500 !important; /* Naranja para el texto de subtítulo en modo oscuro */
 }      
  
-       
+.card-text {
+  list-style-type: disc; /* Puedes cambiar a 'circle' o 'square' */
+  padding-left: 20px; /* Ajusta el espacio a la izquierda */
+}
+    
+.card-subtitle.text-muted {
+  color: rgb(30, 112, 235) !important; /* Puedes cambiar 'blue' por un código HEX como #007BFF */
+}
+
+
+ /* --- Estilos para el Sidebar y toggle --- */
+
+    /* Transición para el sidebar */
+    .left-sidebar {
+      transition: transform 0.3s ease;
+    }
+
+    /* Clase para ocultar el sidebar */
+    .left-sidebar.sidebar-hidden {
+      transform: translateX(-100%);
+    }
+
+
     </style>
   
 </head>
@@ -130,7 +152,7 @@ body.dark-mode .card .card-subtitle {
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
     <!-- Sidebar Start -->
-    <aside class="left-sidebar">
+    <aside class="left-sidebar" id="left-sidebar">
       <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
@@ -243,7 +265,12 @@ body.dark-mode .card .card-subtitle {
                     <i class="ti ti-menu-2"></i>
                 </a>
             </li>
-            
+              <!-- NUEVO: Botón de toggle para escritorio -->
+              <li class="nav-item d-none d-xl-block">
+                <a class="nav-link sidebartoggler nav-icon-hover" id="sidebarToggle" href="javascript:void(0)">
+                  <i class="ti ti-menu-2"></i>
+                </a>
+              </li>
             <!-- Icono de la luna para el modo oscuro -->
             <li class="nav-item">
     <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="darkModeToggle">
@@ -294,8 +321,16 @@ body.dark-mode .card .card-subtitle {
                 <div class="card mb-4">
                   <div class="card-body">
                     <h6 class="card-title">Módulo I</h6>
-                    <h7 class="card-subtitle mb-2 text-muted">Subproyecto I</h7>
-                    <p class="card-text">Información adicional sobre el Módulo I.</p>
+                    <h7 class="card-subtitle mb-2 text-muted">Problemas, Algoritmos y Programas</h7>
+                    <ul class="card-text">
+                      <li>Concepto de algoritmo.</li>
+                      <li>Variables y tipos de datos.</li>
+                      <li>Constantes y variables.</li>
+                      <li>Expresiones.</li>
+                      <li>Funciones internas.</li>
+                      <li>La operación de asignación.</li>
+                      <li>Entrada y salida de información.</li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -303,8 +338,16 @@ body.dark-mode .card .card-subtitle {
                 <div class="card mb-4">
                   <div class="card-body">
                     <h6 class="card-title">Módulo II</h6>
-                    <h7 class="card-subtitle mb-2 text-muted">Subproyecto II</h7>
-                    <p class="card-text">Información adicional sobre el Módulo II.</p>
+                    <h7 class="card-subtitle mb-2 text-muted">Herramientas Claves de Programación en la Solución de Problemas</h7>
+                    <ul class="card-text">
+                    <li>Análisis de problemas</li>
+                    <li>Diseño de algoritmos.</li>
+                    <li>Diagramas de flujo.</li>
+                    <li>Introducción al programa Pascal.</li>
+                    <li>Solución por problemas por computadora.</li>
+                    <li>Codificación del algoritmo de un programa.</li>
+                    <li>Ejecución del programa.</li>
+                    <li>Comprobación del programa.</li>
                   </div>
                 </div>
               </div>
@@ -312,8 +355,14 @@ body.dark-mode .card .card-subtitle {
                 <div class="card mb-4">
                   <div class="card-body">
                     <h6 class="card-title">Módulo III</h6>
-                    <h7 class="card-subtitle mb-2 text-muted">Subproyecto III</h7>
-                    <p class="card-text">Información adicional sobre el Módulo III.</p>
+                    <h7 class="card-subtitle mb-2 text-muted">Programa y su Estructura General</h7>
+                    <ul class="card-text">
+                      <li>Constitución de un programa y sus partes.</li>
+                      <li>Tablas de símbolos de los operadores binarios relacionales y lógicos en Pascal.</li>
+                      <li>Instrucciones. </li>
+                      <li>Tipos de instrucciones.</li>
+                      <li>Programa y sus elementos básicos.</li>
+                      <li>Escritura de algoritmos/programas.</li>
                   </div>
                 </div>
               </div>
@@ -321,8 +370,15 @@ body.dark-mode .card .card-subtitle {
                 <div class="card mb-4">
                   <div class="card-body">
                     <h6 class="card-title">Módulo IV</h6>
- <h7 class="card-subtitle mb-2 text-muted">Subproyecto IV</h7>
-                    <p class="card-text">Información adicional sobre el Módulo IV.</p>
+ <h7 class="card-subtitle mb-2 text-muted">Las Técnicas de Programación</h7>
+                  <ul class="card-text">
+                      <li>Introducción a la programación estructurada.</li>
+                      <li>Programación modular.</li>
+                      <li>Estructura secuencial. </li>
+                      <li>Estructuras selectivas.</li>
+                      <li>Estructuras repetitivas. </li>
+                      <li>Estructuras de decisión anidadas.</li>
+                      <li>Estructuras repetitivas anidadas.</li>
                   </div>
                 </div>
               </div>
@@ -425,6 +481,15 @@ window.addEventListener('DOMContentLoaded', () => {
             brandLogo.style.opacity = '1';
         }
     });
+
+ // Toggle para el sidebar en escritorio
+ const sidebar = document.getElementById('left-sidebar');
+      const sidebarToggle = document.getElementById('sidebarToggle');
+      if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', function() {
+          sidebar.classList.toggle('sidebar-hidden');
+        });
+      }
 
     // Añadir el event listener al botón para cambiar el tema
     if (darkModeToggle) {
