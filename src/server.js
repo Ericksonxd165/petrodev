@@ -401,7 +401,7 @@ app.post('/register', async (req, res) => {
 
   // Validar la contraseña
   if (!validatePassword(password)) {
-    return res.status(400).json({ message: 'Contraseña inválida' });
+    return res.status(400).json({ message: 'Contraseña inválida. Debe tener al menos 8 caracteres, una letra mayúscula, un número y un carácter especial' });
   }
 
  // Verificar si el correo electrónico, la cédula o el teléfono ya existen
