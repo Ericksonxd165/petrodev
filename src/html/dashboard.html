@@ -272,7 +272,7 @@ body.dark-mode #product-image:hover {
               </li>
             <!-- Icono de la luna para el modo oscuro -->
             <li class="nav-item">
-    <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="darkModeToggle">
+    <a class="nav-link nav-icon-hover" href="javascript:void(0)" onclick="bgChanger()"  id="darkModeToggle">
         <i class="ti ti-moon"></i> <!-- El icono de la luna que cambia a sol -->
         <div class="notification bg-primary rounded-circle"></div>
     </a>
@@ -316,7 +316,7 @@ body.dark-mode #product-image:hover {
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
-        <img src="./assets/images/logos/background.png" alt="" style="width: 100%; height: 100%; object-fit:cover; border-radius: 5px;">
+        <img src="./assets/images/logos/background.png" id="imgToChange"  alt="" style="width: 100%; height: 100%; object-fit:cover; border-radius: 5px;">
                     </div>
                 </div>
             </div>
@@ -420,6 +420,20 @@ body.dark-mode #product-image:hover {
           
 
 document.addEventListener("DOMContentLoaded", function() {
+
+
+
+  function bgChanger(){
+
+if(theme === 'dark'){
+  imgbg.setAttribute("src", "./assets/images/logos/backgroundn.png");
+
+}else{  imgbg.setAttribute("src", "./assets/images/logos/background.png");}
+
+bgChanger();
+    }
+
+
       fetch('/tasks/recent')
         .then(response => response.json())
         .then(data => {
@@ -448,6 +462,13 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
+
+
+    let theme = localStorage.getItem('theme');
+    let imgbg = document.getElementById('imgToChange');
+
+    bgChanger();
+
 fetch('/checkAuth')
       .then(response => response.json())
       .then(data => {
@@ -470,6 +491,15 @@ fetch('/checkAuth')
       }
     }
 
+    function bgChanger() {
+    const theme = localStorage.getItem('theme');
+    const imgbg = document.getElementById('imgToChange');
+    if (theme === 'dark') {
+      imgbg.setAttribute('src', './assets/images/logos/backgroundn.png');
+    } else {
+      imgbg.setAttribute('src', './assets/images/logos/background.png');
+    }
+  }
     // Manejar el cierre de sesión
     async function logout() {
       const response = await fetch('/logout', {
@@ -516,6 +546,9 @@ fetch('/checkAuth')
             });
           }
 
+
+
+
 // Función que activa o desactiva el modo oscuro
 function toggleDarkMode() {
     const body = document.body;
@@ -528,10 +561,16 @@ function toggleDarkMode() {
     if (body.classList.contains('dark-mode')) {
         darkModeToggle.innerHTML = '<i class="ti ti-sun"></i>';  // Icono de sol
         localStorage.setItem('theme', 'dark');  // Guardar modo oscuro
+        imgbg.setAttribute("src", "./assets/images/logos/backgroundn.png");
     } else {
         darkModeToggle.innerHTML = '<i class="ti ti-moon"></i>';  // Icono de luna
         localStorage.setItem('theme', 'light');  // Guardar modo claro
+        imgbg.setAttribute("src", "./assets/images/logos/background.png");
     }
+
+   
+bgChanger();
+
 }
 
 // Al cargar la página, aplicar el tema guardado y gestionar la precarga
@@ -574,6 +613,9 @@ window.addEventListener('DOMContentLoaded', () => {
     if (darkModeToggle) {
         darkModeToggle.addEventListener('click', toggleDarkMode);
     }
+
+    
+bgChanger();  
 });
 </script>
 <script src="assets/js/sessions.js" ></script>

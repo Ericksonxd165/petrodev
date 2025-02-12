@@ -288,7 +288,7 @@ body:not(.dark-mode) .card-img-top:hover {
             </li>
             <!-- Icono de la luna para el modo oscuro -->
             <li class="nav-item">
-    <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="darkModeToggle">
+    <a class="nav-link nav-icon-hover"  id="darkModeToggle"  onclick="changeImages()">
         <i class="ti ti-moon"></i> <!-- El icono de la luna que cambia a sol -->
         <div class="notification bg-primary rounded-circle"></div>
     </a>
@@ -337,33 +337,33 @@ body:not(.dark-mode) .card-img-top:hover {
     <!-- Card 1 -->
     <div class="col">
       <div class="card h-100 shadow-sm">
-        <img src="./assets/images/clases/clase1.png" class="card-img-top" alt="Card 1">
+        <img src="./assets/images/clases/clase1.png" class="card-img-top  identifier" alt="Card 1">
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">Introducción a Python</h5>
           <p class="card-text">Conceptos básicos y sintaxis inicial.</p>
-          <a href="clase1.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+          <a href="clase1.html" class="btn btn-primary mt-auto   ">Iniciar clase</a>
         </div>
       </div>
     </div>
     <!-- Card 2 -->
     <div class="col">
       <div class="card h-100 shadow-sm">
-        <img src="./assets/images/clases/clase2.png" class="card-img-top" alt="Card 2">
+        <img src="./assets/images/clases/clase2.png" class="card-img-top  identifier" alt="Card 2">
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">Funciones en Python</h5>
           <p class="card-text">Uso y sintaxis de funciones.</p>
-          <a href="clase2.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+          <a href="clase2.html" class="btn btn-primary mt-auto   ">Iniciar clase</a>
         </div>
       </div>
     </div>
     <!-- Card 3 -->
     <div class="col">
       <div class="card h-100 shadow-sm">
-        <img src="./assets/images/clases/clase3.png" class="card-img-top" alt="Card 2">
+        <img src="./assets/images/clases/clase3.png" class="card-img-top  identifier" alt="Card 2">
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">Condicionales en Python</h5>
           <p class="card-text">Uso de condicionales y operadores de comparación.</p>
-          <a href="clase3.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+          <a href="clase3.html" class="btn btn-primary mt-auto   ">Iniciar clase</a>
         </div>
       </div>
     </div>
@@ -371,11 +371,11 @@ body:not(.dark-mode) .card-img-top:hover {
      <!-- Card 28 -->
        <div class="col">
       <div class="card h-100 shadow-sm">
-        <img src="./assets/images/clases/default.png" class="card-img-top" alt="Card 3">
+        <img src="./assets/images/clases/clase4.png" class="card-img-top  identifier" alt="Card 3">
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">Bucles en Python</h5>
           <p class="card-text">Ciclos for, while y do while </p>
-          <a href="clase4.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+          <a href="clase4.html" class="btn btn-primary mt-auto   ">Iniciar clase</a>
         </div>
       </div>
    
@@ -383,22 +383,22 @@ body:not(.dark-mode) .card-img-top:hover {
      <!-- Card 29 -->
      <div class="col">
       <div class="card h-100 shadow-sm">
-        <img src="./assets/images/clases/default.png" class="card-img-top" alt="Card 3">
+        <img src="./assets/images/clases/clase5.png" class="card-img-top  identifier" alt="Card 3">
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">Operadores Logicos en Python</h5>
           <p class="card-text">Operadores and or y not</p>
-          <a href="clase5.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+          <a href="clase5.html" class="btn btn-primary mt-auto   ">Iniciar clase</a>
         </div>
       </div>
     </div>
      <!-- Card 30 -->
        <div class="col">
       <div class="card h-100 shadow-sm">
-        <img src="./assets/images/clases/default.png" class="card-img-top" alt="Card 3">
+        <img src="./assets/images/clases/clase6.png" class="card-img-top  identifier" alt="Card 3">
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">Operaciones aritmeticas</h5>
           <p class="card-text">Como desarrollar operaciones matematicas basicas con Python</p>
-          <a href="clase6.html" class="btn btn-primary mt-auto">Iniciar clase</a>
+          <a href="clase6.html" class="btn btn-primary mt-auto   ">Iniciar clase</a>
         </div>
       </div>
    
@@ -407,6 +407,8 @@ body:not(.dark-mode) .card-img-top:hover {
 </div>
      
  <script>
+
+ 
 
 document.addEventListener("DOMContentLoaded", function() {
     fetch('/checkAuth')
@@ -423,7 +425,39 @@ document.addEventListener("DOMContentLoaded", function() {
         console.error('Error al verificar la autenticación:', error);
         window.location.href = 'index.html';
       });
+
+      function changeImages() {
+    const imgCards = document.querySelectorAll('.identifier');
+    const theme = localStorage.getItem('theme');
+    if (theme === "dark") {
+      imgCards.forEach((img, i) => {
+        img.setAttribute('src', `./assets/images/clases/clase${i + 1}n.png`);
+      });
+    } else {
+      imgCards.forEach((img, i) => {
+        img.setAttribute('src', `./assets/images/clases/clase${i + 1}.png`);
+      });
+    }
+  }
+    changeImages();
+
   });
+
+
+ 
+  function changeImages() {
+    const imgCards = document.querySelectorAll('.identifier');
+    const theme = localStorage.getItem('theme');
+    if (theme === "dark") {
+      imgCards.forEach((img, i) => {
+        img.setAttribute('src', `./assets/images/clases/clase${i + 1}n.png`);
+      });
+    } else {
+      imgCards.forEach((img, i) => {
+        img.setAttribute('src', `./assets/images/clases/clase${i + 1}.png`);
+      });
+    }
+  }
 
   function showUserCedula() {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -435,7 +469,7 @@ document.addEventListener("DOMContentLoaded", function() {
 function toggleDarkMode() {
     const body = document.body;
     const darkModeToggle = document.getElementById('darkModeToggle');
-    
+    let theme = localStorage.getItem('theme');
     // Alternar la clase 'dark-mode' en el body
     body.classList.toggle('dark-mode');
     
@@ -443,10 +477,18 @@ function toggleDarkMode() {
     if (body.classList.contains('dark-mode')) {
         darkModeToggle.innerHTML = '<i class="ti ti-sun"></i>';  // Icono de sol
         localStorage.setItem('theme', 'dark');  // Guardar modo oscuro
+        theme = 'dark'; // Actualizar la variable them
     } else {
         darkModeToggle.innerHTML = '<i class="ti ti-moon"></i>';  // Icono de luna
         localStorage.setItem('theme', 'light');  // Guardar modo claro
+        theme = 'light'; // Actualizar la variable theme
     }
+
+
+
+  changeImages();
+
+
 }
 
  // Toggle para el sidebar en escritorio
@@ -500,6 +542,9 @@ window.addEventListener('DOMContentLoaded', () => {
     if (darkModeToggle) {
         darkModeToggle.addEventListener('click', toggleDarkMode);
     }
+
+
+
 });
 </script>
 <script src="../assets/js/sessions.js" ></script>    
