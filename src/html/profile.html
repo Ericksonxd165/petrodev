@@ -10,6 +10,14 @@
   <link rel="stylesheet" href="./assets/css/styles.min.css" />
    <style> 
    
+   input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+
+
     /* Estilos generales para los módulos */
 .card {
     border-radius: 15px; /* Bordes redondeados */
@@ -409,8 +417,18 @@ body.dark-mode .card .card-subtitle {
       function editField(fieldId) {
         const field = document.getElementById(fieldId);
         const currentValue = field.textContent;
+
+      
+
         if (confirm('¿Estás seguro de que deseas modificar tu información personal?')) {
-          field.innerHTML = `<input type="text" id="${fieldId}Input" value="${currentValue}" class="form-control d-inline w-auto"> <i class="fa-solid fa-check   checkers" onclick="saveField('${fieldId}')"></i> <i class="fa-solid fa-x  checkers" onclick="cancelEdit('${fieldId}', '${currentValue}')"></i>`;
+
+          if(fieldId === 'cedula' || fieldId === 'telefono'){
+            field.innerHTML = `<input type="number" id="${fieldId}Input" value="${currentValue}" class="form-control d-inline w-auto"> <i class="fa-solid fa-check   checkers" onclick="saveField('${fieldId}')"></i> <i class="fa-solid fa-x  checkers" onclick="cancelEdit('${fieldId}', '${currentValue}')"></i>`;
+          }else if (fieldId === 'email'){
+            field.innerHTML = `<input type="email" id="${fieldId}Input" value="${currentValue}" class="form-control d-inline w-auto"> <i class="fa-solid fa-check   checkers" onclick="saveField('${fieldId}')"></i> <i class="fa-solid fa-x  checkers" onclick="cancelEdit('${fieldId}', '${currentValue}')"></i>`;
+
+
+          }else  field.innerHTML = `<input type="text" id="${fieldId}Input" value="${currentValue}" class="form-control d-inline w-auto"> <i class="fa-solid fa-check   checkers" onclick="saveField('${fieldId}')"></i> <i class="fa-solid fa-x  checkers" onclick="cancelEdit('${fieldId}', '${currentValue}')"></i>`;
         }
       }
     

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Petrodev - Clase 3</title>
+  <title>Petrodev - Clase 4</title>
   <!-- Íconos de Font Awesome -->
   <link
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
@@ -288,7 +288,7 @@ width: 10px;
   </style>
 </head>
 <body class="dark-mode">
-  <div class="task-title">Condicionales en Python</div>
+  <div class="task-title">Bucles en Python</div>
   <button class="return-button" onclick="location.href='capacitacion.html'">&times;</button>
   <button class="mode-toggle" onclick="toggleMode()">
     <div class="icon-box"><i class="fas fa-moon"></i></div>
@@ -299,180 +299,145 @@ width: 10px;
       <!-- Slide 1: Funciones y Comentarios -->
       <div class="slider-item active">
         <pre><code>
-          <h2>¿Qué son los condicionales?</h2></pre>
+          <h2>Que son los Bucles?</h2></pre>
           <span>
-            Los condicionales son estructuras de control que permiten ejecutar bloques de código solo si se cumple una condición específica. <br><br>
-            En Python, los condicionales se implementan principalmente con las palabras clave <span class="keyword">if</span>,<span class="keyword">elif </span> y <span class="keyword">else</span>. <br><br>
+            Los ciclos (o bucles) son estructuras de control que permiten repetir un bloque de código varias veces mientras se cumpla una condición específica. En Python, los ciclos más comunes son for y while.
         </span>
-      
-      <p> Sintaxis básica de los condicionales</p><br>
-        La estructura básica de un condicional en Python es la siguiente: <br><br>
-        <span class="keyword">if</span> <span class="variable">condicion</span>:<br>
-<span class="comment"># Bloque de código si la condición es True</span><br>
-<span class="keyword">elif</span> <span class="variable">otra_condicion</span>:<br>
-<span class="comment"># Bloque de código si otra_condicion es True</span><br>
-<span class="keyword">else</span>:<br>
-<span class="comment"># Bloque de código si ninguna condición es True</span><br><br>
+        <br>
+        <br>
+<span class="comment">
+  1. Ciclo for
+El ciclo for se utiliza para iterar sobre una secuencia (como una lista, tupla, cadena de texto, etc.) y ejecutar un bloque de código para cada elemento de la secuencia.
 
-<span class="keyword">if:</span> Evalúa una condición. Si es True, ejecuta el bloque de código asociado. <br><br>
-<span class="keyword">elif:</span> <span class="comment">(Opcional)</span> Evalúa otra condición si la anterior fue False. <br><br>
-<span class="keyword">else: </span> <span class="comment">(Opcional)</span> Ejecuta un bloque de código si todas las condiciones anteriores fueron False.
-        </pre></code>
+Sintaxis básica: <br><br>
 
-        <span> 
-          <a href="editor.html" class="variable" style="text-decoration: none;" >Puedes intentar esto tu mismo en el editor</a>, seleccionando la sintaxis de codigo de los condicionales y presionando el boton de pegar para probarlo.</span>
-        </span>   
+<span class="keyword">for</span> <span class="variable">elemento</span> <span class="keyword">in</span> <span class="variable">secuencia</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Bloque de código a repetir</span><br><br>
+</span>
+
+Este es un pequeño ejemplo: <br><br>
+<span class="comment"># Imprimir los números del 1 al 5</span><br>
+<span class="keyword">for</span> <span class="variable">i</span> <span class="keyword">in</span> <span class="function">range</span>(<span class="keyword">1</span>, <span class="keyword">6</span>):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(<span class="variable">i</span>) <span class="comment"># Output: 1 2 3 4 5</span><br>
 
       </div>
       <!-- Slide 2: Variables y Tipos de Datos -->
       <div class="slider-item active">
         <pre><code>
-          <h2>Ejemplos de condicionales</h2></pre>
-          <span>
-            1. Condicional simple <span class="keyword">(if)</span>
-          </span>
+          <h2>Ciclo while</h2></pre>
+          <span class="comment">
+            2. Ciclo while
+            El ciclo while se utiliza para repetir un bloque de código mientras una condición sea verdadera. Es útil cuando no se conoce de antemano cuántas veces se debe repetir el bloque.
+            
+            Sintaxis básica:        </span>
         <br>
         <br>
-        <span class="variable">edad</span> = <span class="keyword">18</span><br>
-<span class="keyword">if</span> <span class="variable">edad</span> >= <span class="keyword">18</span>:<br>
-<span class="function">print</span>(<span class="string">"Eres mayor de edad."</span>) <span class="comment"># Output: Eres mayor de edad.</span><br><br>
-<span>
-  2. Condicional con else
- <span class="keyword">(if)</span>
-</span><br><br>
-<span class="variable">temperatura</span> = <span class="keyword">30</span><br>
-<span class="keyword">if</span> <span class="variable">temperatura</span> > <span class="keyword">25</span>:<br>
-<span class="function">print</span>(<span class="string">"Hace calor."</span>) <span class="comment"># Output: Hace calor.</span><br>
-<span class="keyword">else</span>:<br>
-<span class="function">print</span>(<span class="string">"Hace frío."</span>)<br><br>
-        </div>
+
+        <span class="keyword">while</span> <span class="variable">condicion</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Bloque de código a repetir</span><br><br>
+        Un pequeño ejemplo: <br><br>
+        <span class="comment"># Imprimir los números del 1 al 5</span><br>
+<span class="variable">contador</span> = <span class="keyword">1</span><br>
+<span class="keyword">while</span> <span class="variable">contador</span> <= <span class="keyword">5</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(<span class="variable">contador</span>) <span class="comment"># Output: 1 2 3 4 5</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">contador</span> += <span class="keyword">1</span><br>
+
       </div>
+
+     
+      <!-- Slide 3: Estructuras de Control -->
+      <div class="slider-item">
+        <pre><code><h2> Romper ciclos:</h2>
+        <span >
+          En ocasiones es necesario salir de un ciclo antes de que la condición se cumpla. Para esto, se puede
+           utilizar la instrucción break.
+          
+          Ejemplo:
+          <span class="comment"># Imprimir números hasta encontrar el 5</span><br>
+          <span class="keyword">for</span> <span class="variable">i</span> <span class="keyword">in</span> <span class="function">range</span>(<span class="keyword">1</span>, <span class="keyword">11</span>):<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> <span class="variable">i</span> == <span class="keyword">6</span>:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">break</span> <span class="comment"># Terminar el ciclo</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(<span class="variable">i</span>) <span class="comment"># Output: 1 2 3 4 5</span><br>
+
+
+        </div>
+      
+        <div class="slider-item active">
+          <pre><code>
+            <h2>Informacion adicional</h2> <br><br>
+  
+            1. else en ciclos
+            En Python, los ciclos pueden tener un bloque else que se ejecuta solo si el ciclo termina normalmente (es decir, sin usar break). <br><br>
+            Ejemplo: <br><br>
+            <span class="comment"># Buscar un número en una lista</span><br>
+        <span class="variable">numeros</span> = [<span class="keyword">1</span>, <span class="keyword">2</span>, <span class="keyword">3</span>, <span class="keyword">4</span>, <span class="keyword">5</span>]<br>
+        <span class="keyword">for</span> <span class="variable">num</span> <span class="keyword">in</span> <span class="variable">numeros</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> <span class="variable">num</span> == <span class="keyword">6</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(<span class="string">"Número encontrado"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">break</span><br>
+        <span class="keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(<span class="string">"Número no encontrado"</span>) <span class="comment"># Output: Número no encontrado</span><br><br>
+        
+        2. Ciclos anidados
+        Puedes colocar un ciclo dentro de otro para manejar estructuras más complejas, como matrices. <br><br>
+        
+        Ejemplo: <br><br>
+        
+        <span class="comment"># Imprimir una matriz 3x3</span><br>
+        <span class="keyword">for</span> <span class="variable">i</span> <span class="keyword">in</span> <span class="function">range</span>(<span class="keyword">1</span>, <span class="keyword">4</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span> <span class="variable">j</span> <span class="keyword">in</span> <span class="function">range</span>(<span class="keyword">1</span>, <span class="keyword">4</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(<span class="string">f"({i}, {j})"</span>, <span class="keyword">end</span>=<span class="string">" "</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>() <span class="comment"># Salto de línea</span><br>
+        <span class="comment"># Output:<br>
+        # (1, 1) (1, 2) (1, 3)<br>
+        # (2, 1) (2, 2) (2, 3)<br>
+        # (3, 1) (3, 2) (3, 3)</span><br><br>
+          
+        
+        3. Uso de enumerate en ciclos for
+        La función enumerate permite obtener tanto el índice como el valor de cada elemento en una secuencia. <br><br>
+        
+        Ejemplo: <br><br>
+        
+        <span class="comment"># Imprimir el índice y el valor de una lista</span><br>
+        <span class="variable">frutas</span> = [<span class="string">"manzana"</span>, <span class="string">"banana"</span>, <span class="string">"naranja"</span>]<br>
+        <span class="keyword">for</span> <span class="variable">indice</span>, <span class="variable">fruta</span> <span class="keyword">in</span> <span class="function">enumerate</span>(<span class="variable">frutas</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(<span class="string">f"Índice: {indice}, Fruta: {fruta}"</span>)<br>
+        <span class="comment"># Output:<br>
+        # Índice: 0, Fruta: manzana<br>
+        # Índice: 1, Fruta: banana<br>
+        # Índice: 2, Fruta: naranja</span><br>
+  
+        </div>
+
       <!-- Slide 5: Entrada y Salida de Datos -->
       <div class="slider-item">
         <div>
-          <h2>Ejemplos de condicionales</h2>
-          <p>3. Condicional con elif</p>
-          <p>
-          </p>
-          <p><span class="variable">nota</span> = <span class="keyword">85</span><br>
-            <span class="keyword">if</span> <span class="variable">nota</span> >= <span class="keyword">90</span>:<br>
-            <span class="function">print</span>(<span class="string">"Excelente"</span>)<br>
-            <span class="keyword">elif</span> <span class="variable">nota</span> >= <span class="keyword">70</span>:<br>
-            <span class="function">print</span>(<span class="string">"Aprobado"</span>) <span class="comment"># Output: Aprobado</span><br>
-            <span class="keyword">else</span>:<br>
-            <span class="function">print</span>(<span class="string">"Reprobado"</span>)<br></p><br>
-<p>4. Condicionales anindados</p>
-<p><span class="variable">año</span> = <span class="keyword">2021</span><br>
-  <span class="variable">numero</span> = <span class="keyword">10</span><br>
-<span class="keyword">if</span> <span class="variable">numero</span> > <span class="keyword">0</span>:<br>
-<span class="function">print</span>(<span class="string">"El número es positivo."</span>)<br>
-<span class="keyword">if</span> <span class="variable">numero</span> % <span class="keyword">2</span> == <span class="keyword">0</span>:<br>
-<span class="function">print</span>(<span class="string">"Además, es par."</span>) <span class="comment"># Output: El número es positivo. Además, es par.</span><br>
-<span class="keyword">else</span>:<br>
-<span class="function">print</span>(<span class="string">"El número es negativo."</span>)<br>
+          <h2>Continue</h2> <br><br>
+
+          la sentencia continue permite omitir parte del código de un bucle sin detenerlo por completo. Es útil para evitar código condicional anidado o para optimizar un bucle. <br><br>
+<span class="keyword">Ejemplo de continue:</span>
+
+<span class="comment"># Imprimir números del 1 al 5, pero saltar el 3</span><br>
+<span class="keyword">for</span> <span class="variable">i</span> <span class="keyword">in</span> <span class="function">range</span>(<span class="keyword">1</span>, <span class="keyword">6</span>):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> <span class="variable">i</span> == <span class="keyword">3</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">continue</span> <span class="comment"># Saltar el número 3</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(<span class="variable">i</span>) <span class="comment"># Output: 1 2 4 5</span><br>
 
 <br>
 </div>
       </div>
-
-      <div class="slider-item">
-        <div>
-          <h2>Ejemplos de condicionales</h2>
-          <p>5. Condicional con operadores lógicos (<span class="keyword">and</span> ,<span class="keyword"> or</span> , <span class="keyword">not</span>) <br><br> 
-       
-          </p>
-          <p>
-   
-            <span class="variable">edad</span> = <span class="keyword">25</span><br>
-            <span class="variable">tiene_licencia</span> = <span class="keyword">True</span><br>
-            <span class="keyword">if</span> <span class="variable">edad</span> >= <span class="keyword">18</span> <span class="keyword">and</span> <span class="variable">tiene_licencia</span>:<br>
-            <span class="function">print</span>(<span class="string">"Puedes conducir."</span>) <span class="comment"># Output: Puedes conducir.</span><br>
-            <span class="keyword">else</span>:<br>
-            <span class="function">print</span>(<span class="string">"No puedes conducir."</span>)<br>
-          </p>
-         <p>6. Condicional con <span class="keyword">in </span> (para verificar pertenencia) <br><br>
-          <span class="variable">frutas</span> = [<span class="string">"manzana"</span>, <span class="string">"banana"</span>, <span class="string">"naranja"</span>]<br>
-<span class="keyword">if</span> <span class="string">"banana"</span> <span class="keyword">in</span> <span class="variable">frutas</span>:<br>
-<span class="function">print</span>(<span class="string">"La banana está en la lista."</span>) <span class="comment"># Output: La banana está en la lista.</span><br>
-<span class="keyword">else</span>:<br>
-<span class="function">print</span>(<span class="string">"La banana no está en la lista."</span>)<br>
-        </p>
-<br>
-</div>
-      </div>   
-      <div class="slider-item">
-        <div>
-          <h2>Operadores de comparación</h2>
-          <p>Los condicionales suelen usar operadores de comparación para evaluar condiciones. Aquí tienes los más comunes:</p>
-          <p>
-          </p>
-          <table>
-            <thead>
-              <tr>
-                <th>Operador</th>
-                <th>Descripción</th>
-                <th>Ejemplo</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><span class="operator">==</span></td>
-                <td>Igual a</td>
-                <td><span class="keyword">if</span> <span class="variable">x</span> <span class="operator">==</span> <span class="keyword">10</span>:</td>
-              </tr>
-              <tr>
-                <td><span class="operator">!=</span></td>
-                <td>Diferente de</td>
-                <td><span class="keyword">if</span> <span class="variable">x</span> <span class="operator">!=</span> <span class="keyword">10</span>:</td>
-              </tr>
-              <tr>
-                <td><span class="operator">&gt;</span></td>
-                <td>Mayor que</td>
-                <td><span class="keyword">if</span> <span class="variable">x</span> <span class="operator">&gt;</span> <span class="keyword">10</span>:</td>
-              </tr>
-              <tr>
-                <td><span class="operator">&lt;</span></td>
-                <td>Menor que</td>
-                <td><span class="keyword">if</span> <span class="variable">x</span> <span class="operator">&lt;</span> <span class="keyword">10</span>:</td>
-              </tr>
-              <tr>
-                <td><span class="operator">&gt;=</span></td>
-                <td>Mayor o igual que</td>
-                <td><span class="keyword">if</span> <span class="variable">x</span> <span class="operator">&gt;=</span> <span class="keyword">10</span>:</td>
-              </tr>
-              <tr>
-                <td><span class="operator">&lt;=</span></td>
-                <td>Menor o igual que</td>
-                <td><span class="keyword">if</span> <span class="variable">x</span> <span class="operator">&lt;=</span> <span class="keyword">10</span>:</td>
-              </tr>
-              <tr>
-                <td><span class="keyword">in</span></td>
-                <td>Pertenece a</td>
-                <td><span class="keyword">if</span> <span class="string">"a"</span> <span class="keyword">in</span> <span class="variable">lista</span>:</td>
-              </tr>
-              <tr>
-                <td><span class="keyword">not in</span></td>
-                <td>No pertenece a</td>
-                <td><span class="keyword">if</span> <span class="string">"a"</span> <span class="keyword">not in</span> <span class="variable">lista</span>:</td>
-              </tr>
-            </tbody>
-          </table>
-</div>
-      </div>
-      
       <!-- Slide 6: Resumen del Curso -->
       <div class="slider-item">
         <div>
           <h2>Resumen y Próximos Pasos</h2>
           <p>
-            En esta clase Sobre los condicionales de Python has aprendido:
+            En esta clase, aprendiste sobre los ciclos en Python y cómo utilizarlos para repetir bloques de código. Algunos conceptos clave que se cubrieron incluyen:
           </p>
           <ul>
-            <li>La sintaxis básica de los condicionales.</li>
-            <li>El uso y funcionamiento de las condicionales.</li>
-            <li>El manejo de estructuras de control.</li>
-            <li>Operadores de comparacion.</li>
-            <li>Las diferentes circunstancias en las que puedes usar condicionales.</li>
+            <li>La sintaxis básica de los ciclos.</li>
+            <li>Estructuras de control para los ciclos.</li>
+            <li>Como continuar los ciclos.</li>
           </ul>
           <p>
             ¡Continúa practicando y explorando la documentación para profundizar tus conocimientos en Python en!
@@ -556,7 +521,7 @@ function copyToClipboard() {
     if (currentIndex === items.length - 1) {
       if (continueButton) {
         continueButton.textContent = 'Siguiente Clase';
-        continueButton.onclick = () => window.location.href = 'clase4.html';
+        continueButton.onclick = () => window.location.href = 'clase5.html';
         if (!restartClassButton) {
           restartClassButton = document.createElement('button');
           restartClassButton.id = 'restart-class-button';

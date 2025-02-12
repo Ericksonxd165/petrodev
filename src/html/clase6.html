@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Petrodev - Clase 3</title>
+  <title>Petrodev - Clase 5</title>
   <!-- Íconos de Font Awesome -->
   <link
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
@@ -288,7 +288,7 @@ width: 10px;
   </style>
 </head>
 <body class="dark-mode">
-  <div class="task-title">Condicionales en Python</div>
+  <div class="task-title">Operaciones aritmeticas</div>
   <button class="return-button" onclick="location.href='capacitacion.html'">&times;</button>
   <button class="mode-toggle" onclick="toggleMode()">
     <div class="icon-box"><i class="fas fa-moon"></i></div>
@@ -299,188 +299,161 @@ width: 10px;
       <!-- Slide 1: Funciones y Comentarios -->
       <div class="slider-item active">
         <pre><code>
-          <h2>¿Qué son los condicionales?</h2></pre>
+          <h2>Objetivo</h2></pre>
           <span>
-            Los condicionales son estructuras de control que permiten ejecutar bloques de código solo si se cumple una condición específica. <br><br>
-            En Python, los condicionales se implementan principalmente con las palabras clave <span class="keyword">if</span>,<span class="keyword">elif </span> y <span class="keyword">else</span>. <br><br>
-        </span>
-      
-      <p> Sintaxis básica de los condicionales</p><br>
-        La estructura básica de un condicional en Python es la siguiente: <br><br>
-        <span class="keyword">if</span> <span class="variable">condicion</span>:<br>
-<span class="comment"># Bloque de código si la condición es True</span><br>
-<span class="keyword">elif</span> <span class="variable">otra_condicion</span>:<br>
-<span class="comment"># Bloque de código si otra_condicion es True</span><br>
-<span class="keyword">else</span>:<br>
-<span class="comment"># Bloque de código si ninguna condición es True</span><br><br>
+            Aprender a realizar operaciones aritméticas básicas en Python, como suma, resta, multiplicación, división, y otras operaciones útiles. <br><br>
+            
+            Operadores Aritméticos en Python
+            Python proporciona los siguientes operadores para realizar operaciones aritméticas: <br><br>
+            
+            Operador	| Descripción	| Ejemplo <br>
+            +	|Suma	| a + b <br>
+            - |	Resta |	a - b  <br>
+            *	| Multiplicación |	a * b <br>
+            /	| División	| a / b
+            //|	División entera	| a //  <br>
+            % |	Módulo (resto) |	a % b  <br>
+            **|	Potencia | a ** b <br> <br>
+            
 
-<span class="keyword">if:</span> Evalúa una condición. Si es True, ejecuta el bloque de código asociado. <br><br>
-<span class="keyword">elif:</span> <span class="comment">(Opcional)</span> Evalúa otra condición si la anterior fue False. <br><br>
-<span class="keyword">else: </span> <span class="comment">(Opcional)</span> Ejecuta un bloque de código si todas las condiciones anteriores fueron False.
-        </pre></code>
-
-        <span> 
-          <a href="editor.html" class="variable" style="text-decoration: none;" >Puedes intentar esto tu mismo en el editor</a>, seleccionando la sintaxis de codigo de los condicionales y presionando el boton de pegar para probarlo.</span>
-        </span>   
+        <br>
+        <br>
 
       </div>
       <!-- Slide 2: Variables y Tipos de Datos -->
       <div class="slider-item active">
         <pre><code>
-          <h2>Ejemplos de condicionales</h2></pre>
+          <h2>Adicion y sustraccion</h2></pre>
+
+         1.  Suma (+) <span class="comment">(o adicion) </span>: <br>
           <span>
-            1. Condicional simple <span class="keyword">(if)</span>
+            La suma se utiliza para agregar dos o más números.</span>. <br><br>
+            Ejemplo:<br><br>
+            <span class="variable">a</span> = <span class="keyword">5</span><br>
+<span class="variable">b</span> = <span class="keyword">3</span><br>
+<span class="variable">resultado</span> = <span class="variable">a</span> + <span class="variable">b</span><br>
+<span class="function">print</span>(<span class="variable">resultado</span>) <span class="comment"># Output: 8</span><br>
+            Sintaxis: <br> <br>
+
           </span>
-        <br>
-        <br>
-        <span class="variable">edad</span> = <span class="keyword">18</span><br>
-<span class="keyword">if</span> <span class="variable">edad</span> >= <span class="keyword">18</span>:<br>
-<span class="function">print</span>(<span class="string">"Eres mayor de edad."</span>) <span class="comment"># Output: Eres mayor de edad.</span><br><br>
-<span>
-  2. Condicional con else
- <span class="keyword">(if)</span>
-</span><br><br>
-<span class="variable">temperatura</span> = <span class="keyword">30</span><br>
-<span class="keyword">if</span> <span class="variable">temperatura</span> > <span class="keyword">25</span>:<br>
-<span class="function">print</span>(<span class="string">"Hace calor."</span>) <span class="comment"># Output: Hace calor.</span><br>
-<span class="keyword">else</span>:<br>
-<span class="function">print</span>(<span class="string">"Hace frío."</span>)<br><br>
+          2. Resta (-) <span class="comment">(o sustracción)</span>: <br>
+La resta se utiliza para calcular la diferencia entre dos números. <br><br>
+Ejemplo: <br><br>
+<span class="variable">a</span> = <span class="keyword">10</span><br>
+<span class="variable">b</span> = <span class="keyword">4</span><br>
+<span class="variable">resultado</span> = <span class="variable">a</span> - <span class="variable">b</span><br>
+<span class="function">print</span>(<span class="variable">resultado</span>) <span class="comment"># Output: 6</span><br>
+
+      </div>
+      <!-- Slide 3: Estructuras de Control -->
+      <div class="slider-item">
+        <pre><code><h2>Multiplicacion y Division</h2>
+   
+          3. Multiplicación (*): <br>
+          La multiplicación se utiliza para calcular el producto de dos números. <br><br>
+          Ejemplo: <br><br>
+          <span class="variable">a</span> = <span class="keyword">7</span><br>
+<span class="variable">b</span> = <span class="keyword">6</span><br>
+<span class="variable">resultado</span> = <span class="variable">a</span> * <span class="variable">b</span><br>
+<span class="function">print</span>(<span class="variable">resultado</span>) <span class="comment"># Output: 42</span><br>
+
+          4. División (/): <br>
+          La división se utiliza para calcular el cociente de dos números. <br><br>
+          Ejemplo: <br><br>
+          <span class="variable">a</span> = <span class="keyword">20</span><br>
+          <span class="variable">b</span> = <span class="keyword">4</span><br>
+          <span class="variable">resultado</span> = <span class="variable">a</span> / <span class="variable">b</span><br>
+          <span class="function">print</span>(<span class="variable">resultado</span>) <span class="comment"># Output: 5.0</span><br>
         </div>
       </div>
+
+      <div class="slider-item">
+        <pre><code><h2>Divisiones enteras y restos:</h2>
+          5. División entera (//): <br><br>
+          La división entera devuelve el cociente de la división, sin la parte decimal. <br><br>
+
+          Ejemplo: <br><br>
+          <span class="variable">a</span> = <span class="keyword">20</span><br>
+<span class="variable">b</span> = <span class="keyword">3</span><br>
+<span class="variable">resultado</span> = <span class="variable">a</span> // <span class="variable">b</span><br>
+<span class="function">print</span>(<span class="variable">resultado</span>) <span class="comment"># Output: 6</span><br> 
+
+6. Módulo (%): <br><br>
+El módulo devuelve el resto de una división. <br><br>
+
+Ejemplo: <br><br>
+<span class="variable">a</span> = <span class="keyword">20</span><br>
+<span class="variable">b</span> = <span class="keyword">3</span><br>
+<span class="variable">resultado</span> = <span class="variable">a</span> % <span class="variable">b</span><br>
+<span class="function">print</span>(<span class="variable">resultado</span>) <span class="comment"># Output: 2</span><br>
+        </div>
+
       <!-- Slide 5: Entrada y Salida de Datos -->
       <div class="slider-item">
-        <div>
-          <h2>Ejemplos de condicionales</h2>
-          <p>3. Condicional con elif</p>
-          <p>
-          </p>
-          <p><span class="variable">nota</span> = <span class="keyword">85</span><br>
-            <span class="keyword">if</span> <span class="variable">nota</span> >= <span class="keyword">90</span>:<br>
-            <span class="function">print</span>(<span class="string">"Excelente"</span>)<br>
-            <span class="keyword">elif</span> <span class="variable">nota</span> >= <span class="keyword">70</span>:<br>
-            <span class="function">print</span>(<span class="string">"Aprobado"</span>) <span class="comment"># Output: Aprobado</span><br>
-            <span class="keyword">else</span>:<br>
-            <span class="function">print</span>(<span class="string">"Reprobado"</span>)<br></p><br>
-<p>4. Condicionales anindados</p>
-<p><span class="variable">año</span> = <span class="keyword">2021</span><br>
-  <span class="variable">numero</span> = <span class="keyword">10</span><br>
-<span class="keyword">if</span> <span class="variable">numero</span> > <span class="keyword">0</span>:<br>
-<span class="function">print</span>(<span class="string">"El número es positivo."</span>)<br>
-<span class="keyword">if</span> <span class="variable">numero</span> % <span class="keyword">2</span> == <span class="keyword">0</span>:<br>
-<span class="function">print</span>(<span class="string">"Además, es par."</span>) <span class="comment"># Output: El número es positivo. Además, es par.</span><br>
-<span class="keyword">else</span>:<br>
-<span class="function">print</span>(<span class="string">"El número es negativo."</span>)<br>
+          <h2>Potencias y Operaciones mixtas:</h2><br>
+        
 
-<br>
-</div>
-      </div>
+<p> 
+  7. Potencia (**): <br>
+  La potencia se utiliza para elevar un número a la potencia de otro. <br><br>
+  
+  Ejemplo: <br><br>
+  
+  <span class="variable">a</span> = <span class="keyword">2</span><br>
+  <span class="variable">b</span> = <span class="keyword">3</span><br>
+  <span class="variable">resultado</span> = <span class="variable">a</span> ** <span class="variable">b</span><br>
+  <span class="function">print</span>(<span class="variable">resultado</span>) <span class="comment"># Output: 8</span><br><br>
+  8.Operaciones combinadas <br>
+  Puedes combinar varias operaciones en una sola expresión. Python sigue las reglas de precedencia matemática (PEMDAS/BODMAS): <br><br>
+  Paréntesis: (). <br>
 
-      <div class="slider-item">
-        <div>
-          <h2>Ejemplos de condicionales</h2>
-          <p>5. Condicional con operadores lógicos (<span class="keyword">and</span> ,<span class="keyword"> or</span> , <span class="keyword">not</span>) <br><br> 
-       
-          </p>
-          <p>
-   
-            <span class="variable">edad</span> = <span class="keyword">25</span><br>
-            <span class="variable">tiene_licencia</span> = <span class="keyword">True</span><br>
-            <span class="keyword">if</span> <span class="variable">edad</span> >= <span class="keyword">18</span> <span class="keyword">and</span> <span class="variable">tiene_licencia</span>:<br>
-            <span class="function">print</span>(<span class="string">"Puedes conducir."</span>) <span class="comment"># Output: Puedes conducir.</span><br>
-            <span class="keyword">else</span>:<br>
-            <span class="function">print</span>(<span class="string">"No puedes conducir."</span>)<br>
-          </p>
-         <p>6. Condicional con <span class="keyword">in </span> (para verificar pertenencia) <br><br>
-          <span class="variable">frutas</span> = [<span class="string">"manzana"</span>, <span class="string">"banana"</span>, <span class="string">"naranja"</span>]<br>
-<span class="keyword">if</span> <span class="string">"banana"</span> <span class="keyword">in</span> <span class="variable">frutas</span>:<br>
-<span class="function">print</span>(<span class="string">"La banana está en la lista."</span>) <span class="comment"># Output: La banana está en la lista.</span><br>
-<span class="keyword">else</span>:<br>
-<span class="function">print</span>(<span class="string">"La banana no está en la lista."</span>)<br>
-        </p>
-<br>
-</div>
-      </div>   
-      <div class="slider-item">
-        <div>
-          <h2>Operadores de comparación</h2>
-          <p>Los condicionales suelen usar operadores de comparación para evaluar condiciones. Aquí tienes los más comunes:</p>
-          <p>
-          </p>
-          <table>
-            <thead>
-              <tr>
-                <th>Operador</th>
-                <th>Descripción</th>
-                <th>Ejemplo</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><span class="operator">==</span></td>
-                <td>Igual a</td>
-                <td><span class="keyword">if</span> <span class="variable">x</span> <span class="operator">==</span> <span class="keyword">10</span>:</td>
-              </tr>
-              <tr>
-                <td><span class="operator">!=</span></td>
-                <td>Diferente de</td>
-                <td><span class="keyword">if</span> <span class="variable">x</span> <span class="operator">!=</span> <span class="keyword">10</span>:</td>
-              </tr>
-              <tr>
-                <td><span class="operator">&gt;</span></td>
-                <td>Mayor que</td>
-                <td><span class="keyword">if</span> <span class="variable">x</span> <span class="operator">&gt;</span> <span class="keyword">10</span>:</td>
-              </tr>
-              <tr>
-                <td><span class="operator">&lt;</span></td>
-                <td>Menor que</td>
-                <td><span class="keyword">if</span> <span class="variable">x</span> <span class="operator">&lt;</span> <span class="keyword">10</span>:</td>
-              </tr>
-              <tr>
-                <td><span class="operator">&gt;=</span></td>
-                <td>Mayor o igual que</td>
-                <td><span class="keyword">if</span> <span class="variable">x</span> <span class="operator">&gt;=</span> <span class="keyword">10</span>:</td>
-              </tr>
-              <tr>
-                <td><span class="operator">&lt;=</span></td>
-                <td>Menor o igual que</td>
-                <td><span class="keyword">if</span> <span class="variable">x</span> <span class="operator">&lt;=</span> <span class="keyword">10</span>:</td>
-              </tr>
-              <tr>
-                <td><span class="keyword">in</span></td>
-                <td>Pertenece a</td>
-                <td><span class="keyword">if</span> <span class="string">"a"</span> <span class="keyword">in</span> <span class="variable">lista</span>:</td>
-              </tr>
-              <tr>
-                <td><span class="keyword">not in</span></td>
-                <td>No pertenece a</td>
-                <td><span class="keyword">if</span> <span class="string">"a"</span> <span class="keyword">not in</span> <span class="variable">lista</span>:</td>
-              </tr>
-            </tbody>
-          </table>
-</div>
-      </div>
-      
+  Exponentes: **. <br>
+  
+  Multiplicación y división: *, /, //, %. <br>
+  
+  Suma y resta: +, -. <br>
+  
+  Ejemplo: <br><br>
+  <span class="variable">resultado</span> = (<span class="keyword">10</span> + <span class="keyword">2</span>) * <span class="keyword">3</span> ** <span class="keyword">2</span> - <span class="keyword">4</span><br>
+  <span class="function">print</span>(<span class="variable">resultado</span>) <span class="comment"># Output: 104</span><br>
+  
+</p>
+         
+
+
+
+        </div>
+
+
+
       <!-- Slide 6: Resumen del Curso -->
       <div class="slider-item">
-        <div>
-          <h2>Resumen y Próximos Pasos</h2>
-          <p>
-            En esta clase Sobre los condicionales de Python has aprendido:
-          </p>
-          <ul>
-            <li>La sintaxis básica de los condicionales.</li>
-            <li>El uso y funcionamiento de las condicionales.</li>
-            <li>El manejo de estructuras de control.</li>
-            <li>Operadores de comparacion.</li>
-            <li>Las diferentes circunstancias en las que puedes usar condicionales.</li>
-          </ul>
-          <p>
+        
+           En Resumen: <br><br> <p>
+
+        
+            <span class="keyword">Suma (+):</span>  Agrega dos números. <br>
+             
+           <span class="keyword">Resta (-):</span>   Calcula la diferencia entre dos números. <br>
+             
+            <span class="keyword">Multiplicación (*):</span>  Calcula el producto de dos números. <br>
+             
+           <span class="keyword">División (/): </span> Divide un número entre otro (resultado flotante). <br>
+             
+            <span class="keyword">División entera (//): </span> Divide y devuelve el cociente entero. <br>
+             
+            <span class="keyword">Módulo (%):</span>  Devuelve el resto de una división. <br>
+             
+            <span class="keyword">Potencia (**):</span>  Eleva un número a la potencia de otro. <br>
+             
+           <span class="keyword">Precedencia:</span>  
+          Python sigue las reglas matemáticas estándar para evaluar expresiones. <br> <br>
             ¡Continúa practicando y explorando la documentación para profundizar tus conocimientos en Python en!
             Hasta la sigiente clase 🤖
           </p>
         </div>
       </div>
-    </div>
+
 
     <!-- Indicadores -->
     <div class="indicator-container">
@@ -556,7 +529,7 @@ function copyToClipboard() {
     if (currentIndex === items.length - 1) {
       if (continueButton) {
         continueButton.textContent = 'Siguiente Clase';
-        continueButton.onclick = () => window.location.href = 'clase4.html';
+        continueButton.onclick = () => window.location.href = 'clase6.html';
         if (!restartClassButton) {
           restartClassButton = document.createElement('button');
           restartClassButton.id = 'restart-class-button';
