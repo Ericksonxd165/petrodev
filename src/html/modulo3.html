@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Módulo I: Problemas, Algoritmos y Programas</title>
+  <!-- Bootstrap (opcional, para facilitar algunos estilos base) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome para iconos -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --keyword: #007BFF;
+    }
+
+    /* Keyframes para la transición al cambiar de modo */
+    @keyframes modeChange {
+      0% { filter: brightness(1); }
+      50% { filter: brightness(0.7); }
+      100% { filter: brightness(1); }
+    }
+    /* Clase que aplica la animación al cambiar de modo */
+    .mode-transition {
+      animation: modeChange 0.5s ease-in-out;
+    }
+
+    /* Keyframes para la animación "pulse" del toggle */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    .pulse {
+      animation: pulse 0.5s ease;
+    }
+
+    /* Estilos generales para simular un libro digital */
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #fdfdfd;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark-mode {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+
+    /* Encabezado del libro */
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .header-bar h1 {
+      font-size: 2rem;
+      margin: 0;
+      text-align: center;
+      flex: 1;
+    }
+    .header-bar .exit-button,
+    .header-bar .dark-toggle {
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: inherit;
+      transition: transform 0.3s ease, color 0.3s ease, background-color 0.3s ease;
+    }
+    /* Efecto para la "X" (botón de salida): al pasar el mouse se escala y cambia de color */
+    .exit-button:hover {
+      color: var(--keyword);
+      transform: scale(1.2);
+    }
+    
+    /* Efecto hover en el toggle de modo oscuro (zoom y cambio de color) */
+.dark-toggle:hover {
+  color: var(--keyword); /* Cambio de color */
+  transform: scale(1.2); /* Efecto zoom */
+}
+
+/* Animación al hacer clic en el toggle */
+.dark-toggle:active {
+  animation: pulse 0.3s ease;
+}
+    /* Contenedor del "libro" */
+    .book {
+      width: 90%;
+      max-width: 1200px;
+      height: 80vh;
+      margin: 0 auto;
+      position: relative;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    /* Cada spread simula dos páginas (hojas) vistas al mismo tiempo */
+    .spread {
+      display: none;
+      width: 100%;
+      height: 100%;
+      display: flex;
+    }
+    .spread.active {
+      display: flex;
+    }
+    /* Cada página del spread */
+    .page {
+      width: 50%;
+      height: 100%;
+      padding: 40px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      background-color: #fff;
+    }
+    body.dark-mode .page {
+      background-color: #1c1c1c;
+    }
+    .left-page {
+      border-right: 1px solid #ccc;
+    }
+    /* Títulos de cada página */
+    .page h2 {
+      font-size: 1.5rem;
+      margin-top: 0;
+      color: var(--keyword);
+      border-bottom: 1px solid var(--keyword);
+      padding-bottom: 5px;
+    }
+    /* En modo oscuro, los títulos serán naranjas */
+    body.dark-mode .page h2 {
+      color: #FFA500;
+      border-color: #FFA500;
+    }
+    .page p,
+    .page pre,
+    .page ol,
+    .page ul {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    pre {
+      background-color: #f8f8f8;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    body.dark-mode pre {
+      background-color: #333;
+    }
+    /* Botones de navegación (páginas del libro) */
+    .navigation-buttons {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .navigation-buttons button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      border: 1px solid var(--keyword);
+      background-color: transparent;
+      color: var(--keyword);
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .navigation-buttons button:hover {
+  background-color: var(--keyword);
+  color: white !important;
+}
+
+    .book {
+      perspective: 1200px;
+      position: relative;
+    }
+
+    .spread {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.8s;
+      backface-visibility: hidden;
+      display: none;
+    }
+
+    .spread.active {
+      display: flex;
+      transform: rotateY(0deg);
+      z-index: 1;
+    }
+
+    .spread.right {
+      transform-origin: left center;
+    }
+
+    .spread.left {
+      transform-origin: right center;
+    }
+
+    .spread.flip-next {
+      transform: rotateY(-180deg);
+      display: flex;
+      z-index: 2;
+    }
+
+    .spread.flip-prev {
+      transform: rotateY(180deg);
+      display: flex;
+      z-index: 2;
+    }
+
+    /* Portada */
+    .cover-page {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fff;
+      flex-direction: column;
+    }
+
+    .cover-page img {
+      max-width: 200px;
+      margin-bottom: 20px;
+    }
+
+    body.dark-mode .cover-page {
+      background: #1c1c1c;
+    }
+    
+    
+/* Añade estos estilos en el head */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --code-bg: #f5f5f5;
+  --border-color: #dddddd;
+  --accent-color: #2196F3;
+}
+
+.dark-mode {
+  --bg-color: #1a1a1a;
+  --text-color: #e0e0e0;
+  --code-bg: #2d2d2d;
+  --border-color: #404040;
+  --accent-color: #4CAF50;
+}
+
+.example-box, .creation-steps, .flow-tips {
+  background: rgba(0,0,0,0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.dark-mode .example-box, 
+.dark-mode .creation-steps, 
+.dark-mode .flow-tips {
+  background: rgba(255,255,255,0.05);
+}
+
+pre {
+  background: var(--code-bg);
+  color: var(--text-color);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  overflow-x: auto;
+}
+
+table.test-cases {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--code-bg);
+}
+
+table.test-cases th, 
+table.test-cases td {
+  border: 1px solid var(--border-color);
+  padding: 8px;
+  text-align: left;
+}
+
+.error-types {
+  display: grid;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: rgba(255,0,0,0.1);
+  border-radius: 6px;
+  border: 1px solid #ff4444;
+}
+
+.dark-mode .error {
+  background: rgba(255,70,70,0.15);
+}
+    
+  /* Aplicar modo oscuro inmediatamente si está activado */
+body.dark-mode .navigation-buttons button {
+  border-color: rgb(255, 255, 255) !important; /* Naranja */
+  color: rgb(255, 255, 255) !important; /* Texto blanco */
+  background-color: transparent
+}
+
+/* Para cambiar el color al hacer hover */
+body.dark-mode .navigation-buttons button:hover {
+  background-color: rgb(255, 140, 0) !important; /* Un tono de naranja más oscuro */
+  color: rgb(255, 255, 255) !important; /* Mantener texto blanco */
+}
+
+
+/* Efecto al hacer clic en modo oscuro */
+body.dark-mode .navigation-buttons button:active {
+  background-color: orange !important; /* Fondo naranja */
+  color: white !important; /* Letras blancas */
+  border-color: orange !important;
+  transform: scale(0.98);
+}
+  </style>
+</head>
+<body class="dark-mode">
+  <!-- Encabezado: Botón de salida y toggle de modo -->
+  <div class="header-bar">
+    <button class="exit-button" onclick="window.location.href='modulos.html'">&times;</button>
+    <h1>Módulo III: Programa y su Estructura General</h1>
+    <button class="dark-toggle" onclick="toggleDarkMode()"><i class="fas fa-adjust"></i></button>
+  </div>
+
+ <!-- Contenedor del libro -->
+<div class="book" id="book">
+    <div class="book" id="book">
+        <!-- Spread 1: Anatomía de un Programa -->
+        <div class="spread active">
+          <div class="page left-page">
+            <h2>🏗️ Constitución de un Programa</h2>
+            <p>Todo programa en Pascal se compone de tres partes fundamentales:</p>
+            <ol>
+              <li><strong>Cabecera:</strong> 
+                <p>Declara el nombre del programa. Ejemplo:</p>
+                <pre>program CalculadoraBasica;</pre>
+              </li>
+              <li><strong>Sección de Declaraciones:</strong>
+                <p>Incluye variables y constantes. Ejemplo:</p>
+                <pre>
+      var
+        numero1, numero2: integer;
+      const
+        PI = 3.1416;</pre>
+              </li>
+              <li><strong>Cuerpo Principal:</strong>
+                <p>Contiene las instrucciones ejecutables entre <code>begin</code> y <code>end.</code></p>
+                <pre>
+      begin
+        write('Hola Mundo');
+      end.</pre>
+              </li>
+            </ol>
+          </div>
+          
+          <div class="page">
+            <h2>🔣 Operadores en Pascal</h2>
+            <p>Tabla completa de operadores relacionales y lógicos:</p>
+            
+            <div class="operator-table">
+              <h4>Relacionales (Comparación):</h4>
+              <table>
+                <tr><th>Operador</th><th>Nombre</th><th>Ejemplo</th><th>Resultado</th></tr>
+                <tr><td>=</td><td>Igualdad</td><td>5 = 5</td><td>True</td></tr>
+                <tr><td><></td><td>Desigualdad</td><td>3 <> 5</td><td>True</td></tr>
+                <tr><td><</td><td>Menor que</td><td>4 < 6</td><td>True</td></tr>
+                <tr><td>></td><td>Mayor que</td><td>7 > 2</td><td>True</td></tr>
+                <tr><td><=</td><td>Menor o igual</td><td>5 <= 5</td><td>True</td></tr>
+                <tr><td>>=</td><td>Mayor o igual</td><td>9 >= 8</td><td>True</td></tr>
+              </table>
+              
+              <h4>Lógicos (Booleanos):</h4>
+              <table>
+                <tr><th>Operador</th><th>Nombre</th><th>Ejemplo</th><th>Significado</th></tr>
+                <tr><td>and</td><td>Conjunción</td><td>(a > 5) and (b < 3)</td><td>Ambas condiciones deben ser verdaderas</td></tr>
+                <tr><td>or</td><td>Disyunción</td><td>(x = 0) or (y = 0)</td><td>Al menos una condición debe ser verdadera</td></tr>
+                <tr><td>not</td><td>Negación</td><td>not (edad < 18)</td><td>Invierte el valor booleano</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Spread 2: Instrucciones y Tipos -->
+        <div class="spread">
+          <div class="page left-page">
+            <h2>📜 Qué son las Instrucciones</h2>
+            <p>Son comandos que ejecuta el programa, equivalentes a verbos en lenguaje natural. Características clave:</p>
+            <ul>
+              <li>Se ejecutan secuencialmente</li>
+              <li>Deben terminar con punto y coma (;)</li>
+              <li>Pueden contener expresiones y operadores</li>
+            </ul>
+            
+            <div class="example">
+              <h4>Ejemplo de instrucción compuesta:</h4>
+              <pre>
+      writeln('El resultado es: ', (15 + 3) * 2);</pre>
+              <p>Esta instrucción:
+                <ul>
+                  <li>Realiza un cálculo matemático</li>
+                  <li>Concatena texto con números</li>
+                  <li>Muestra el resultado en pantalla</li>
+                </ul>
+              </p>
+            </div>
+          </div>
+          
+          <div class="page">
+            <h2>📦 Tipos de Instrucciones</h2>
+            <div class="instruction-types">
+              <h4>1. Simples:</h4>
+              <p>Realizan una acción básica</p>
+              <pre>
+      contador := 0;          { Asignación }
+      write('Ingrese dato:'); { Salida }</pre>
+              
+              <h4>2. Estructuradas:</h4>
+              <p>Controlan el flujo del programa</p>
+              <pre>
+      if edad >= 18 then      { Condicional }
+        writeln('Mayor de edad');
+      
+      for i := 1 to 10 do     { Bucle }
+        writeln(i);</pre>
+              
+              <h4>3. Compuestas:</h4>
+              <p>Agrupan múltiples instrucciones</p>
+              <pre>
+      begin
+        readln(numero);
+        resultado := numero * 2;
+        writeln(resultado);
+      end;</pre>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Spread 3: Elementos Básicos -->
+        <div class="spread">
+          <div class="page left-page">
+            <h2>🧩 Elementos Esenciales</h2>
+            <p>Todos los programas requieren:</p>
+            <ul>
+              <li><strong>Variables:</strong> Almacenan datos modificables
+                <pre>var edad: integer;</pre>
+              </li>
+              <li><strong>Constantes:</strong> Valores fijos
+                <pre>const IVA = 0.16;</pre>
+              </li>
+              <li><strong>Palabras Reservadas:</strong> <code>program, var, begin, end, if, then</code></li>
+              <li><strong>Identificadores:</strong> Nombres para variables/programas
+                <pre>var totalVentas: real; { Buen ejemplo }
+      var tv: real;         { Mal ejemplo }</pre>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="page">
+            <h2>📝 Escritura de Algoritmos</h2>
+            <p>Guía para convertir problemas en programas:</p>
+            <ol>
+              <li><strong>Análisis:</strong> 
+                <p>Descomponer el problema en entradas, procesos y salidas</p>
+                <p>Ejemplo para calcular área de círculo:
+                  <br>Entrada: Radio
+                  <br>Proceso: A = π*r²
+                  <br>Salida: Valor del área
+                </p>
+              </li>
+              <li><strong>Diseño:</strong>
+                <p>Crear pseudocódigo estructurado</p>
+                <pre>
+      1. Leer radio
+      2. Calcular área
+      3. Mostrar resultado</pre>
+              </li>
+            </ol>
+          </div>
+        </div>
+      
+        <!-- Spread 4: Ejemplo Integrador -->
+        <div class="spread">
+          <div class="page left-page">
+            <h2>🔍 Ejemplo Completo</h2>
+            <p>Programa que determina si un número es par:</p>
+            <pre>
+      program NumeroPar;
+      var
+        num: integer;
+      begin
+        write('Ingrese número: ');
+        readln(num);
+        if num mod 2 = 0 then
+          writeln('Es par')
+        else
+          writeln('Es impar');
+      end.</pre>
+          </div>
+          
+          <div class="page">
+            <h2>⚙️ Desglose del Programa</h2>
+            <div class="breakdown">
+              <h4>1. Cabecera:</h4>
+              <pre>program NumeroPar;</pre>
+              
+              <h4>2. Declaración de variable:</h4>
+              <pre>var num: integer;</pre>
+              
+              <h4>3. Cuerpo principal:</h4>
+              <pre>
+      begin
+        { Entrada }
+        write('Ingrese número: ');
+        readln(num);
+        
+        { Proceso y Salida }
+        if num mod 2 = 0 then
+          writeln('Es par')
+        else
+          writeln('Es impar');
+      end.</pre>
+              
+              <h4>Elementos usados:</h4>
+              <ul>
+                <li>Operador relacional (<code>=</code>)</li>
+                <li>Operador matemático (<code>mod</code>)</li>
+                <li>Estructura condicional (<code>if-then-else</code>)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botones de navegación entre spreads -->
+  <div class="navigation-buttons">
+    <button id="prevButton" onclick="prevSpread()">Anterior</button>
+    <button id="nextButton" onclick="nextSpread()">Siguiente</button>
+  </div>
+
+  <!-- JavaScript para la navegación y el modo oscuro -->
+  <script>
+    
+    // Función unificada para aplicar el tema
+    function applyTheme(isDark) {
+      const body = document.body;
+      const darkModeToggle = document.querySelector('.dark-toggle i');
+      
+      // Aplicar clase al body
+      body.classList.toggle('dark-mode', isDark);
+      
+      // Cambiar icono del toggle
+      darkModeToggle.className = isDark ? 'fas fa-adjust' : 'fas fa-adjust';
+      
+      // Guardar preferencia
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+    
+    // Función para alternar el tema
+    function toggleDarkMode() {
+      const isDark = !document.body.classList.contains('dark-mode');
+      applyTheme(isDark);
+    }
+    
+    // Inicialización del tema al cargar
+    function initializeTheme() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      applyTheme(savedTheme === 'dark');
+    }
+    
+    // Asegurar consistencia en los estilos de los botones
+    function updateButtonStyles() {
+      const buttons = document.querySelectorAll('.navigation-buttons button');
+      const isDark = document.body.classList.contains('dark-mode');
+      
+      buttons.forEach(button => {
+        if(isDark) {
+          button.style.borderColor = '#FFA500';
+          button.style.color = '#FFA500';
+        } else {
+          button.style.borderColor = '#007BFF';
+          button.style.color = '#007BFF';
+        }
+      });
+    }
+    
+    // Inicializar al cargar la página
+    window.addEventListener('DOMContentLoaded', () => {
+      initializeTheme();
+      updateButtonStyles();
+      
+      // Actualizar estilos cuando cambia el tema
+      document.body.addEventListener('click', (e) => {
+        if(e.target.closest('.dark-toggle')) {
+          setTimeout(updateButtonStyles, 10);
+        }
+      });
+    });
+    
+    // Resto del código existente para la navegación del libro
+    let currentSpread = 0;
+    const spreads = document.querySelectorAll('.spread');
+    
+    function showSpread(index) {
+      spreads.forEach((spread, i) => {
+        spread.classList.toggle('active', i === index);
+      });
+      updateButtonStyles();
+    }
+    
+    function nextSpread() {
+      if (currentSpread < spreads.length - 1) {
+        currentSpread++;
+        showSpread(currentSpread);
+      }
+    }
+    
+    function prevSpread() {
+      if (currentSpread > 0) {
+        currentSpread--;
+        showSpread(currentSpread);
+      }
+    }
+    
+    // Actualizar estilos de botones cuando cambia la página
+    document.querySelectorAll('.navigation-buttons button').forEach(button => {
+      button.addEventListener('click', updateButtonStyles);
+    });
+    </script>
+  <!-- Bootstrap JS (opcional) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

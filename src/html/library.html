@@ -71,40 +71,67 @@
   position: relative;
 }
 
-.tag {
+/* Etiquetas para todos los dispositivos */
+.tag, .tag-python {
   position: absolute;
-  top: -40px; /* Ajustado más cerca de la parte superior */
-  right: 5px; /* Ajustado más cerca del borde derecho */
-  background-color: #333; /* Gris oscuro para un estilo minimalista */
+  top: -35px; /* Posición más compacta */
+  background-color: #333; /* Fondo oscuro */
   color: white;
-  padding: 3px 8px; /* Más pequeño */
-  font-size: 12px; /* Texto más pequeño */
-  font-weight: normal; /* Menos pesado */
-  border-radius: 4px; /* Bordes ligeramente redondeados */
+  padding: 2px 6px;
+  font-size: 10px;
+  border-radius: 3px;
   text-transform: uppercase;
-  letter-spacing: 0.5px; /* Espaciado de letras más fino */
-  box-shadow: none; /* Sin sombra para un estilo más limpio */
-}    
-      
- /* Estilos para la etiqueta "Ingeniería en Petróleo" */
-.example {
-  position: relative;
+  letter-spacing: 0.3px;
+  white-space: normal; /* Permitir que el texto se ajuste en varias líneas */
+  z-index: 10; /* Asegura que las etiquetas estén por encima de otros elementos */
+  width: auto; /* Ancho automático para adaptarse al contenido */
+  max-width: 200px; /* Máximo ancho para evitar que se desborde */
+  word-wrap: break-word; /* Permite que el texto se rompa en palabras si es largo */
 }
 
+/* Etiqueta principal */
+.tag {
+  right: 5px;
+}
+
+/* Etiqueta secundaria */
 .tag-python {
-  position: absolute;
-  top: -40px; /* Ajustado más cerca de la parte superior */
-  right: 200px; /* Ajustado más cerca del borde derecho */
-  background-color: #333; /* Gris oscuro para un estilo minimalista */
-  color: white;
-  padding: 3px 8px; /* Más pequeño */
-  font-size: 12px; /* Texto más pequeño */
-  font-weight: normal; /* Menos pesado */
-  border-radius: 4px; /* Bordes ligeramente redondeados */
-  text-transform: uppercase;
-  letter-spacing: 0.5px; /* Espaciado de letras más fino */
-  box-shadow: none; /* Sin sombra para un estilo más limpio */
-}         
+  right: 90px; /* Espacio reducido entre etiquetas */
+}
+
+/* Ajustes para móviles (menos de 768px) */
+@media (max-width: 768px) {
+  .tag, .tag-python {
+    top: -30px; /* Posición más alta para móvil */
+    font-size: 8px; /* Texto más pequeño */
+    padding: 1px 4px; /* Menos padding para ahorrar espacio */
+  }
+  
+  .tag {
+    right: 10px;
+  }
+  
+  .tag-python {
+    right: 60px; /* Menor espacio entre etiquetas */
+  }
+}
+
+/* Ajustes para pantallas muy pequeñas (menos de 480px) */
+@media (max-width: 480px) {
+  .tag, .tag-python {
+    top: -25px; /* Aumentamos el espacio superior para que no se peguen al borde */
+    font-size: 7px; /* Texto aún más pequeño */
+    padding: 1px 3px; /* Menor padding */
+  }
+  
+  .tag {
+    right: 5px;
+  }
+  
+  .tag-python {
+    right: 50px; /* Ajuste aún mayor para evitar superposiciones */
+  }
+}
         
 /* Estilos para el modo oscuro */
 body.dark-mode .container,
@@ -930,10 +957,11 @@ fetch('/checkAuth')
 
 <script>
 // Lista de videos locales
+// Lista de videos locales (rutas actualizadas)
 const videos = [
-  "videos/video1.mp4",
-  "videos/video2.mp4",
-  "videos/video3.mp4"
+  "./assets/images/videos/video1.mp4",
+  "./assets/images/videos/video2.mp4",  // Ruta corregida
+  "./assets/images/videos/video3.mp4"
 ];
 
 let currentVideoIndex = 0;

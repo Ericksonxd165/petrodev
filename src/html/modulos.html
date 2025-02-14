@@ -142,6 +142,32 @@ body.dark-mode .card .card-subtitle {
       transform: translateX(-100%);
     }
 
+    /* Estilo para los enlaces de módulos */
+.module-link {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Efecto hover para modo claro */
+body:not(.dark-mode) .module-link:hover {
+    color: #1e70eb !important;
+    transform: translateX(5px);
+}
+
+/* Efecto hover para modo oscuro */
+body.dark-mode .module-link:hover {
+    color: #FFA500 !important;
+    transform: translateX(5px);
+}
+
+/* Pequeño indicador de flecha (opcional) */
+.module-link:hover::after {
+    content: "🡻";
+    margin-left: 5px;
+    position: absolute;
+    right: -15px;
+}
 
     </style>
   
@@ -321,7 +347,7 @@ body.dark-mode .card .card-subtitle {
                 <div class="card mb-4">
                   <div class="card-body">
                     <h6 class="card-title">Módulo I</h6>
-                    <h7 class="card-subtitle mb-2 text-muted">Problemas, Algoritmos y Programas</h7>
+                    <a href="modulo1.html" class="card-subtitle mb-2 text-muted d-block text-decoration-none module-link">Problemas, Algoritmos y Programas</a>
                     <ul class="card-text">
                       <li>Concepto de algoritmo.</li>
                       <li>Variables y tipos de datos.</li>
@@ -338,7 +364,7 @@ body.dark-mode .card .card-subtitle {
                 <div class="card mb-4">
                   <div class="card-body">
                     <h6 class="card-title">Módulo II</h6>
-                    <h7 class="card-subtitle mb-2 text-muted">Herramientas Claves de Programación en la Solución de Problemas</h7>
+                    <a href="modulo2.html" class="card-subtitle mb-2 text-muted d-block text-decoration-none module-link">Herramientas Claves de Programación en la Solución de Problemas</a>
                     <ul class="card-text">
                     <li>Análisis de problemas</li>
                     <li>Diseño de algoritmos.</li>
@@ -355,7 +381,7 @@ body.dark-mode .card .card-subtitle {
                 <div class="card mb-4">
                   <div class="card-body">
                     <h6 class="card-title">Módulo III</h6>
-                    <h7 class="card-subtitle mb-2 text-muted">Programa y su Estructura General</h7>
+                    <a href="modulo3.html" class="card-subtitle mb-2 text-muted d-block text-decoration-none module-link">Programa y su Estructura General</a>
                     <ul class="card-text">
                       <li>Constitución de un programa y sus partes.</li>
                       <li>Tablas de símbolos de los operadores binarios relacionales y lógicos en Pascal.</li>
@@ -370,7 +396,7 @@ body.dark-mode .card .card-subtitle {
                 <div class="card mb-4">
                   <div class="card-body">
                     <h6 class="card-title">Módulo IV</h6>
- <h7 class="card-subtitle mb-2 text-muted">Las Técnicas de Programación</h7>
+                    <a href="modulo4.html" class="card-subtitle mb-2 text-muted d-block text-decoration-none module-link">Las Técnicas de Programación</a>
                   <ul class="card-text">
                       <li>Introducción a la programación estructurada.</li>
                       <li>Programación modular.</li>

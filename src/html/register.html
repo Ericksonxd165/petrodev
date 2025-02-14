@@ -234,7 +234,55 @@ body:not(.dark-mode) a.text-primary.fw-bold {
     margin-top: 1px; /* Ajusta el valor según lo necesites */
 }      
       
+.password-rules {
+    position: absolute;
+    right: -300px;
+    top: 0;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 15px;
+    border-radius: 5px;
+    width: 250px;
+    display: none;
+    z-index: 1000;
+}
+
+.password-status {
+    margin-left: 5px;
+}
+
+.requirement-met {
+    color: #28a745;
+}
+
+.requirement-not-met {
+    color: #dc3545;
+}
+
+.password-container {
+    position: relative;
+}
       
+/* Nuevos estilos para modo oscuro */
+.dark-mode .password-rules {
+    background: #2d2d2d;
+    border-color: #404040;
+    color: #e0e0e0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.dark-mode .password-rules h6 {
+    color: #ffffff;
+}
+
+.dark-mode .requirement-met {
+    color: #4CAF50 !important;
+}
+
+.dark-mode .requirement-not-met {
+    color: #f44336 !important;
+}
+
   </style>
 </head>
 
@@ -276,14 +324,41 @@ body:not(.dark-mode) a.text-primary.fw-bold {
                     <label for="telefono" class="form-label">Teléfono</label>
                     <input type="number" class="form-control" id="telefono" name="telefono" required>
                   </div>
-                  <div class="mb-4">
+                  <div class="mb-4 password-container">
                     <label for="password" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                  </div>
-                  <div class="mb-4">
-                    <label for="confirm_password" class="form-label">Confirmar Contraseña</label>
-                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-                  </div>
+                    <input type="password" class="form-control" id="password" name="password" 
+                           required onfocus="showPasswordRules()">
+                    
+                    <div class="password-rules" id="passwordRules">
+                        <h6>La contraseña debe contener:</h6>
+                        <div id="length-rule">
+                            <span>• Mínimo 8 caracteres</span>
+                            <span class="password-status">✖</span>
+                        </div>
+                        <div id="uppercase-rule">
+                            <span>• Al menos 1 mayúscula</span>
+                            <span class="password-status">✖</span>
+                        </div>
+                        <div id="number-rule">
+                            <span>• Al menos 1 número</span>
+                            <span class="password-status">✖</span>
+                        </div>
+                        <div id="special-char-rule">
+                            <span>• Al menos 1 carácter especial</span>
+                            <span class="password-status">✖</span>
+                        </div>
+                        <div id="match-rule">
+                            <span>• Las contraseñas coinciden</span>
+                            <span class="password-status">✖</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-4 password-container">
+                  <label for="confirm_password" class="form-label">Confirmar Contraseña</label>
+                  <input type="password" class="form-control" id="confirm_password" 
+                         name="confirm_password" required onfocus="showPasswordRules()">
+              </div>
                   <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4"> Inscríbete </button>
                   <div class="d-flex align-items-center justify-content-center">
                     <p class="fs-4 mb-0 fw-bold">Ya tienes una cuenta?</p>
@@ -325,6 +400,50 @@ body:not(.dark-mode) a.text-primary.fw-bold {
                       alert(result.message);
                     }
                   }
+
+                  function showPasswordRules() {
+    document.getElementById('passwordRules').style.display = 'block';
+}
+
+document.getElementById('password').addEventListener('input', function(e) {
+    const password = e.target.value;
+    const confirmPassword = document.getElementById('confirm_password').value;
+    
+    // Validar requisitos
+    const hasMinLength = password.length >= 8;
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecialChar = /[!@#$%^&*]/.test(password);
+    const passwordsMatch = password === confirmPassword && password !== '';
+
+    // Actualizar iconos
+    updateStatus('length-rule', hasMinLength);
+    updateStatus('uppercase-rule', hasUppercase);
+    updateStatus('number-rule', hasNumber);
+    updateStatus('special-char-rule', hasSpecialChar);
+    updateStatus('match-rule', passwordsMatch);
+});
+
+document.getElementById('confirm_password').addEventListener('input', function(e) {
+    const password = document.getElementById('password').value;
+    const passwordsMatch = password === e.target.value && password !== '';
+    updateStatus('match-rule', passwordsMatch);
+});
+
+function updateStatus(ruleId, isValid) {
+    const ruleElement = document.getElementById(ruleId);
+    const statusElement = ruleElement.querySelector('.password-status');
+    
+    statusElement.textContent = isValid ? '✔' : '✖';
+    statusElement.className = `password-status ${isValid ? 'requirement-met' : 'requirement-not-met'}`;
+}
+
+// Ocultar reglas cuando se hace clic fuera
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.password-container')) {
+        document.getElementById('passwordRules').style.display = 'none';
+    }
+});
                 </script>
             </div>
           </div>

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Módulo I: Problemas, Algoritmos y Programas</title>
+  <!-- Bootstrap (opcional, para facilitar algunos estilos base) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome para iconos -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --keyword: #007BFF;
+    }
+
+    /* Keyframes para la transición al cambiar de modo */
+    @keyframes modeChange {
+      0% { filter: brightness(1); }
+      50% { filter: brightness(0.7); }
+      100% { filter: brightness(1); }
+    }
+    /* Clase que aplica la animación al cambiar de modo */
+    .mode-transition {
+      animation: modeChange 0.5s ease-in-out;
+    }
+
+    /* Keyframes para la animación "pulse" del toggle */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    .pulse {
+      animation: pulse 0.5s ease;
+    }
+
+    /* Estilos generales para simular un libro digital */
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #fdfdfd;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark-mode {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+
+    /* Encabezado del libro */
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .header-bar h1 {
+      font-size: 2rem;
+      margin: 0;
+      text-align: center;
+      flex: 1;
+    }
+    .header-bar .exit-button,
+    .header-bar .dark-toggle {
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: inherit;
+      transition: transform 0.3s ease, color 0.3s ease, background-color 0.3s ease;
+    }
+    /* Efecto para la "X" (botón de salida): al pasar el mouse se escala y cambia de color */
+    .exit-button:hover {
+      color: var(--keyword);
+      transform: scale(1.2);
+    }
+    
+    /* Efecto hover en el toggle de modo oscuro (zoom y cambio de color) */
+.dark-toggle:hover {
+  color: var(--keyword); /* Cambio de color */
+  transform: scale(1.2); /* Efecto zoom */
+}
+
+/* Animación al hacer clic en el toggle */
+.dark-toggle:active {
+  animation: pulse 0.3s ease;
+}
+    /* Contenedor del "libro" */
+    .book {
+      width: 90%;
+      max-width: 1200px;
+      height: 80vh;
+      margin: 0 auto;
+      position: relative;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    /* Cada spread simula dos páginas (hojas) vistas al mismo tiempo */
+    .spread {
+      display: none;
+      width: 100%;
+      height: 100%;
+      display: flex;
+    }
+    .spread.active {
+      display: flex;
+    }
+    /* Cada página del spread */
+    .page {
+      width: 50%;
+      height: 100%;
+      padding: 40px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      background-color: #fff;
+    }
+    body.dark-mode .page {
+      background-color: #1c1c1c;
+    }
+    .left-page {
+      border-right: 1px solid #ccc;
+    }
+    /* Títulos de cada página */
+    .page h2 {
+      font-size: 1.5rem;
+      margin-top: 0;
+      color: var(--keyword);
+      border-bottom: 1px solid var(--keyword);
+      padding-bottom: 5px;
+    }
+    /* En modo oscuro, los títulos serán naranjas */
+    body.dark-mode .page h2 {
+      color: #FFA500;
+      border-color: #FFA500;
+    }
+    .page p,
+    .page pre,
+    .page ol,
+    .page ul {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    pre {
+      background-color: #f8f8f8;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    body.dark-mode pre {
+      background-color: #333;
+    }
+    /* Botones de navegación (páginas del libro) */
+    .navigation-buttons {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .navigation-buttons button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      border: 1px solid var(--keyword);
+      background-color: transparent;
+      color: var(--keyword);
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .navigation-buttons button:hover {
+  background-color: var(--keyword);
+  color: white !important;
+}
+
+    .book {
+      perspective: 1200px;
+      position: relative;
+    }
+
+    .spread {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.8s;
+      backface-visibility: hidden;
+      display: none;
+    }
+
+    .spread.active {
+      display: flex;
+      transform: rotateY(0deg);
+      z-index: 1;
+    }
+
+    .spread.right {
+      transform-origin: left center;
+    }
+
+    .spread.left {
+      transform-origin: right center;
+    }
+
+    .spread.flip-next {
+      transform: rotateY(-180deg);
+      display: flex;
+      z-index: 2;
+    }
+
+    .spread.flip-prev {
+      transform: rotateY(180deg);
+      display: flex;
+      z-index: 2;
+    }
+
+    /* Portada */
+    .cover-page {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fff;
+      flex-direction: column;
+    }
+
+    .cover-page img {
+      max-width: 200px;
+      margin-bottom: 20px;
+    }
+
+    body.dark-mode .cover-page {
+      background: #1c1c1c;
+    }
+    
+    
+/* Añade estos estilos en el head */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --code-bg: #f5f5f5;
+  --border-color: #dddddd;
+  --accent-color: #2196F3;
+}
+
+.dark-mode {
+  --bg-color: #1a1a1a;
+  --text-color: #e0e0e0;
+  --code-bg: #2d2d2d;
+  --border-color: #404040;
+  --accent-color: #4CAF50;
+}
+
+.example-box, .creation-steps, .flow-tips {
+  background: rgba(0,0,0,0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.dark-mode .example-box, 
+.dark-mode .creation-steps, 
+.dark-mode .flow-tips {
+  background: rgba(255,255,255,0.05);
+}
+
+pre {
+  background: var(--code-bg);
+  color: var(--text-color);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  overflow-x: auto;
+}
+
+table.test-cases {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--code-bg);
+}
+
+table.test-cases th, 
+table.test-cases td {
+  border: 1px solid var(--border-color);
+  padding: 8px;
+  text-align: left;
+}
+
+.error-types {
+  display: grid;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: rgba(255,0,0,0.1);
+  border-radius: 6px;
+  border: 1px solid #ff4444;
+}
+
+.dark-mode .error {
+  background: rgba(255,70,70,0.15);
+}
+    
+  /* Aplicar modo oscuro inmediatamente si está activado */
+body.dark-mode .navigation-buttons button {
+  border-color: rgb(255, 255, 255) !important; /* Naranja */
+  color: rgb(255, 255, 255) !important; /* Texto blanco */
+  background-color: transparent
+}
+
+/* Para cambiar el color al hacer hover */
+body.dark-mode .navigation-buttons button:hover {
+  background-color: rgb(255, 140, 0) !important; /* Un tono de naranja más oscuro */
+  color: rgb(255, 255, 255) !important; /* Mantener texto blanco */
+}
+
+
+/* Efecto al hacer clic en modo oscuro */
+body.dark-mode .navigation-buttons button:active {
+  background-color: orange !important; /* Fondo naranja */
+  color: white !important; /* Letras blancas */
+  border-color: orange !important;
+  transform: scale(0.98);
+}
+  </style>
+</head>
+<body class="dark-mode">
+  <!-- Encabezado: Botón de salida y toggle de modo -->
+  <div class="header-bar">
+    <button class="exit-button" onclick="window.location.href='modulos.html'">&times;</button>
+    <h1>Módulo II: Herramientas Claves de Programación en la Solución de Problemas</h1>
+    <button class="dark-toggle" onclick="toggleDarkMode()"><i class="fas fa-adjust"></i></button>
+  </div>
+
+ <!-- Contenedor del libro -->
+<div class="book" id="book">
+    <!-- Spread 1: Análisis y Diseño -->
+    <div class="spread active">
+      <div class="page left-page">
+        <h2>🔍 Análisis de Problemas</h2>
+        <p>
+          El primer paso para resolver cualquier problema es entenderlo completamente. Debemos:
+        </p>
+        <ul>
+          <li>🎯 <strong>Identificar el objetivo:</strong> ¿Qué debe lograr el programa?</li>
+          <li>📥 <strong>Determinar entradas:</strong> ¿Qué datos necesita?</li>
+          <li>📤 <strong>Definir salidas:</strong> ¿Qué resultados debe producir?</li>
+          <li>⚠️ <strong>Reconocer restricciones:</strong> Límites y condiciones especiales</li>
+        </ul>
+        <p><strong>Ejemplo práctico:</strong> Sistema de cálculo de edad</p>
+        <div class="example-box">
+          <p>Objetivo: Calcular edad exacta a partir de fecha de nacimiento<br>
+          Entradas: Fecha actual y fecha de nacimiento<br>
+          Salida: Años, meses y días de diferencia<br>
+          Restricción: Validar fechas válidas</p>
+        </div>
+      </div>
+      <div class="page">
+        <h2>📐 Diseño de Algoritmos</h2>
+        <p>
+          Un algoritmo bien diseñado debe ser:
+        </p>
+        <ul>
+          <li>✅ <strong>Preciso:</strong> Instrucciones no ambiguas</li>
+          <li>🔁 <strong>Finito:</strong> Debe terminar en algún momento</li>
+          <li>💡 <strong>Efectivo:</strong> Resolver el problema eficientemente</li>
+        </ul>
+        <p><strong>Algoritmo para cálculo de edad:</strong></p>
+        <ol>
+          <li>Obtener fecha actual</li>
+          <li>Solicitar fecha de nacimiento</li>
+          <li>Validar formato de fechas</li>
+          <li>Calcular diferencia en días</li>
+          <li>Convertir días a años/meses/días</li>
+          <li>Mostrar resultado formateado</li>
+        </ol>
+      </div>
+    </div>
+  
+    <!-- Spread 2: Diagramas de Flujo Actualizado -->
+    <div class="spread">
+      <div class="page left-page">
+        <h2>📊 Diagramas de Flujo</h2>
+        <p>Representación visual de procesos usando símbolos universales:</p>
+        
+        <div style="border: 1px solid #ccc; padding: 15px; margin: 10px 0; border-radius: 8px;">
+          <h4>🔑 Leyenda de Símbolos:</h4>
+          <ul style="list-style: none; padding: 0;">
+            <li>🔵 <strong>Óvalo:</strong> Inicio/Fin</li>
+            <li>⬜ <strong>Rectángulo:</strong> Proceso</li>
+            <li>🔷 <strong>Rombo:</strong> Decisión</li>
+            <li>➡️ <strong>Flecha:</strong> Flujo</li>
+          </ul>
+        </div>
+  
+        <h3>Ejemplo: Verificar Aprobación</h3>
+        <pre>
+  🔵 [Inicio Examen]
+  ➡️ ⬜ [Ingresar calificación]
+  ➡️ 🔷 ¿Calificación ≥ 70?
+     ├─ ✅ Sí ➡️ ⬜ [Mostrar "Aprobado"]
+     │                ➡️ 🔵 [Fin]
+     └─ ❌ No ➡️ ⬜ [Mostrar "Reprobado"]
+                      ➡️ 🔵 [Fin]
+        </pre>
+  
+        <div>
+          <p>📌 <strong>Pasos para crear diagramas:</strong></p>
+          <ol>
+            <li>Identificar el proceso principal</li>
+            <li>Definir puntos de inicio y fin</li>
+            <li>Agregar acciones y decisiones clave</li>
+            <li>Conectar elementos con flechas lógicas</li>
+          </ol>
+        </div>
+      </div>
+  
+      <div class="page">
+        <h2>🔀 Flujo de Decisión Múltiple</h2>
+        <p>Ejemplo completo con múltiples condiciones:</p>
+        
+        <div style="position: relative; margin: 20px 0;">
+          <pre>
+  🔵 [Inicio Clasificación]
+  ➡️ ⬜ [Ingresar edad]
+  ➡️ 🔷 ¿Menor de 13?
+     ├─ ✅ Sí ➡️ ⬜ [Mostrar "Niño"]
+     └─ ❌ No ➡️ 🔷 ¿Menor de 18?
+         ├─ ✅ Sí ➡️ ⬜ [Mostrar "Adolescente"]
+         └─ ❌ No ➡️ 🔷 ¿Mayor de 65?
+             ├─ ✅ Sí ➡️ ⬜ [Mostrar "Adulto Mayor"]
+             └─ ❌ No ➡️ ⬜ [Mostrar "Adulto"]
+  ➡️ 🔵 [Fin del proceso]
+          </pre>
+        </div>
+  
+        <div style="border: 1px solid #ccc; padding: 4px; margin: 10px 0; border-radius: 8px;">
+          <h4>📚 Explicación del Diagrama:</h4>
+          <ul>
+            <li><strong>Niveles de decisión:</strong> 3 condiciones anidadas</li>
+            <li><strong>Flujo vertical:</strong> Cada nivel se indenta</li>
+            <li><strong>Símbolos:</strong> Emojis + texto descriptivo</li>
+          </ul>
+        </div>
+  
+        <div>
+          <p>💡 <strong>Consejo profesional:</strong><br>
+          Usa herramientas como ASCII Flow o Draw.io para crear diagramas más complejos manteniendo esta estructura básica.</p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Spread 3: Introducción a Pascal -->
+    <div class="spread">
+      <div class="page left-page">
+        <h2>🖥️ Introducción a Pascal</h2>
+        <p>
+          Lenguaje ideal para aprender programación estructurada:
+        </p>
+        <pre>
+  program HolaMundo;
+  begin
+    writeln('¡Bienvenido a Pascal!');
+    writeln('Estructura básica:');
+    writeln('1. Declaración del programa');
+    writeln('2. Sección de variables');
+    writeln('3. Cuerpo principal');
+  end.
+        </pre>
+        <p><strong>Características principales:</strong></p>
+        <ul>
+          <li>🧠 Estructura clara y ordenada</li>
+          <li>📌 Tipado estático</li>
+          <li>📚 Sintaxis similar al inglés</li>
+        </ul>
+      </div>
+      <div class="page">
+        <h2>📝 Primer Programa en Pascal</h2>
+        <pre>
+  program PromedioNotas;
+  var
+    nota1, nota2, nota3, promedio: real;
+  begin
+    write('Ingrese nota 1: ');
+    readln(nota1);
+    write('Ingrese nota 2: ');
+    readln(nota2);
+    write('Ingrese nota 3: ');
+    readln(nota3);
+    promedio := (nota1 + nota2 + nota3) / 3;
+    writeln('El promedio es: ', promedio:0:2);
+  end.
+        </pre>
+        <p><strong>Elementos clave:</strong></p>
+        <ul>
+          <li>📝 Declaración de variables</li>
+          <li>🖱️ Entrada de datos</li>
+          <li>🧮 Operación matemática</li>
+          <li>🖨️ Salida formateada</li>
+        </ul>
+      </div>
+    </div>
+  
+    <!-- Spread 4: Ejecución y Comprobación -->
+    <div class="spread">
+      <div class="page left-page">
+        <h2>🚀 Ejecución del Programa</h2>
+        <p>
+          Proceso de poner en marcha nuestro código:
+        </p>
+        <ol>
+          <li>📄 Guardar el archivo .pas</li>
+          <li>⚙️ Compilar (F9 en muchos IDEs)</li>
+          <li>▶️ Ejecutar el programa</li>
+          <li>👀 Observar resultados</li>
+        </ol>
+        <p><strong>Errores comunes:</strong></p>
+        <div class="error-types">
+          <div class="error">
+            <div class="error-icon">!</div>
+            <span>Sintaxis: Falta punto y coma</span>
+          </div>
+          <div class="error">
+            <div class="error-icon">!</div>
+            <span>Lógico: Fórmula incorrecta</span>
+          </div>
+          <div class="error">
+            <div class="error-icon">!</div>
+            <span>Runtime: División por cero</span>
+          </div>
+        </div>
+      </div>
+      <div class="page">
+        <h2>✅ Comprobación del Programa</h2>
+        <p>
+          Verificación mediante casos de prueba:
+        </p>
+        <table class="test-cases">
+          <tr>
+            <th>Entradas</th>
+            <th>Salida Esperada</th>
+          </tr>
+          <tr>
+            <td>7, 8, 9</td>
+            <td>8.00</td>
+          </tr>
+          <tr>
+            <td>10, 10, 10</td>
+            <td>10.00</td>
+          </tr>
+          <tr>
+            <td>0, 0, 0</td>
+            <td>0.00</td>
+          </tr>
+        </table>
+        <p><strong>Técnicas de verificación:</strong></p>
+        <ul>
+          <li>🧪 Pruebas unitarias</li>
+          <li>📊 Validación de bordes</li>
+          <li>🔍 Revisión paso a paso</li>
+        </ul>
+      </div>
+    </div>
+  
+    <!-- Spread 5: Buenas Prácticas -->
+    <div class="spread">
+      <div class="page left-page">
+        <h2>🌟 Buenas Prácticas</h2>
+        <p>
+          Consejos para mejorar tu programación:
+        </p>
+        <ul>
+          <li>📝 Comenta tu código</li>
+          <li>🔡 Usa nombres descriptivos</li>
+          <li>📐 Sigue indentación consistente</li>
+          <li>🧩 Modulariza tu código</li>
+        </ul>
+        <pre>
+  { Buen ejemplo }
+  program CalculadoraArea;
+  var
+    radio, area: real;
+  begin
+    // Entrada de datos
+    write('Ingrese radio: ');
+    readln(radio);
+    
+    // Cálculo
+    area := 3.1416 * radio * radio;
+    
+    // Salida
+    writeln('Área: ', area:0:2);
+  end.
+        </pre>
+      </div>
+      <div class="page">
+        <h2>🆘 Soporte Adicional</h2>
+        <p>
+          Recursos para seguir aprendiendo:
+        </p>
+        <ul>
+          <li>📚 Libro: "Aprende Pascal en 21 días"</li>
+          <li>💻 IDE gratuito: Lazarus</li>
+          <li>🔄 Plataforma: EjerciciosOnlinePascal.com</li>
+          <li>🎓 Comunidad: ForoProgramadoresPascal</li>
+        </ul>
+        <div class="tip-box">
+          <p>💡 ¿Atascado? Intenta:</p>
+          <ol>
+            <li>Releer el mensaje de error</li>
+            <li>Buscar en línea el error</li>
+            <li>Pedir ayuda a un compañero</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  
+    
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botones de navegación entre spreads -->
+  <div class="navigation-buttons">
+    <button id="prevButton" onclick="prevSpread()">Anterior</button>
+    <button id="nextButton" onclick="nextSpread()">Siguiente</button>
+  </div>
+
+  <!-- JavaScript para la navegación y el modo oscuro -->
+  <script>
+    
+    // Función unificada para aplicar el tema
+    function applyTheme(isDark) {
+      const body = document.body;
+      const darkModeToggle = document.querySelector('.dark-toggle i');
+      
+      // Aplicar clase al body
+      body.classList.toggle('dark-mode', isDark);
+      
+      // Cambiar icono del toggle
+      darkModeToggle.className = isDark ? 'fas fa-adjust' : 'fas fa-adjust';
+      
+      // Guardar preferencia
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+    
+    // Función para alternar el tema
+    function toggleDarkMode() {
+      const isDark = !document.body.classList.contains('dark-mode');
+      applyTheme(isDark);
+    }
+    
+    // Inicialización del tema al cargar
+    function initializeTheme() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      applyTheme(savedTheme === 'dark');
+    }
+    
+    // Asegurar consistencia en los estilos de los botones
+    function updateButtonStyles() {
+      const buttons = document.querySelectorAll('.navigation-buttons button');
+      const isDark = document.body.classList.contains('dark-mode');
+      
+      buttons.forEach(button => {
+        if(isDark) {
+          button.style.borderColor = '#FFA500';
+          button.style.color = '#FFA500';
+        } else {
+          button.style.borderColor = '#007BFF';
+          button.style.color = '#007BFF';
+        }
+      });
+    }
+    
+    // Inicializar al cargar la página
+    window.addEventListener('DOMContentLoaded', () => {
+      initializeTheme();
+      updateButtonStyles();
+      
+      // Actualizar estilos cuando cambia el tema
+      document.body.addEventListener('click', (e) => {
+        if(e.target.closest('.dark-toggle')) {
+          setTimeout(updateButtonStyles, 10);
+        }
+      });
+    });
+    
+    // Resto del código existente para la navegación del libro
+    let currentSpread = 0;
+    const spreads = document.querySelectorAll('.spread');
+    
+    function showSpread(index) {
+      spreads.forEach((spread, i) => {
+        spread.classList.toggle('active', i === index);
+      });
+      updateButtonStyles();
+    }
+    
+    function nextSpread() {
+      if (currentSpread < spreads.length - 1) {
+        currentSpread++;
+        showSpread(currentSpread);
+      }
+    }
+    
+    function prevSpread() {
+      if (currentSpread > 0) {
+        currentSpread--;
+        showSpread(currentSpread);
+      }
+    }
+    
+    // Actualizar estilos de botones cuando cambia la página
+    document.querySelectorAll('.navigation-buttons button').forEach(button => {
+      button.addEventListener('click', updateButtonStyles);
+    });
+    </script>
+  <!-- Bootstrap JS (opcional) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
