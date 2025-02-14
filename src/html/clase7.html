@@ -301,7 +301,7 @@ width: 10px;
   </style>
 </head>
 <body class="dark-mode">
-  <div class="task-title">Funciones en Python</div>
+  <div class="task-title">Ingeniería en Petróleo con Python</div>
   <button class="return-button" onclick="location.href='capacitacion.html'">&times;</button>
   <button class="mode-toggle" onclick="toggleMode()">
     <div class="icon-box"><i class="fas fa-moon"></i></div>
@@ -309,98 +309,160 @@ width: 10px;
 
   <div class="slider-container">
     <div class="slider">
-      <!-- Slide 1: Introducción a Funciones en Ingeniería Petrolera -->
+      <!-- Slide 1: Introducción a la Ingeniería en Petróleo -->
       <div class="slider-item active">
         <code>
-          <h2>¿Qué es una función en Python y su aplicación en Ingeniería Petrolera?</h2>
+          <h2>Introducción a la Ingeniería en Petróleo</h2>
           <span>
-            En ingeniería petrolera, las funciones en Python permiten modelar procesos como el cálculo de reservas, simulaciones de producción y análisis de fluidos. 
-            Una función es un bloque de código reutilizable que realiza una tarea específica. En Python, se definen con la palabra clave <span class="keyword">def</span>. <br><br>
-
-              <span class="keyword">def</span> <span class="function">nombre_de_la_funcion</span>(<span class="variable">parametros</span>):<br>
-              &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Cuerpo de la función</span><br>
-              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="variable">valor</span> <span class="comment"># Opcional</span><br><br>
-
-              <span>
-                <a href="editor.html" class="variable" style="text-decoration: none;">Prueba este código en el editor</a>
-              </span>
+            La <strong>Ingeniería en Petróleo</strong> es una disciplina multifacética que integra geología, ingeniería y tecnología para la exploración, extracción y manejo de hidrocarburos. Además, el uso de la programación en Python permite analizar datos complejos, optimizar procesos y simular escenarios reales en el campo.
+            <br><br>
+            Por ejemplo, podemos calcular el porcentaje de recuperación de un pozo:
+            <br><br>
+            <span class="keyword">def</span> <span class="function">calcular_recuperacion</span>(<span class="variable">inicial</span>, <span class="variable">extraido</span>):<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">"""Calcula el porcentaje de recuperación de petróleo.</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">- inicial: cantidad inicial en barriles</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">- extraido: cantidad extraída en barriles</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">"""</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">recuperacion</span> = (<span class="variable">extraido</span> / <span class="variable">inicial</span>) * <span class="keyword">100</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="variable">recuperacion</span><br><br>
+            <span class="comment"># Ejemplo de uso:</span><br>
+            <span class="variable">inicial</span> = <span class="keyword">1000</span> <span class="comment"># barriles</span><br>
+            <span class="variable">extraido</span> = <span class="keyword">300</span> <span class="comment"># barriles</span><br>
+            <span class="function">print</span>(f<span class="string">"La recuperación es de {calcular_recuperacion(inicial, extraido):.2f}% "</span>)<br><br>
+            ¡Prueba este ejemplo en nuestro <a href="editor.html" class="variable" style="text-decoration: none;">Editor de Python</a> y experimenta con distintos valores!
           </span>
+        </code>
       </div>
-      
-      <!-- Slide 2: Parámetros y retorno de funciones en simulaciones -->
-      <div class="slider-item active">
-        <pre><code>
-          <h2>Parámetros y retorno de funciones en simulaciones de petróleo</h2>
-          <span>
-            Las funciones en Python pueden recibir parámetros para realizar cálculos como la presión en un pozo o el factor volumétrico del petróleo:
-          </span>
-          <br><br>
-          <span class="keyword">def</span> <span class="function">calcular_presion_fondo</span>(<span class="variable">presion_superficie</span>, <span class="variable">gradiente</span>, <span class="variable">profundidad</span>):<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="variable">presion_superficie</span> + (<span class="variable">gradiente</span> * <span class="variable">profundidad</span>)<br><br>
-
-          <span class="comment"># Ejemplo de uso</span><br>
-          <span class="variable">presion</span> = <span class="function">calcular_presion_fondo</span>(<span class="keyword">1000</span>, <span class="keyword">0.465</span>, <span class="keyword">3000</span>)<br>
-          <span class="function">print</span>(<span class="variable">presion</span>) <span class="comment"># Salida: 2395 psi</span><br>
-      </div>
-      
-      <!-- Slide 3: Cálculo de Volumen de Reservas -->
-      <div class="slider-item">
-        <h2>Cálculo de Volumen de Reservas</h2>
-        <span>
-          En ingeniería petrolera, el volumen original de petróleo en sitio (OOIP) se calcula con la ecuación:
-        </span><br><br>
-        <span class="keyword">def</span> <span class="function">calcular_OOIP</span>(<span class="variable">area</span>, <span class="variable">espesor</span>, <span class="variable">porosidad</span>, <span class="variable">factor_volumetrico</span>):<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> (<span class="variable">area</span> * <span class="variable">espesor</span> * <span class="variable">porosidad</span>) / <span class="variable">factor_volumetrico</span><br><br>
-        <span class="comment"># Ejemplo de cálculo de reservas</span><br>
-        <span class="variable">ooip</span> = <span class="function">calcular_OOIP</span>(<span class="keyword">5000</span>, <span class="keyword">10</span>, <span class="keyword">0.2</span>, <span class="keyword">1.25</span>)<br>
-        <span class="function">print</span>(<span class="variable">ooip</span>) <span class="comment"># Salida: 80000 barriles</span><br>
-      </div>
-      
-      <!-- Slide 4: Simulación de Flujo en Tuberías -->
-      <div class="slider-item">
-        <h2>Simulación de Flujo en Tuberías</h2>
-        <span>
-          En la ingeniería petrolera, se requiere calcular la velocidad del flujo en tuberías:
-        </span><br><br>
-        <span class="keyword">def</span> <span class="function">calcular_velocidad_flujo</span>(<span class="variable">caudal</span>, <span class="variable">diametro</span>):<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> (<span class="variable">caudal</span> / (<span class="keyword">3.1416</span> * (<span class="variable">diametro</span>/2) ** 2))<br><br>
-        <span class="comment"># Ejemplo</span><br>
-        <span class="variable">velocidad</span> = <span class="function">calcular_velocidad_flujo</span>(<span class="keyword">500</span>, <span class="keyword">8</span>)<br>
-        <span class="function">print</span>(<span class="variable">velocidad</span>) <span class="comment"># Salida: 9.95 ft/s</span><br>
-      </div>
-      
-      <!-- Slide 5: Cálculo de Índice de Productividad -->
-      <div class="slider-item">
-        <h2>Cálculo del Índice de Productividad</h2>
-        <span>
-          El índice de productividad (IP) mide la eficiencia de un pozo para producir fluidos:
-        </span><br><br>
-        <span class="keyword">def</span> <span class="function">calcular_IP</span>(<span class="variable">flujo</span>, <span class="variable">presion_fondo</span>, <span class="variable">presion_reservorio</span>):<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="variable">flujo</span> / (<span class="variable">presion_reservorio</span> - <span class="variable">presion_fondo</span>)<br><br>
-        <span class="comment"># Ejemplo</span><br>
-        <span class="variable">IP</span> = <span class="function">calcular_IP</span>(<span class="keyword">500</span>, <span class="keyword">2500</span>, <span class="keyword">4000</span>)<br>
-        <span class="function">print</span>(<span class="variable">IP</span>) <span class="comment"># Salida: 0.33 stb/d/psi</span><br>
-      </div>
-
-
-            
-        <!-- Slide 6: Optimización de Producción con Funciones -->
-<div class="slider-item">
-    <h2>Optimización de Producción con Funciones</h2>
-    <span>
-      En la ingeniería petrolera, optimizar la producción de un pozo requiere ajustar variables clave para maximizar la eficiencia.
-      A continuación, una función que evalúa la producción óptima con base en el índice de productividad (IP) y la diferencia de presión:
-    </span><br><br>
-    <span class="keyword">def</span> <span class="function">optimizar_produccion</span>(<span class="variable">IP</span>, <span class="variable">presion_reservorio</span>, <span class="variable">presion_fondo</span>):<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">flujo_optimo</span> = <span class="variable">IP</span> * (<span class="variable">presion_reservorio</span> - <span class="variable">presion_fondo</span>)<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="variable">flujo_optimo</span><br><br>
   
-    <span class="comment"># Ejemplo de optimización</span><br>
-    <span class="variable">flujo_optimo</span> = <span class="function">optimizar_produccion</span>(<span class="keyword">0.33</span>, <span class="keyword">4000</span>, <span class="keyword">2500</span>)<br>
-    <span class="function">print</span>(<span class="variable">flujo_optimo</span>) <span class="comment"># Salida: 495 stb/d</span><br>
-  </div>
+      <!-- Slide 2: Exploración y Geología -->
+      <div class="slider-item">
+        <pre><code>
+  <h2>Exploración y Geología</h2>
+  <span>
+    La exploración geológica es esencial para identificar y evaluar yacimientos potenciales mediante métodos 
+    como la sísmica.
+    <br><br>
+    <span class="keyword">def</span> <span class="function">calcular_tiempo</span>(<span class="variable">velocidad</span>, <span class="variable">distancia</span>):
+        <span class="comment">"""Calcula el tiempo de viaje de una onda.</span>
+        <span class="comment">- velocidad: en m/s</span>
+        <span class="comment">- distancia: en metros</span>
+        <span class="comment">"""</span>
+        <span class="variable">tiempo</span> = <span class="variable">distancia</span> / <span class="variable">velocidad</span>
+        <span class="keyword">return</span> <span class="variable">tiempo</span>
+    <br><br>
+    <span class="comment"># Ejemplo:</span><br>
+    <span class="variable">velocidad</span> = <span class="keyword">3000</span> <span class="comment"># m/s</span><br>
+    <span class="variable">distancia</span> = <span class="keyword">6000</span> <span class="comment"># m</span><br>
+    <span class="function">print</span>(f<span class="string">"El tiempo de viaje es {calcular_tiempo(velocidad, distancia):.2f} segundos"</span>)<br><br>
+    Modifica los parámetros en nuestro <a href="editor.html" class="variable" style="text-decoration: none;">Editor de Python</a> para ver cómo varían los resultados.
+  </span>
+        </code></pre>
+      </div>
+  
+      <!-- Slide 3: Ingeniería de Yacimientos -->
+      <div class="slider-item">
+        <pre><code>
+  <h2>Ingeniería de Yacimientos</h2>
+  <span>
+    En la ingeniería de yacimientos se analiza y optimiza la extracción de hidrocarburos. Un cálculo vital es el
+     volumen poroso del reservorio.
+    <br><br>
+    <span class="keyword">def</span> <span class="function">calcular_volumen_poroso</span>(<span class="variable">porosidad</span>, <span class="variable">area</span>, <span class="variable">espesor</span>):
+        <span class="comment">"""Calcula el volumen poroso.</span>
+        <span class="comment">- porosidad: fracción del espacio vacío (ej. 0.2 para 20%)</span>
+        <span class="comment">- area: en m²</span>
+        <span class="comment">- espesor: en m</span>
+        <span class="comment">"""</span>
+        <span class="variable">volumen</span> = <span class="variable">porosidad</span> * <span class="variable">area</span> * <span class="variable">espesor</span>
+        <span class="keyword">return</span> <span class="variable">volumen</span>
+    <br><br>
+    <span class="comment"># Ejemplo:</span><br>
+    <span class="variable">porosidad</span> = <span class="keyword">0.2</span><br>
+    <span class="variable">area</span> = <span class="keyword">50000</span> <span class="comment"># m²</span><br>
+    <span class="variable">espesor</span> = <span class="keyword">15</span> <span class="comment"># m</span><br>
+    <span class="function">print</span>(f<span class="string">"El volumen poroso es {calcular_volumen_poroso(porosidad, area, espesor):.2f} m³"</span>)<br><br>
+    ¡Experimenta con diferentes valores en nuestro <a href="editor.html" class="variable" style="text-decoration: none;">Editor de Python</a>!
+  </span>
+        </code></pre>
+      </div>
+  
+      <!-- Slide 4: Perforación y Completación -->
+      <div class="slider-item">
+        <pre><code>
+  <h2>Perforación y Completación</h2>
+  <span>
+    La perforación y completación de pozos son procesos críticos para acceder a los yacimientos. La estimación de costos es fundamental.
+    <br><br>
+    <span class="keyword">def</span> <span class="function">estimar_costo_perforacion</span>(<span class="variable">profundidad</span>, <span class="variable">costo_por_metro</span>):
+        <span class="comment">"""Calcula el costo total de perforación.</span>
+        <span class="comment">- profundidad: en metros</span>
+        <span class="comment">- costo_por_metro: en dólares por metro</span>
+        <span class="comment">"""</span>
+        <span class="keyword">return</span> <span class="variable">profundidad</span> * <span class="variable">costo_por_metro</span>
+    <br><br>
+    <span class="comment"># Ejemplo:</span><br>
+    <span class="variable">profundidad</span> = <span class="keyword">3000</span> <span class="comment"># m</span><br>
+    <span class="variable">costo_por_metro</span> = <span class="keyword">1000</span> <span class="comment"># $/m</span><br>
+    <span class="function">print</span>(f<span class="string">"El costo estimado de perforación es ${estimar_costo_perforacion(profundidad, costo_por_metro):,.2f}"</span>)<br><br>
+    ¡Utiliza el <a href="editor.html" class="variable" style="text-decoration: none;">Editor de Python</a> para simular distintos escenarios de costos!
+  </span>
+        </code></pre>
+      </div>
+  
+      <!-- Slide 5: Tecnologías Emergentes y Simulaciones -->
+      <div class="slider-item">
+        <pre><code>
+  <h2>Tecnologías Emergentes y Simulaciones</h2>
+  <span>
+    La digitalización y la simulación avanzada están revolucionando la industria petrolera. Un ejemplo es el análisis de la curva de declinación para predecir la producción futura.
+    <br><br>
+    <span class="keyword">def</span> <span class="function">decline_curve</span>(<span class="variable">q0</span>, <span class="variable">D</span>, <span class="variable">t</span>):
+        <span class="comment">"""Modelo simple de curva de declinación.</span>
+        <span class="comment">- q0: producción inicial (barriles/día)</span>
+        <span class="comment">- D: tasa de declinación diaria (ej. 0.05 para 5%)</span>
+        <span class="comment">- t: tiempo en días</span>
+        <span class="comment">"""</span>
+        <span class="keyword">return</span> <span class="variable">q0</span> * (<span class="keyword">1</span> - <span class="variable">D</span>) ** <span class="variable">t</span>
+    <br><br>
+    <span class="comment"># Ejemplo:</span><br>
+    <span class="variable">q0</span> = <span class="keyword">1000</span> <span class="comment"># barriles/día</span><br>
+    <span class="variable">D</span> = <span class="keyword">0.05</span> <span class="comment"># tasa de declinación</span><br>
+    <span class="variable">t</span> = <span class="keyword">10</span> <span class="comment"># días</span><br>
+    <span class="function">print</span>(f<span class="string">"La producción después de {t} días es {decline_curve(q0, D, t):.2f} barriles/día"</span>)<br><br>
+    Ajusta los parámetros en nuestro <a href="editor.html" class="variable" style="text-decoration: none;">Editor de Python</a> para simular distintos escenarios.
+  </span>
+        </code></pre>
+      </div>
+  
+      <!-- Slide 6: Resumen y Próximos Pasos -->
+      <div class="slider-item">
+        <div>
+          <h2>Resumen y Próximos Pasos</h2>
+          <p>
+            <strong>Beneficios de integrar la programación en la Ingeniería en Petróleo:</strong>
+            <br><br>
+            ➜ Optimización y análisis preciso de datos.<br>
+            ➜ Simulación de escenarios complejos para decisiones informadas.<br>
+            ➜ Reducción de costos y mejora en la eficiencia operativa.
+          </p>
+          <p>
+            En esta clase hemos explorado:
+          </p>
+          <ul>
+            <li>La integración de Python en la Ingeniería en Petróleo.</li>
+            <li>Métodos de exploración geológica y análisis sísmico.</li>
+            <li>Cálculo del volumen poroso en yacimientos.</li>
+            <li>Estimación de costos en perforación y completación de pozos.</li>
+            <li>Simulaciones avanzadas, como el análisis de la curva de declinación.</li>
+          </ul>
+          <p>
+            ¡Sigue practicando y explorando! Utiliza nuestro 
+            <a href="editor.html" class="variable" style="text-decoration: none;">Editor de Python</a> para experimentar con estos ejemplos y preparar el terreno para la próxima clase. 🤖
+          </p>
+        </div>
       </div>
     </div>
+  </div>
 
     <!-- Indicadores -->
     <div class="indicator-container">
