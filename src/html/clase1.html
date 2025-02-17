@@ -121,6 +121,13 @@ width: 10px;
       color: var(--retro-bg);
     }
 
+    .light-mode .bottom-buttons button:hover {
+  background-color: transparent;
+  color: #212121;
+  border: 1px solid #000000;
+}
+
+
     /* Estilo para el scroll */
     .slider-container::-webkit-scrollbar {
       width: 10px;
@@ -204,6 +211,12 @@ width: 10px;
       opacity: 1;
       background-color: #fff;
     }
+
+    .light-mode .indicator.active {
+      opacity: 1;
+      background-color: #212121;
+    }
+    
 
     /* Botones de navegación */
     .slider-button {
@@ -296,118 +309,129 @@ width: 10px;
 
   <div class="slider-container">
     <div class="slider">
-      <!-- Slide 1: Funciones y Comentarios -->
+      <!-- Slide 1: Exploración y Geología -->
       <div class="slider-item active">
-        <pre><code>
-          <h2>Variables en Python</h2></pre>
+        <code>
+          <h2>Variables en Python</h2>
           <span>
-          En programación, una variable es un espacio en la memoria que se utiliza para almacenar datos. En Python, las variables no necesitan ser declaradas con un tipo específico, ya que el lenguaje es de tipado dinámico. Esto significa que el tipo de dato se infiere automáticamente según el valor que le asignes.
-
-Por ejemplo:
-        </span>
-        <br>
-        <br>
-
-<span class="variable">presion</span> = <span class="keyword">3500 </span><span class="comment"># Entero (int)</span><br>
- <span class="variable">densidad</span> = <span class="keyword"> 0.85 </span><span class="comment"> # Flotante (float)</span><br>
- <span class="variable">nombre_pozo </span> = <span class="keyword">"Pozo_A"</span><span class="comment">  # Cadena de texto (str)</span><br>
- <span class="variable">es_activo</span> = <span class="keyword">True</span><span class="comment">   # Booleano (bool)</span><br>
-<br>
-<span class="comment">#En este caso:</span><br>
- <span class="comment">
-  presion es un número entero que podría representar la presión en un yacimiento (en psi).
- </span><br>
- <span class="comment">
-  densidad es un número decimal que podría representar la densidad del petróleo (en g/cm³).
-</span><br>
-<span class="comment">   
-  nombre_pozo es una cadena de texto que almacena el nombre de un pozo.
-</span><br> 
-<span class="comment">
-    es_activo es un valor booleano que indica si el pozo está activo o no.
-</span>
-
+            En programación, una variable es un espacio en la memoria que se utiliza para almacenar datos.
+             En Python, las variables no necesitan ser declaradas con un tipo específico, ya que el lenguaje es de tipado dinámico. 
+             Esto significa que el tipo de dato se infiere automáticamente según el valor que le asignes.
+            Por ejemplo:            <br><br>
+            <span class="variable">presion</span> = <span class="keyword">3500 </span><span class="comment"># Entero (int)</span><br>
+            <span class="variable">densidad</span> = <span class="keyword"> 0.85 </span><span class="comment"> # Flotante (float)</span><br>
+            <span class="variable">nombre_pozo </span> = <span class="keyword">"Pozo_A"</span><span class="comment">  # Cadena de texto (str)</span><br>
+            <span class="variable">es_activo</span> = <span class="keyword">True</span><span class="comment">   # Booleano (bool)</span><br>
+           <br>
+           <span class="comment">#En este caso:</span><br>
+            <span class="comment">
+             presion es un número entero que podría representar la presión en un yacimiento (en psi).
+            </span><br>
+            <span class="comment">
+             densidad es un número decimal que podría representar la densidad del petróleo (en g/cm³).
+           </span><br>
+           <span class="comment">   
+             nombre_pozo es una cadena de texto que almacena el nombre de un pozo.
+           </span><br> 
+           <span class="comment">
+               es_activo es un valor booleano que indica si el pozo está activo o no.
+           </span>
+        </code>
       </div>
-      <!-- Slide 2: Variables y Tipos de Datos -->
-      <div class="slider-item active">
+  
+      <!-- Slide 2: Ingeniería de Yacimientos -->
+      <div class="slider-item">
         <pre><code>
-          <h2>Tipos de datos en Python</h2></pre>
-          <span>
-            Los tipos de datos definen la naturaleza de la información que se almacena en una variable. A continuación, te explico los tipos de datos más comunes en Python:  
-        </span>
-        <br>
-        <br>
+  <h2>Tipos de datos en Python</h2>
+  <span>
+    Los tipos de datos definen la naturaleza de la información que se almacena en una variable. 
+    A continuación, te explico los tipos de datos más comunes en Python:  
 
-        <span class="variable">presion</span> = <span class="keyword">3500</span> <span class="comment"># Entero (int)</span><span> Los enteros son números sin decimales. Pueden ser positivos o negativos.
+    <br>
+    <span class="variable">presion</span> = <span class="keyword">3500</span> <span class="comment"># Entero (int)</span><span> Los enteros son números sin decimales. Pueden ser positivos o negativos.
 
-        </span><br>
-        <span class="variable">densidad</span> = <span class="keyword">0.85</span> <span class="comment"># Flotante (float)</span><span> Los flotantes son números con decimales. Se utilizan para representar valores más precisos.
+    </span><br>
+    <span class="variable">densidad</span> = <span class="keyword">0.85</span> <span class="comment"># Flotante (float)</span><span> Los flotantes son números con decimales. 
+      Se utilizan para representar valores más precisos.
 
-        </span><br>
-        <span class="variable">nombre_pozo</span> = <span class="string">"Pozo_A"</span> <span class="comment"># Cadena de texto (str)</span><span> Las cadenas de texto son secuencias de caracteres. Se definen entre comillas simples (') o dobles (").</span><br><br>
-        <span class="variable">es_activo</span> = <span class="keyword">True</span> <span class="comment"># Booleano (bool)</span> <span> Los booleanos son valores lógicos que solo pueden ser True (verdadero) o False (falso). Se utilizan para representar condiciones o estados binarios.</span><br><br>
-        <span class="variable">presiones</span> = <span class="keyword">[3500, 4000, 3200]</span> <span class="comment"># Lista (list)</span> <span> Las listas son colecciones ordenadas y mutables de elementos. Pueden contener diferentes tipos de datos.</span><br><br>
-        <span class="variable">coordenadas</span> = <span class="keyword">(10.5, -75.3)</span> <span class="comment"># Tupla (tuple)</span><span> Las tuplas son similares a las listas, pero son inmutables, es decir, no se pueden modificar después de su creación.</span><br><br>
-        <span class="variable">pozos_activos</span> = <span class="keyword">{"Pozo_A", "Pozo_B", "Pozo_C"}</span> <span class="comment"># Conjunto (set)</span><span> Los conjuntos son colecciones no ordenadas de elementos únicos. No permiten duplicados.</span><br><br>
-        <span class="variable">datos_pozo</span> = <span class="keyword">{"nombre": "Pozo_A", "presion": 3500, "densidad": 0.85}</span> <span class="comment"># Diccionario (dict)</span><span>Los diccionarios son colecciones de pares clave-valor. Se utilizan para almacenar datos asociativos.</span><br><br>
-        <span class="variable">resultado</span> = <span class="keyword">None</span> <span class="comment"># Valor vacío (None)</span><span> El valor None se utiliza para representar la ausencia de valor. Es similar a null en otros lenguajes.
+    </span><br>
+    <span class="variable">nombre_pozo</span> = <span class="string">"Pozo_A"</span> <span class="comment"># Cadena de texto (str)</span><span> Las cadenas de texto son secuencias de caracteres.
+       Se definen entre comillas simples (') o dobles (").</span><br><br>
+    <span class="variable">es_activo</span> = <span class="keyword">True</span> <span class="comment"># Booleano (bool)</span> <span> Los booleanos son valores lógicos que solo pueden ser True (verdadero) o False (falso).
+      Se utilizan para representar condiciones o estados binarios.</span><br><br>
+    <span class="variable">presiones</span> = <span class="keyword">[3500, 4000, 3200]</span> <span class="comment"># Lista (list)</span> <span> Las listas son colecciones ordenadas y mutables de elementos. 
+      Pueden contener diferentes tipos de datos.</span><br><br>
+    <span class="variable">coordenadas</span> = <span class="keyword">(10.5, -75.3)</span> <span class="comment"># Tupla (tuple)</span><span> Las tuplas son similares a las listas, pero son inmutables
+       es decir, no se pueden modificar después de su creación.</span><br><br>
+    <span class="variable">pozos_activos</span> = <span class="keyword">{"Pozo_A", "Pozo_B", "Pozo_C"}</span> <span class="comment"># Conjunto (set)</span><span> Los conjuntos son colecciones no ordenadas 
+      de elementos únicos, No permiten duplicados.</span><br><br>
+    <span class="variable">datos_pozo</span> = <span class="keyword">{"nombre": "Pozo_A", "presion": 3500, "densidad": 0.85}</span> <span class="comment"># Diccionario (dict)</span><span>Los diccionarios 
+      son colecciones de pares clave-valor. Se utilizan para almacenar datos asociativos.</span><br><br>
+    <span class="variable">resultado</span> = <span class="keyword">None</span> <span class="comment"># Valor vacío (None)</span><span> El valor None se utiliza para representar la ausencia de valor.
+       Es similar a null en otros lenguajes.
 </span><br><br>
-        <span class="variable">pozo</span> = <span class="keyword">Pozo("Pozo_A", 3500)</span> <span class="comment"># Objeto (object)</span><span> En Python, todo es un objeto. Los objetos son instancias de clases y pueden tener atributos y métodos. Más adelante, en clases futuras, profundizaremos en este concepto.
+    <span class="variable">pozo</span> = <span class="keyword">Pozo("Pozo_A", 3500)</span> <span class="comment"># Objeto (object)</span><span> En Python, todo es un objeto. 
+      Los objetos son instancias de clases y pueden tener atributos y métodos. <br> Más adelante, en clases futuras, profundizaremos en este concepto.
 
-        </span><br>
-
-
+    </span><br>
+        </code></pre>
       </div>
-      <!-- Slide 3: Estructuras de Control -->
+  
+      <!-- Slide 3: Perforación y Completación -->
       <div class="slider-item">
-        <pre><code><h2> Uso de variables</h2>
-
- <span>Las variables pueden ser utilizadas para el procesamiento de datos. estan pueden obedecer estructuras
-   de control, operaciones aritmeticas y ser utilizadas en <span class="keyword">Funciones</span></span><br><br>
-<span class="variable">saludo</span> = <span class="string">"Hola"</span><br>
-<span class="keyword">print</span>(<span class="variable">saludo</span>)<span class="comment"># Saldria "Hola en consola" </span>
-
-<span class="variable">a</span> = <span class="keyword">1</span><br>
-<span class="variable">b</span> = <span class="keyword">2</span><br>
-<span class="variable">suma</span> = <span class="variable">a<span class="string">+</span>b</span><br>
-
-<span class="keyword">print</span>(<span class="variable">suma</span>)<span class="comment"># Saldria el numero 3 en consola </span>
+        <pre><code>
+  <h2>Uso de variables</h2>
+  <span>
+    La planificación de la perforación y completación es vital para acceder a los yacimientos. Se estiman costos y tiempos según la profundidad y la tecnología empleada.
+    <br><br>
+    <span>Las variables pueden ser utilizadas para el procesamiento de datos. estan pueden obedecer estructuras
+      de control, operaciones aritmeticas y ser utilizadas en <span class="keyword">Funciones</span></span><br><br>
+   <span class="variable">saludo</span> = <span class="string">"Hola"</span><br>
+   <span class="keyword">print</span>(<span class="variable">saludo</span>)<span class="comment"># Saldria "Hola en consola" </span>
+   
+   <span class="variable">a</span> = <span class="keyword">1</span><br>
+   <span class="variable">b</span> = <span class="keyword">2</span><br>
+   <span class="variable">suma</span> = <span class="variable">a<span class="string">+</span>b</span><br>
+   
+   <span class="keyword">print</span>(<span class="variable">suma</span>)<span class="comment"># Saldria el numero 3 en consola </span>
+        </code></pre>
       </div>
-      <!-- Slide 4: Funciones y Módulos -->
+  
+      <!-- Slide 4: Producción y Simulaciones -->
       <div class="slider-item">
-        <div>
-          <h2>Uso de tipado de datos</h2>
-          <p>
-            En Python, los <strong>Tipos de datos</strong> te permiten definir la naturaleza de la información que se almacena en una variable. Algunos de los tipos de datos más comunes en uso son:
-          </p>
+        <pre><code>
+  <h2>Uso de tipado de datos</h2>
+  <p>
+    En Python, los <strong>Tipos de datos</strong> te permiten definir la naturaleza de la información que se almacena en una variable. Algunos de los tipos de datos más comunes en uso son:
+  </p>
 
 
-       <span class="comment"># Tipo numero</span><br>
-        <span class="variable">numero</span> = <span class="keyword">1</span><br>
-        <p class="comment"> Que sirven por ejemplo para la realizacion de operaciones aritmeticas:</p>
+<span class="comment"># Tipo numero</span><br>
+<span class="variable">numero</span> = <span class="keyword">1</span><br>
+<p class="comment"> Que sirven por ejemplo para la realizacion de operaciones aritmeticas:</p>
 
-        <span class="variable">suma</span> = <span class="variable">numero</span> + <span class="keyword">2</span><br>
+<span class="variable">suma</span> = <span class="variable">numero</span> + <span class="keyword">2</span><br>
 
-        <span class="comment"># Tipo String</span><br>
-        <span class="variable">nombre</span> = <span class="string">"Juan"</span><br>
-        <p class="comment"> Que sirven para escribir cadenas de texto, estas pueden usarse para almacenar
-          informacion o para mostrar mensajes en pantalla, incluso concatenarlos como en este ejemplo:</p>
+<span class="comment"># Tipo String</span><br>
+<span class="variable">nombre</span> = <span class="string">"Juan"</span><br>
+<p class="comment"> Que sirven para escribir cadenas de texto, estas pueden usarse para almacenar
+  informacion o para mostrar mensajes en pantalla, incluso concatenarlos como en este ejemplo:</p>
 
-        <span class="variable">saludo</span> = <span class="string">"Hola, "</span> + <span class="variable">nombre</span><br><span class="comment"># Saldria "Hola Juan" en consola</span>
-        </p>
-
-        </div>
+<span class="variable">saludo</span> = <span class="string">"Hola, "</span> + <span class="variable">nombre</span><br><span class="comment"># Saldria "Hola Juan" en consola</span>
+</p>
+        </code></pre>
       </div>
-      <!-- Slide 5: Entrada y Salida de Datos -->
+  
+      <!-- Slide 5: Tecnologías Emergentes y Digitalización -->
       <div class="slider-item">
-        <div>
-          <h2>Entrada y Salida de Datos</h2>
-          <p>
-            Python permite interactuar con el usuario mediante la función <code>input()</code> para recibir datos y <code>print()</code> para mostrar información en pantalla, lo que facilita la creación de programas interactivos.
-          </p>
-          <p>Sin embargo en el caso de <strong>Petrodev</strong> la funcion input se vera inhabilitada, puedes intentarlo aun asi en tu propio editor de codigo o entorno de desarrollo</p>
-          <p>Ejemplo:</p>
-          <pre><code><span class="comment"># Solicitar el nombre del usuario</span>
+        <pre><code>
+  <h2>Entrada y Salida de Datos</h2>
+  <p>
+    Python permite interactuar con el usuario mediante la función <code>input()</code> para recibir datos y <code>print()</code> para mostrar información en pantalla, lo que facilita la creación de programas interactivos.
+  </p>
+  <p>Sin embargo en el caso de <strong>Petrodev</strong> la funcion input se vera inhabilitada, puedes intentarlo aun asi en tu propio editor de codigo o entorno de desarrollo</p>
+  <p>Ejemplo:</p>
+  <pre><code><span class="comment"># Solicitar el nombre del usuario</span>
 <span class="variable">nombre</span> = <span class="keyword">input</span>(<span class="string">"Ingresa tu nombre: "</span>)
 <span class="keyword">print</span>(<span class="string">"Bienvenido, "</span> + <span class="variable">nombre</span>)</code></pre><br><br>
 
@@ -416,35 +440,37 @@ como parametros en siguientes clases </p>
 
 <span id="copy" ><span class="variable">nombre</span> = <span class="string">"Eli"</span> <br>
 <span class="keyword">print</span>(<span class="string">"Bienvenido, "</span> + <span class="variable">nombre</span>) </span>
- <span class="copy" onclick="copyToClipboard()" ><i id="clipboard" class="fa-solid fa-copy"></i> Clic aca para copiar</span>
+<span class="copy" onclick="copyToClipboard()" ><i id="clipboard" class="fa-solid fa-copy"></i> Clic aca para copiar</span>
 
 
 <p>Intentalo tu mismo, copia este codigo y pruebalo en el <a href="editor.html" style="text-decoration: none;" class="keyword">Editor</a></p>
 <br>
-</div>
+        </code></pre>
       </div>
-      <!-- Slide 6: Resumen del Curso -->
+  
+      <!-- Slide 6: Sostenibilidad, Retos y Futuro -->
       <div class="slider-item">
         <div>
           <h2>Resumen y Próximos Pasos</h2>
           <p>
             En esta primera clase Introducción de Python has aprendido:
-          </p>
-          <ul>
-            <li>La sintaxis básica de las variables.</li>
-            <li>El uso de variables y tipos de datos.</li>
-            <li>El manejo de estructuras de control y aritmetica basica.</li>
-            <li>Conceptos de uso de los tipos de datos.</li>
-            <li>Entrada y salida de datos para programas interactivos.</li>
-          </ul>
           <p>
-            Continúa practicando y explorando la documentación para profundizar tus conocimientos en Python.
-            ¡Hasta la siguiente clase! 🤖
-          </p>
+            <br><br>
+            <ul>
+              <li>La sintaxis básica de las variables.</li>
+              <li>El uso de variables y tipos de datos.</li>
+              <li>El manejo de estructuras de control y aritmetica basica.</li>
+              <li>Conceptos de uso de los tipos de datos.</li>
+              <li>Entrada y salida de datos para programas interactivos.</li>
+            </ul>
+            <p>
+              Continúa practicando y explorando la documentación para profundizar tus conocimientos en Python.
+              ¡Hasta la siguiente clase! 🤖
+            </p>
         </div>
       </div>
     </div>
-
+  </div>
     <!-- Indicadores -->
     <div class="indicator-container">
       <div class="indicator active" onclick="jumpTo(0)"></div>
@@ -540,20 +566,30 @@ function copyToClipboard() {
   }
 
 
-    function toggleMode() {
-      const modeIcon = document.querySelector('.mode-toggle i');
-      if (document.body.classList.contains('dark-mode')) {
-        document.body.classList.remove('dark-mode');
-        document.body.classList.add('light-mode');
-        // Cambiar de moon a sun (el icono se mostrará en negro por CSS en light-mode)
-        modeIcon.classList.remove('fa-moon');
-        modeIcon.classList.add('fa-sun');
-      } else {
-        document.body.classList.remove('light-mode');
-        document.body.classList.add('dark-mode');
-        modeIcon.classList.remove('fa-sun');
-        modeIcon.classList.add('fa-moon');
-      }
+  
+ // Cargar tema al iniciar
+const savedTheme = localStorage.getItem('theme');
+document.body.classList.add(savedTheme); // Tema por defecto dark
+
+// Configurar icono inicial
+const modeIcon = document.querySelector('.mode-toggle i');
+if (savedTheme === 'light-mode') {
+    modeIcon.classList.replace('fa-moon', 'fa-sun');
+} else {
+    modeIcon.classList.replace('fa-sun', 'fa-moon');
+}
+
+  function toggleMode() {
+    const modeIcon = document.querySelector('.mode-toggle i');
+    if (document.body.classList.contains('dark-mode')) {
+        document.body.classList.replace('dark-mode', 'light-mode');
+        modeIcon.classList.replace('fa-moon', 'fa-sun');
+        localStorage.setItem('theme', 'light-mode');
+    } else {
+        document.body.classList.replace('light-mode', 'dark-mode');
+        modeIcon.classList.replace('fa-sun', 'fa-moon');
+        localStorage.setItem('theme', 'dark-mode');
+    }
     }
   </script>
 </body>

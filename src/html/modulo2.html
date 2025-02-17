@@ -9,31 +9,6 @@
   <!-- Font Awesome para iconos -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
   <style>
-    :root {
-      --keyword: #007BFF;
-    }
-
-    /* Keyframes para la transición al cambiar de modo */
-    @keyframes modeChange {
-      0% { filter: brightness(1); }
-      50% { filter: brightness(0.7); }
-      100% { filter: brightness(1); }
-    }
-    /* Clase que aplica la animación al cambiar de modo */
-    .mode-transition {
-      animation: modeChange 0.5s ease-in-out;
-    }
-
-    /* Keyframes para la animación "pulse" del toggle */
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-      100% { transform: scale(1); }
-    }
-    .pulse {
-      animation: pulse 0.5s ease;
-    }
-
     /* Estilos generales para simular un libro digital */
     body {
       font-family: 'Georgia', serif;
@@ -47,7 +22,7 @@
       background-color: #121212;
       color: #e0e0e0;
     }
-
+  
     /* Encabezado del libro */
     .header-bar {
       display: flex;
@@ -77,15 +52,15 @@
     }
     
     /* Efecto hover en el toggle de modo oscuro (zoom y cambio de color) */
-.dark-toggle:hover {
-  color: var(--keyword); /* Cambio de color */
-  transform: scale(1.2); /* Efecto zoom */
-}
-
-/* Animación al hacer clic en el toggle */
-.dark-toggle:active {
-  animation: pulse 0.3s ease;
-}
+    .dark-toggle:hover {
+      color: var(--keyword); /* Cambio de color */
+      transform: scale(1.2); /* Efecto zoom */
+    }
+  
+    /* Animación al hacer clic en el toggle */
+    .dark-toggle:active {
+      animation: pulse 0.3s ease;
+    }
     /* Contenedor del "libro" */
     .book {
       width: 90%;
@@ -166,15 +141,15 @@
       transition: background-color 0.3s, color 0.3s;
     }
     .navigation-buttons button:hover {
-  background-color: var(--keyword);
-  color: white !important;
-}
-
+      background-color: var(--keyword);
+      color: white !important;
+    }
+  
     .book {
       perspective: 1200px;
       position: relative;
     }
-
+  
     .spread {
       position: absolute;
       width: 100%;
@@ -184,33 +159,33 @@
       backface-visibility: hidden;
       display: none;
     }
-
+  
     .spread.active {
       display: flex;
       transform: rotateY(0deg);
       z-index: 1;
     }
-
+  
     .spread.right {
       transform-origin: left center;
     }
-
+  
     .spread.left {
       transform-origin: right center;
     }
-
+  
     .spread.flip-next {
       transform: rotateY(-180deg);
       display: flex;
       z-index: 2;
     }
-
+  
     .spread.flip-prev {
       transform: rotateY(180deg);
       display: flex;
       z-index: 2;
     }
-
+  
     /* Portada */
     .cover-page {
       display: flex;
@@ -219,111 +194,35 @@
       background: #fff;
       flex-direction: column;
     }
-
+  
     .cover-page img {
       max-width: 200px;
       margin-bottom: 20px;
     }
-
+  
     body.dark-mode .cover-page {
       background: #1c1c1c;
     }
-    
-    
-/* Añade estos estilos en el head */
-:root {
-  --bg-color: #ffffff;
-  --text-color: #333333;
-  --code-bg: #f5f5f5;
-  --border-color: #dddddd;
-  --accent-color: #2196F3;
-}
-
-.dark-mode {
-  --bg-color: #1a1a1a;
-  --text-color: #e0e0e0;
-  --code-bg: #2d2d2d;
-  --border-color: #404040;
-  --accent-color: #4CAF50;
-}
-
-.example-box, .creation-steps, .flow-tips {
-  background: rgba(0,0,0,0.05);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 15px;
-  margin: 15px 0;
-}
-
-.dark-mode .example-box, 
-.dark-mode .creation-steps, 
-.dark-mode .flow-tips {
-  background: rgba(255,255,255,0.05);
-}
-
-pre {
-  background: var(--code-bg);
-  color: var(--text-color);
-  padding: 15px;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  overflow-x: auto;
-}
-
-table.test-cases {
-  width: 100%;
-  border-collapse: collapse;
-  background: var(--code-bg);
-}
-
-table.test-cases th, 
-table.test-cases td {
-  border: 1px solid var(--border-color);
-  padding: 8px;
-  text-align: left;
-}
-
-.error-types {
-  display: grid;
-  gap: 10px;
-  margin-top: 15px;
-}
-
-.error {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px;
-  background: rgba(255,0,0,0.1);
-  border-radius: 6px;
-  border: 1px solid #ff4444;
-}
-
-.dark-mode .error {
-  background: rgba(255,70,70,0.15);
-}
-    
-  /* Aplicar modo oscuro inmediatamente si está activado */
-body.dark-mode .navigation-buttons button {
-  border-color: rgb(255, 255, 255) !important; /* Naranja */
-  color: rgb(255, 255, 255) !important; /* Texto blanco */
-  background-color: transparent
-}
-
-/* Para cambiar el color al hacer hover */
-body.dark-mode .navigation-buttons button:hover {
-  background-color: rgb(255, 140, 0) !important; /* Un tono de naranja más oscuro */
-  color: rgb(255, 255, 255) !important; /* Mantener texto blanco */
-}
-
-
-/* Efecto al hacer clic en modo oscuro */
-body.dark-mode .navigation-buttons button:active {
-  background-color: orange !important; /* Fondo naranja */
-  color: white !important; /* Letras blancas */
-  border-color: orange !important;
-  transform: scale(0.98);
-}
+  
+    /* Media query para dispositivos móviles */
+    @media (max-width: 768px) {
+      .book {
+        width: 100%;
+        height: 50rem;
+      }
+      .spread {
+        flex-direction: column;
+      }
+      .page {
+        width: 100%;
+        height: 50rem;
+        padding: 20px;
+      }
+      .left-page {
+        border-right: 100px;
+        border-bottom: 1px solid #ccc;
+      }
+    }
   </style>
 </head>
 <body class="dark-mode">
@@ -704,6 +603,13 @@ body.dark-mode .navigation-buttons button:active {
         currentSpread++;
         showSpread(currentSpread);
       }
+    if (currentSpread === spreads.length -1 ) {
+      document.getElementById('prevButton').disabled = false;
+      document.getElementById('nextButton').disabled = true;
+    document.getElementById('nextButton').innerHTML = '<a href="modulo3.html" style="text-decoration:none;">Siguiente clase</a>';
+
+ 
+    } 
     }
     
     function prevSpread() {

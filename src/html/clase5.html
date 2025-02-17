@@ -121,6 +121,13 @@ width: 10px;
       color: var(--retro-bg);
     }
 
+    .light-mode .bottom-buttons button:hover {
+  background-color: transparent;
+  color: #212121;
+  border: 1px solid #000000;
+}
+
+
     /* Estilo para el scroll */
     .slider-container::-webkit-scrollbar {
       width: 10px;
@@ -204,6 +211,12 @@ width: 10px;
       opacity: 1;
       background-color: #fff;
     }
+
+    .light-mode .indicator.active {
+      opacity: 1;
+      background-color: #212121;
+    }
+    
 
     /* Botones de navegación */
     .slider-button {
@@ -296,9 +309,9 @@ width: 10px;
 
   <div class="slider-container">
     <div class="slider">
-      <!-- Slide 1: Funciones y Comentarios -->
+      <!-- Slide 1: Exploración y Geología -->
       <div class="slider-item active">
-        <pre><code>
+        <code>
           <h2>Que son los Operadores logicos?</h2></pre>
           <span>
             ¿Qué son los operadores lógicos?
@@ -313,26 +326,25 @@ width: 10px;
 
 
 
-        </&span>
+        </span>
         <br>
         <br>
-
+        </code>
       </div>
-      <!-- Slide 2: Variables y Tipos de Datos -->
-      <div class="slider-item active">
+  
+      <!-- Slide 2: Ingeniería de Yacimientos -->
+      <div class="slider-item">
         <pre><code>
-          <h2>Operador And</h2></pre>
-          <span>
-            El operador <span class="keyword">and</span> devuelve <span class="comment">True</span> solo si todas las condiciones que compara son verdaderas.
-             Si alguna condición es falsa, devuelve <span class="variable" style="color: red !important;" >False</span>. <br><br>
+  <h2>Operador And</h2>
+  <span>
+    El operador <span class="keyword">and</span> devuelve <span class="comment">True</span> solo si todas las condiciones que compara son verdaderas.
+     Si alguna condición es falsa, devuelve <span class="variable" style="color: red !important;" >False</span>. <br><br>
 
-            Sintaxis: <br> <br>
+    Sintaxis: <br>
 
-            <span class="variable">condicion1</span> <span class="keyword">and</span> <span class="variable">condicion2</span>
+    <span class="variable">condicion1</span> <span class="keyword">and</span> <span class="variable">condicion2</span>
 
-          </span>
-        <br>
-        <br>
+  </span>
 Ejemplo:<br><br>
 <span class="variable">edad</span> = <span class="keyword">25</span><br>
 <span class="variable">tiene_licencia</span> = <span class="keyword">True</span><br>
@@ -341,105 +353,109 @@ Ejemplo:<br><br>
 <span class="keyword">else</span>:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(<span class="string">"No puedes conducir."</span>) <span class="comment"># Output: No puedes conducir.</span> <br>
 
+        </code></pre>
       </div>
-      <!-- Slide 3: Estructuras de Control -->
+  
+      <!-- Slide 3: Perforación y Completación -->
       <div class="slider-item">
-        <pre><code><h2>Operador Or</h2>
-   
-          El operador <span class="keyword">or</span> devuelve <span class="comment">True</span> si al menos una de las condiciones que compara es verdadera.
-           Solo devuelve False si todas las condiciones son falsas. <br><br>
-          
-          Sintaxis: <br><br>
-          <span class="variable">condicion1</span> <span class="keyword">or</span> <span class="variable">condicion2</span> <br><br>
-          Ejemplo: <br><br>
-          <span class="variable">es_estudiante</span> = <span class="keyword">True</span><br>
+        <pre><code>
+  <h2>Operador Or</h2>
+  
+  El operador <span class="keyword">or</span> devuelve <span class="comment">True</span> si al menos una de las condiciones que compara es verdadera.
+  Solo devuelve False si todas las condiciones son falsas. <br><br>
+ 
+ Sintaxis: <br><br>
+ <span class="variable">condicion1</span> <span class="keyword">or</span> <span class="variable">condicion2</span> <br><br>
+ Ejemplo: <br><br>
+ <span class="variable">es_estudiante</span> = <span class="keyword">True</span><br>
 <span class="variable">es_profesor</span> = <span class="keyword">False</span><br>
 <span class="keyword">if</span> <span class="variable">es_estudiante</span> <span class="keyword">or</span> <span class="variable">es_profesor</span>:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(<span class="string">"Tienes acceso al material."</span>) <span class="comment"># Output: Tienes acceso al material.</span><br>
 <span class="keyword">else</span>:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(<span class="string">"No tienes acceso al material."</span>)<span class="comment"># Output: No tienes acceso al material.</span><br><br>
 
-        </div>
+        </code></pre>
       </div>
-
+  
+      <!-- Slide 4: Producción y Simulaciones -->
       <div class="slider-item">
-        <pre><code><h2>Operador Not</h2>
-   
-          El operador <span class="keyword">not</span> invierte el valor de la condición.
-           Si la condición es <span class="comment">true</span>, la convierte en <span style="color: red;">false</span>, y viceversa. <br><br>
+        <pre><code>
+  <h2>Operador Not</h2>
+ 
+  El operador <span class="keyword">not</span> invierte el valor de la condición.
+  Si la condición es <span class="comment">true</span>, la convierte en <span style="color: red;">false</span>, y viceversa. <br><br>
 
-          Sintaxis: <br><br>
-          <span class="keyword">not</span> <span class="variable">condicion</span> <br><br>
-          Ejemplo: <br><br>
-          <span class="variable">es_feriado</span> = <span class="keyword">False</span><br>
+ Sintaxis: <br><br>
+ <span class="keyword">not</span> <span class="variable">condicion</span> <br><br>
+ Ejemplo: <br><br>
+ <span class="variable">es_feriado</span> = <span class="keyword">False</span><br>
 <span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">es_feriado</span>:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(<span class="string">"Hoy se trabaja."</span>) <span class="comment"># Output: Hoy se trabaja.</span><br>
 <span class="keyword">else</span>:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(<span class="string">"Hoy es feriado."</span>)<span class="comment"># Output: Hoy es feriado..</span><br><br>
-        </div>
-
-      <!-- Slide 5: Entrada y Salida de Datos -->
+        </code></pre>
+      </div>
+  
+      <!-- Slide 5: Tecnologías Emergentes y Digitalización -->
       <div class="slider-item">
-          <h2>Tabla de verdad de los operadores logicos:</h2><br>
-          <table>
-            <thead>
-              <tr>
-                <th><span class="variable">Condición 1</span></th>
-                <th><span class="variable">Condición 2</span></th>
-                <th><span class="keyword">and</span></th>
-                <th><span class="keyword">or</span></th>
-                <th><span class="keyword">not Condición 1</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><span class="keyword">True</span></td>
-                <td><span class="keyword">True</span></td>
-                <td><span class="keyword">True</span></td>
-                <td><span class="keyword">True</span></td>
-                <td><span class="keyword">False</span></td>
-              </tr>
-              <tr>
-                <td><span class="keyword">True</span></td>
-                <td><span class="keyword">False</span></td>
-                <td><span class="keyword">False</span></td>
-                <td><span class="keyword">True</span></td>
-                <td><span class="keyword">False</span></td>
-              </tr>
-              <tr>
-                <td><span class="keyword">False</span></td>
-                <td><span class="keyword">True</span></td>
-                <td><span class="keyword">False</span></td>
-                <td><span class="keyword">True</span></td>
-                <td><span class="keyword">True</span></td>
-              </tr>
-              <tr>
-                <td><span class="keyword">False</span></td>
-                <td><span class="keyword">False</span></td>
-                <td><span class="keyword">False</span></td>
-                <td><span class="keyword">False</span></td>
-                <td><span class="keyword">True</span></td>
-              </tr>
-            </tbody>
-          </table>
+        <pre><code>
+  <h2>Tabla de verdad de los operadores logicos:</h2>
+  <table>
+    <thead>
+      <tr>
+        <th><span class="variable">Condición 1</span></th>
+        <th><span class="variable">Condición 2</span></th>
+        <th><span class="keyword">and</span></th>
+        <th><span class="keyword">or</span></th>
+        <th><span class="keyword">not Condición 1</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="keyword">True</span></td>
+        <td><span class="keyword">True</span></td>
+        <td><span class="keyword">True</span></td>
+        <td><span class="keyword">True</span></td>
+        <td><span class="keyword">False</span></td>
+      </tr>
+      <tr>
+        <td><span class="keyword">True</span></td>
+        <td><span class="keyword">False</span></td>
+        <td><span class="keyword">False</span></td>
+        <td><span class="keyword">True</span></td>
+        <td><span class="keyword">False</span></td>
+      </tr>
+      <tr>
+        <td><span class="keyword">False</span></td>
+        <td><span class="keyword">True</span></td>
+        <td><span class="keyword">False</span></td>
+        <td><span class="keyword">True</span></td>
+        <td><span class="keyword">True</span></td>
+      </tr>
+      <tr>
+        <td><span class="keyword">False</span></td>
+        <td><span class="keyword">False</span></td>
+        <td><span class="keyword">False</span></td>
+        <td><span class="keyword">False</span></td>
+        <td><span class="keyword">True</span></td>
+      </tr>
+    </tbody>
+  </table>
 
 <p>Ejemplos adicionales
-  Combinando <span class="keyword">and</span>, <span class="keyword">or</span> y <span class="keyword">not:</span>  </p>
+Combinando <span class="keyword">and</span>, <span class="keyword">or</span> y <span class="keyword">not:</span>  </p>
 <p> <span class="variable">edad</span> = <span class="keyword">25</span><br>
-  <span class="variable">tiene_licencia</span> = <span class="keyword">True</span><br>
-  <span class="variable">es_feriado</span> = <span class="keyword">False</span><br>
-  <span class="keyword">if</span> (<span class="variable">edad</span> >= <span class="keyword">18</span> <span class="keyword">and</span> <span class="variable">tiene_licencia</span>) <span class="keyword">or</span> <span class="keyword">not</span> <span class="variable">es_feriado</span>:<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(<span class="string">"Puedes conducir hoy."</span>) <span class="comment"># Output: Puedes conducir hoy.</span><br>
-  <span class="keyword">else</span>:<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(<span class="string">"No puedes conducir hoy."</span>)</p>
+<span class="variable">tiene_licencia</span> = <span class="keyword">True</span><br>
+<span class="variable">es_feriado</span> = <span class="keyword">False</span><br>
+<span class="keyword">if</span> (<span class="variable">edad</span> >= <span class="keyword">18</span> <span class="keyword">and</span> <span class="variable">tiene_licencia</span>) <span class="keyword">or</span> <span class="keyword">not</span> <span class="variable">es_feriado</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(<span class="string">"Puedes conducir hoy."</span>) <span class="comment"># Output: Puedes conducir hoy.</span><br>
+<span class="keyword">else</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(<span class="string">"No puedes conducir hoy."</span>)</p>
 <br>
-
-
-        </div>
-
-
-
-      <!-- Slide 6: Resumen del Curso -->
+        </code></pre>
+      </div>
+  
+      <!-- Slide 6: Sostenibilidad, Retos y Futuro -->
       <div class="slider-item">
         <div>
           <h2>Resumen y Próximos Pasos</h2>
@@ -459,8 +475,8 @@ Ejemplo:<br><br>
           </p>
         </div>
       </div>
-
-
+    </div>
+  </div>
     <!-- Indicadores -->
     <div class="indicator-container">
       <div class="indicator active" onclick="jumpTo(0)"></div>
@@ -556,20 +572,30 @@ function copyToClipboard() {
   }
 
 
-    function toggleMode() {
-      const modeIcon = document.querySelector('.mode-toggle i');
-      if (document.body.classList.contains('dark-mode')) {
-        document.body.classList.remove('dark-mode');
-        document.body.classList.add('light-mode');
-        // Cambiar de moon a sun (el icono se mostrará en negro por CSS en light-mode)
-        modeIcon.classList.remove('fa-moon');
-        modeIcon.classList.add('fa-sun');
-      } else {
-        document.body.classList.remove('light-mode');
-        document.body.classList.add('dark-mode');
-        modeIcon.classList.remove('fa-sun');
-        modeIcon.classList.add('fa-moon');
-      }
+  
+ // Cargar tema al iniciar
+const savedTheme = localStorage.getItem('theme');
+document.body.classList.add(savedTheme); // Tema por defecto dark
+
+// Configurar icono inicial
+const modeIcon = document.querySelector('.mode-toggle i');
+if (savedTheme === 'light-mode') {
+    modeIcon.classList.replace('fa-moon', 'fa-sun');
+} else {
+    modeIcon.classList.replace('fa-sun', 'fa-moon');
+}
+
+  function toggleMode() {
+    const modeIcon = document.querySelector('.mode-toggle i');
+    if (document.body.classList.contains('dark-mode')) {
+        document.body.classList.replace('dark-mode', 'light-mode');
+        modeIcon.classList.replace('fa-moon', 'fa-sun');
+        localStorage.setItem('theme', 'light-mode');
+    } else {
+        document.body.classList.replace('light-mode', 'dark-mode');
+        modeIcon.classList.replace('fa-sun', 'fa-moon');
+        localStorage.setItem('theme', 'dark-mode');
+    }
     }
   </script>
 </body>
