@@ -287,6 +287,16 @@ body:not(.dark-mode) .card-img-top:hover {
       <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-6"></iconify-icon>
       <span class="hide-menu">Gestión de Usuario</span>
     </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="./assets/images/products/MANUAL ADMINISTRADOR PETRODEV.pdf" target="_blank" aria-expanded="false">
+        <span class="icon-container">
+          <div class="icon-circle">
+            <i style="color: black;" class="fa-solid fa-user-tie"></i>
+          </div>
+        </span>
+        <span  class="hide-menu">Manual de admin</span>
+      </a>
+    </li>
       <li class="sidebar-item">
       <a class="sidebar-link" href="#" aria-expanded="false">
         <span class="icon-container">
@@ -507,7 +517,7 @@ body:not(.dark-mode) .card-img-top:hover {
                 <p class="card-text"><strong>Fecha de Entrega:</strong> ${entrega.fecha_entrega}</p>
                 <p class="card-text"><strong>Calificación:</strong> <input type="number" value="${entrega.calificacion || ''}" min="0" max="5" data-entrega-id="${entrega.id}" class="calificacion-input"></p>
                 <div class="d-flex justify-content-end">
-                  <button class="btn btn-primary me-2" onclick="calificarEntrega(${entrega.id})">Calificar</button>
+                  <button class="btn btn-primary me-2" style="color:white !important;" onclick="calificarEntrega(${entrega.id})">Calificar</button>
                   <button class="btn btn-info" onclick="verProyecto(${entrega.project_id}, ${entrega.user_id})">Ver Proyecto</button>
                 </div>
               </div>
